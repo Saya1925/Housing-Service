@@ -22,4 +22,4 @@ jobs:
         run: npm install
 
       - name: Run Jest
-        run: npm test
+        run: npm test -- --bail
