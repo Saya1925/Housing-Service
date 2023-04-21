@@ -27,10 +27,10 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
+          username: sayamatsui19
+          password: Sy9119175!
           subject: Jest tests failed
-          to: your-email@example.com
+          to: sayamatsui19@yahoo.com
           body: |
             The Jest tests failed in the last build. Here are the details:
 
