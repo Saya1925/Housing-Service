@@ -1,49 +1,25 @@
-name: Jest CI
+name: Jest
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
 
-      - name: Install dependencies
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: '14.x'
+
+      - name: Install Dependencies
         run: npm install
 
-      - name: Run Jest tests
+      - name: Run Jest
         run: npm test
-
-      - name: Send email notification on error
-        if: ${{ job.status }} == 'failure'
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: sayamatsui19
-          password: Sy9119175!
-          subject: Jest tests failed
-          to: sayamatsui19@yahoo.com
-          body: |
-            The Jest tests failed in the last build. Here are the details:
-
-            ${{ steps.run-jest-test.outputs.jest-output }}
-      - id: run-jest-test
-        name: Run Jest tests and save output
-        run: |
-          npm test --json > jest-output.json
-        shell: bash
-        continue-on-error: true
-        env:
-          CI: true
-      - name: Parse Jest output
-        run: |
-          echo "::set-output name=jest-output::$(cat jest-output.json)"
-        shell: bash
