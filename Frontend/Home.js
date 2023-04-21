@@ -34,6 +34,6 @@ function HomeScreen() {
   );
 }
 
-@sd@asdh@wd @@@@HomeScreen@@afterAll
+@sd@asdh@wd @@@@HomeScreen@@afterAllaa
 
 export default HomeScreen;
