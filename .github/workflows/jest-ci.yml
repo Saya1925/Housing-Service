@@ -21,12 +21,29 @@ jobs:
       - name: Run Jest tests
         run: npm test
 
-      - name: Send Slack notification on failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@master
+      - name: Send email notification on error
+        if: ${{ job.status }} == 'failure'
+        uses: dawidd6/action-send-mail@v3
         with:
-          status: failure
-          message: 'Jest tests failed in the last build. Please check the logs for details.'
-          channel: '#my-channel'
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Jest tests failed
+          to: your-email@example.com
+          body: |
+            The Jest tests failed in the last build. Here are the details:
+
+            ${{ steps.run-jest-test.outputs.jest-output }}
+      - id: run-jest-test
+        name: Run Jest tests and save output
+        run: |
+          npm test --json > jest-output.json
+        shell: bash
+        continue-on-error: true
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          CI: true
+      - name: Parse Jest output
+        run: |
+          echo "::set-output name=jest-output::$(cat jest-output.json)"
+        shell: bash
