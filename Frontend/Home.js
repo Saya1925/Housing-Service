@@ -1,1 +1,1 @@
-test/sfpfk
+test/sfpfkcls:asns
