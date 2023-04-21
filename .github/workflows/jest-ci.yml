@@ -1,25 +1,32 @@
-name: Jest
+name: Jest CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2.1.2
-        with:
-          node-version: '14.x'
-
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Run Jest
+      - name: Run Jest tests
         run: npm test
+
+      - name: Send Slack notification on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@master
+        with:
+          status: failure
+          message: 'Jest tests failed in the last build. Please check the logs for details.'
+          channel: '#my-channel'
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
