@@ -1,14 +1,22 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          node-version: 16
+
       - name: Install dependencies
         run: npm install
+
       - name: Run tests
         run: npm test
