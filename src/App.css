@@ -1,0 +1,28 @@
+header {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #f1f1f1;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  nav a.active {
+    font-weight: bold;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 2.5em;
+  }
+  
+  p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2em;
+  }
+  
