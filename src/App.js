@@ -14,6 +14,12 @@ function App() {
     <Router>
       <div>
         <Header />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/login" component={Login} />
+        <Route path="/membership" component={Membership} />
+        <Route path="/professionals" component={Professionals} />
+        <Route path="/create-task" component={CreateTask} />
+        <Route path="/view-task/:id" component={ViewTask} />
       </div>
     </Router>
   );
