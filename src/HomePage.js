@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from './Header';
-import App from './App';
 import { useNavigate } from 'react-router-dom';
 import heroImage from './images/hero_homePage.jpg'; 
 import './css/HomePage.css';
@@ -8,34 +6,12 @@ import './css/HomePage.css';
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const buttons = [
-    {
-      label: 'HOME',
-      path: './HomePage',
-      exact: true,
-    },
-    {
-      label: 'SERVICES',
-      path: '/MakeOffer',
-    },
-    {
-      label: 'ABOUT US',
-      path: '/',
-    },
-    {
-      label: 'LOG IN',
-      path: '/LogIn',
-    },
-  ];
-
   const handleSignUp = () => {
     navigate('/SignUp');
   };
 
-
   return (
     <div className="page-container">
-      <Header buttons={buttons} />
       <div className="content">
         <h2>Easy House Services</h2>
         <p>Welcome to our Housing Service Platform!</p>
@@ -48,6 +24,5 @@ const HomePage = () => {
     </div>
   );
 };
-
 
 export default HomePage;

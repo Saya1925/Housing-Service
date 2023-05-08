@@ -3,20 +3,19 @@ import Header from './Header';
 import App from './App';
 import HomePage from './HomePage';
 import { useNavigate } from 'react-router-dom';
-import { API } from 'aws-amplify';
-import * as mutations from './graphql/mutations';
-import './css/SignUp.css';
+//import { API } from 'aws-amplify';
+//import * as mutations from './graphql/mutations';
 
 function SignUp() {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  const handleSubmit = async () => {
+  /*const handleSubmit = async () => {
     try {
       // Assuming your AWS DynamoDB has a 'users' table with 'firstName' and 'lastName' fields.
       await API.graphql({
-        query: mutations.createUser,
+        //query: mutations.createUser,
         variables: {
           input: {
             firstName,
@@ -30,7 +29,7 @@ function SignUp() {
       console.error('Error registering user:', error);
       alert('Registration failed');
     }
-  };
+  };*/
 
   const handleClear = () => {
     setFirstName('');
@@ -56,10 +55,10 @@ function SignUp() {
           onChange={(e) => setLastName(e.target.value)}
         />
       </div>
-      <button onClick={handleSubmit}>Register</button>
+      {/*<button onClick={handleSubmit}>Register</button>*/}
       <button onClick={handleClear}>Clear</button>
       </div>
   );
-
+}
 
 export default SignUp;
