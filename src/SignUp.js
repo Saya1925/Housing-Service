@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import App from './App';
-import HomePage from './HomePage';
 import { useNavigate } from 'react-router-dom';
 //import { API } from 'aws-amplify';
 //import * as mutations from './graphql/mutations';
