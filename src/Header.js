@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from './images/logo.jpg'; // Update the import path
-import './css/Header.css'; // Import your custom CSS file
+import logo from './images/logo.jpg';
+import './css/Header.css';
+import Modal from '@mui/material/Modal';
+import './css/Modal.css';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleLogin = () => {
+    // Perform the login process here
+    console.log(email, password);
+    handleClose();
+  };
+
   const buttons = [
     { label: 'HOME', path: '/' },
     { label: 'SERVICE', path: '/MakeOffer' },
     { label: 'ABOUT US', path: '/About' },
-    { label: 'LOG IN', path: '/Login' },
+    { label: 'LOG IN', path: '/Login', onClick: handleOpen },
   ];
 
   return (
@@ -25,12 +43,50 @@ const Header = () => {
               exact
               activeClassName="active"
               className="nav-link"
+              onClick={button.onClick}
             >
               {button.label}
             </NavLink>
           ))}
         </div>
       </nav>
+      <Modal open={open} onClose={handleClose}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <div className="login-title">Log In</div>
+          <TextField
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Button onClick={handleLogin} variant="contained" sx={{ mt: 2 }}>
+            Log In
+          </Button>
+        </Box>
+      </Modal>
     </header>
   );
 };

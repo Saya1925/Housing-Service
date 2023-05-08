@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './css/SignUp.css';
 
-const Register = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -22,9 +22,9 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="signup-container">
       <h2>Register Your Account</h2>
-      <form onSubmit={handleSubmit} className="register-form">
+      <form onSubmit={handleSubmit} className="signup-form">
         <input
           type="text"
           name="firstName"
@@ -73,10 +73,11 @@ const Register = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Register</button>
+        <button type="clear">Clear All</button>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default SignUp;
