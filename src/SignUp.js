@@ -1,63 +1,82 @@
 import React, { useState } from 'react';
-import Header from './Header';
-import App from './App';
-import { useNavigate } from 'react-router-dom';
-//import { API } from 'aws-amplify';
-//import * as mutations from './graphql/mutations';
+import './css/SignUp.css';
 
-function SignUp() {
-  const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+const Register = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  });
 
-  /*const handleSubmit = async () => {
-    try {
-      // Assuming your AWS DynamoDB has a 'users' table with 'firstName' and 'lastName' fields.
-      await API.graphql({
-        //query: mutations.createUser,
-        variables: {
-          input: {
-            firstName,
-            lastName,
-          },
-        },
-      });
-      alert('Registration successful');
-      navigate('/login'); // Redirect to the login page, or wherever you'd like to navigate.
-    } catch (error) {
-      console.error('Error registering user:', error);
-      alert('Registration failed');
-    }
-  };*/
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const handleClear = () => {
-    setFirstName('');
-    setLastName('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform form validation and submit the data to the backend
+    console.log(formData);
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <div>
-        <label>First Name:</label>
+    <div className="register-container">
+      <h2>Register Your Account</h2>
+      <form onSubmit={handleSubmit} className="register-form">
         <input
           type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          name="firstName"
+          placeholder="First Name"
+          value={formData.firstName}
+          onChange={handleChange}
+          required
         />
-      </div>
-      <div>
-        <label>Last Name:</label>
         <input
           type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          name="lastName"
+          placeholder="Last Name"
+          value={formData.lastName}
+          onChange={handleChange}
+          required
         />
-      </div>
-      {/*<button onClick={handleSubmit}>Register</button>*/}
-      <button onClick={handleClear}>Clear</button>
-      </div>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Re-enter Your Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
-}
+};
 
-export default SignUp;
+export default Register;
