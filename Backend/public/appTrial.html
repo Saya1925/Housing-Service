@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example Page</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">try GET request</button>
+
+    <script>
+        const button = document.getElementById('tryTestDB');
+        button.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/test-db');
+            const data = await response.json();
+            console.log(data);
+        }
+        )
+    </script>
+
+</body>
+
+</html>

@@ -66,17 +66,23 @@ console.log(fn + mn);
 
 const express = require('express');
 const app = express();
+
+// calling the db connection
 const db = require('./db');
+
+// Serve static files from the public folder
+app.use(express.static('public'));
 
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');
 //   });
   
 // Route to test the database connection
-app.get('/', async (req, res) => {
+app.get('/test-db', async (req, res) => {
   try {
     const [rows, fields] = await db.query('SELECT * FROM user');
     res.send(rows);
+    console.log(rows);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error connecting to database');
