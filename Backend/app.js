@@ -59,6 +59,31 @@ const personalInformation = {
 const {firstName: fn, lastName: ln} = personalInformation;
 
 console.log(`${fn} ${ln}`);
-*/
+
 let [fn, mn] = ["XX", "YYY", "ZZZZ"]
 console.log(fn + mn);
+*/
+
+const express = require('express');
+const app = express();
+const db = require('./db');
+
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+//   });
+  
+// Route to test the database connection
+app.get('/', async (req, res) => {
+  try {
+    const [rows, fields] = await db.query('SELECT * FROM user');
+    res.send(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error connecting to database');
+  }
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
