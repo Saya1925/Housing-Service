@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-const Header = () => {
+const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,15 +19,29 @@ const Header = () => {
   const handleLogin = () => {
     // Perform the login process here
     console.log(email, password);
+    // If the login is successful, update the isLoggedIn state
+    setIsLoggedIn(true);
     handleClose();
   };
 
-  const buttons = [
+  const commonButtons = [
     { label: 'HOME', path: '/' },
     { label: 'SERVICE', path: '/MakeOffer' },
     { label: 'ABOUT US', path: '/About' },
-    { label: 'LOG IN', path: '/Login', onClick: handleOpen },
   ];
+
+  const loggedInButtons = [
+    { label: 'REQUEST SERVICES', path: '/CreateTask' },
+    { label: 'ACCOUNT', path: '/Account' },
+  ];
+
+  const loggedOutButtons = [
+    { label: 'LOG IN', path: '/LogIn', onClick: handleOpen },
+  ];
+
+  const buttons = isLoggedIn
+    ? [...commonButtons, ...loggedInButtons]
+    : [...commonButtons, ...loggedOutButtons];
 
   return (
     <header className="header">

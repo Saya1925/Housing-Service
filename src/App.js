@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom"; // Import Routes from react-router-dom
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import HomePage from "./HomePage";
 import Membership from "./Membership";
@@ -9,10 +9,12 @@ import ViewTask from "./ViewTask";
 import SignUp from "./SignUp";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div>
-      <Header />
-      <Routes> {/* Wrap your routes in a <Routes> component */}
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/Membership" element={<Membership />} />
         <Route path="/Professionals" element={<Professionals />} />
