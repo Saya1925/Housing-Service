@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
-*/
+
 
 console.log(__dirname)
 console.log(__filename)
@@ -31,3 +31,34 @@ setInterval(() => {
     num += 1
     console.log(num)
 },1000)
+*/
+
+/* literals
+let word1 = 'DD';
+let word2 = 'SE';
+let num1 = 2;
+let num2 = 3;
+
+//const fullname = `${num1 + num2} ${word2}`;
+//console.log(fullname);
+let example = `${word1} ${word2}`;
+console.log(example);
+document.getElementById("example").innerText = example;
+*/
+
+// Destructuring
+/*
+const personalInformation = {
+    firstName: 'Dya',
+    lastName: 'Irs',
+    city: 'Austin',
+    state: 'Texas',
+    zipCode: 73301
+};
+
+const {firstName: fn, lastName: ln} = personalInformation;
+
+console.log(`${fn} ${ln}`);
+*/
+let [fn, mn] = ["XX", "YYY", "ZZZZ"]
+console.log(fn + mn);
