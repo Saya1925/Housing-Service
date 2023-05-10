@@ -11,25 +11,27 @@
     <div id="displayGET"></div>
 
     <br><br>
+    <span><b>account registration related</b></span>
+    <br><br>
 
     <form action="/add-user" method="post">
         <label for="sname">First Name:</label>
         <input type="text" id="sname" name="sname"><br>
-      
+
         <label for="lname">Last Name:</label>
         <input type="text" id="lname" name="lname"><br>
-      
+
         <label for="email">Email:</label>
         <input type="email" id="email" name="email"><br>
-      
+
         <label for="phoneNum">Phone Number:</label>
         <input type="text" id="phoneNum" name="phoneNum"><br>
-      
+
         <label for="pw">Password:</label>
         <input type="password" id="pw" name="pw"><br>
-      
+
         <button type="submit">Register</button>
-      </form>
+    </form>
     <div id="newAddedUser"></div>
 
     <br><br>
@@ -49,7 +51,56 @@
         <button type="submit">Login</button>
     </form>
 
+    <br><br>
+    <span><b>Task list related</b></span>
+    <br><br>
+
+    <form action="/add-task" method="post">
+        <label for="createdBy">Created By:</label>
+        <input type="text" id="createdBy" name="createdBy"><br>
+
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName"><br>
+
+        <label for="budget">Budget:</label>
+        <input type="text" id="budget" name="budget"><br>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="Electrical">Electrical</option>
+            <option value="Construction">Construction</option>
+            <option value="Gardening">Gardening</option>
+            <option value="Plumber">Plumber</option>
+            <option value="Design">Design</option>
+            <option value="Others">Others</option>
+        </select><br>
+
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate"><br>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate"><br>
+
+        <label for="specialReq">Special Requirements:</label>
+        <input type="text" id="specialReq" name="specialReq"><br>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location"><br>
+        <label for="onlineTask">Is it an online task?</label>
+        <input type="checkbox" id="onlineTask" name="onlineTask" onclick="toggleLocationInput()"><br>
+
+        <label for="details">Details:</label>
+        <textarea id="details" name="details"></textarea><br>
+
+        <button type="submit">Add Task</button>
+    </form>
+    <br>
+    <button id="getLatestTask">GET latest Task</button>
+    <div id="latestTask"></div>
+
+
     <script>
+        // to test the connectivity to DB
         const button_testDB = document.getElementById('tryTestDB');
         button_testDB.addEventListener('click', async () => {
             // console.log("clicked");
@@ -78,6 +129,7 @@
         //     console.log(data);
         // });
 
+        // to get the latest registered user info
         const button_getLatestUser = document.getElementById('getLatestUser');
         button_getLatestUser.addEventListener('click', async () => {
             console.log("clicked");
@@ -88,6 +140,33 @@
             var displayGet = document.getElementById("latestUser");
             displayGet.innerHTML = jsonStr;
         });
+
+        // to get the latest created task
+        const button_getLatestTask = document.getElementById('getLatestTask');
+        button_getLatestTask.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/get-latest-task');
+            const data = await response.json();
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("latestTask");
+            displayGet.innerHTML = jsonStr;
+        });
+
+        // function to handle the online task checkbox
+        function toggleLocationInput() {
+            const locationInput = document.getElementById("location");
+            const onlineTaskCheckbox = document.getElementById("onlineTask");
+
+            if (onlineTaskCheckbox.checked) {
+                locationInput.value = "Online";
+                locationInput.disabled = true;
+            } else {
+                locationInput.value = "";
+                locationInput.disabled = false;
+            }
+        }
+
 
         // const button_addUser = document.getElementById('addUser');
         // button_addUser.addEventListener('click', async () => {

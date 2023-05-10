@@ -114,19 +114,19 @@ app.get('/get-latest-user', async (req, res) => {
 app.post('/add-user', async (req, res) => {
     try {
         const { sname, lname, email, phoneNum, pw, membership, professional } = req.body;
-    
+
         const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
                     VALUES ('${sname}', '${lname}', '${email}', '${phoneNum}', '${pw}', '${membership}', '${professional}')`;
-    
+
         const [result] = await db.query(sql);
-    
+
         res.send('Registration successful');
         console.log(`New user with ID ${result.insertId} has been added`);
         // res.send(`New user with ID ${result.insertId} has been added`);
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).send('Registration failed');
-      }
+    }
 });
 
 // Login System
@@ -153,6 +153,44 @@ app.post('/login', async (req, res) => {
         res.status(500).send('Error connecting to database');
     }
 });
+
+// create a task
+app.post('/add-task', async (req, res) => {
+    try {
+        const { createdBy, taskName, budget, category, startDate, endDate, specialReq, location, details, onlineTask } = req.body;
+
+        let locationValue = location;
+        if (onlineTask === "on") {
+            locationValue = "Online";
+        }
+
+        const sql = `INSERT INTO taskList (createdBy, taskName, budget, category, startDate, endDate, specialReq, location, details)
+                    VALUES ('${createdBy}', '${taskName}', '${budget}', '${category}', '${startDate}', '${endDate}', '${specialReq}', '${locationValue}', '${details}')`;
+
+        const [result] = await db.query(sql);
+
+        console.log(`New task with ID ${result.insertId} has been added`);
+        res.send('Task added successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding task');
+    }
+});
+
+
+// Route to retrieve the latest added Task
+app.get('/get-latest-task', async (req, res) => {
+    try {
+        const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 1';
+        const [rows, fields] = await db.query(sql);
+        res.send(rows);
+        console.log(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error connecting to database');
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
