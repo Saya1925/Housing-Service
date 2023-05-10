@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './css/Membership.css';
 import { useNavigate } from 'react-router-dom';
+import PriceDetailsTable from './PriceDetailsTable';
+import './css/Membership.css';
 
 const MembershipCustomer1 = () => {
 
