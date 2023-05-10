@@ -73,55 +73,86 @@ const db = require('./db');
 // Serve static files from the public folder
 app.use(express.static('public'));
 
+//  use body-parser for login
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');
 //   });
-  
+
 // Route to test the database connection
 app.get('/test-db', async (req, res) => {
-  try {
-    const [rows, fields] = await db.query('SELECT * FROM user');
-    res.send(rows);
-    console.log(rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error connecting to database');
-  }
+    try {
+        const [rows, fields] = await db.query('SELECT * FROM user');
+        res.send(rows);
+        console.log(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error connecting to database');
+    }
 });
 
 // Route to retrieve the latest added User
 app.get('/get-latest-user', async (req, res) => {
     try {
-      const sql = 'SELECT * FROM user ORDER BY userID DESC LIMIT 1';
-      const [rows, fields] = await db.query(sql);
-      res.send(rows);
-      console.log(rows);
+        const sql = 'SELECT * FROM user ORDER BY userID DESC LIMIT 1';
+        const [rows, fields] = await db.query(sql);
+        res.send(rows);
+        console.log(rows);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Error connecting to database');
+        console.error(error);
+        res.status(500).send('Error connecting to database');
     }
-  });
-  
+});
+
 
 // Route to create a new User on DB
 app.get('/add-user', async (req, res) => {
     try {
-      const { sname, lname, email, phoneNum, pw, membership, professional } = req.query;
-  
-      const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
+        const { sname, lname, email, phoneNum, pw, membership, professional } = req.query;
+
+        const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
                   VALUES ('${sname}', '${lname}', '${email}', '${phoneNum}', '${pw}', '${membership}', '${professional}')`;
-  
-      const [result] = await db.query(sql);
-  
-      res.send(`New user with ID ${result.insertId} has been added`);
+
+        const [result] = await db.query(sql);
+
+        res.send(`New user with ID ${result.insertId} has been added`);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Error connecting to database');
+        console.error(error);
+        res.status(500).send('Error connecting to database');
     }
-  });
-  
+});
+
+// Login System
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.post('/login', async (req, res) => {
+    const { email, pw } = req.body;
+
+    try {
+        const sql = `SELECT * FROM user WHERE email='${email}' AND pw='${pw}'`;
+        const [result] = await db.query(sql);
+
+        if (result.length > 0) {
+            // User exists, login successful
+            res.send('Login successful');
+        } else {
+            // User doesn't exist or wrong password
+            res.send('Invalid email or password');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error connecting to database');
+    }
+});
 
 // Start the server
 app.listen(3000, () => {
-  console.log('Server started on port 3000');
+    console.log('Server started on port 3000');
 });

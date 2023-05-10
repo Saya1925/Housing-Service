@@ -11,7 +11,7 @@
     <div id="displayGET"></div>
 
     <br><br>
-    
+
     <label for="sname">First Name:</label>
     <input type="text" id="sname" name="sname"><br>
 
@@ -29,11 +29,23 @@
 
     <button id="addUser">try add new user</button>
     <div id="newAddedUser"></div>
-    
+
     <br><br>
-    
+
     <button id="getLatestUser">GET latest user</button>
     <div id="latestUser"></div>
+
+    <br><br>
+
+    <form action="/login" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="pw" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
 
     <script>
         const button_testDB = document.getElementById('tryTestDB');
