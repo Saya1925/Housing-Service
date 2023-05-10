@@ -89,6 +89,38 @@ app.get('/test-db', async (req, res) => {
   }
 });
 
+// Route to retrieve the latest added User
+app.get('/get-latest-user', async (req, res) => {
+    try {
+      const sql = 'SELECT * FROM user ORDER BY userID DESC LIMIT 1';
+      const [rows, fields] = await db.query(sql);
+      res.send(rows);
+      console.log(rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to database');
+    }
+  });
+  
+
+// Route to create a new User on DB
+app.get('/add-user', async (req, res) => {
+    try {
+      const { sname, lname, email, phoneNum, pw, membership, professional } = req.query;
+  
+      const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
+                  VALUES ('${sname}', '${lname}', '${email}', '${phoneNum}', '${pw}', '${membership}', '${professional}')`;
+  
+      const [result] = await db.query(sql);
+  
+      res.send(`New user with ID ${result.insertId} has been added`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to database');
+    }
+  });
+  
+
 // Start the server
 app.listen(3000, () => {
   console.log('Server started on port 3000');

@@ -8,16 +8,95 @@
 <body>
     <span id="example"></span>
     <button id="tryTestDB">try GET request</button>
+    <div id="displayGET"></div>
+
+    <br><br>
+    
+    <label for="sname">First Name:</label>
+    <input type="text" id="sname" name="sname"><br>
+
+    <label for="lname">Last Name:</label>
+    <input type="text" id="lname" name="lname"><br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email"><br>
+
+    <label for="phoneNum">Phone Number:</label>
+    <input type="text" id="phoneNum" name="phoneNum"><br>
+
+    <label for="pw">Password:</label>
+    <input type="password" id="pw" name="pw"><br>
+
+    <button id="addUser">try add new user</button>
+    <div id="newAddedUser"></div>
+    
+    <br><br>
+    
+    <button id="getLatestUser">GET latest user</button>
+    <div id="latestUser"></div>
 
     <script>
-        const button = document.getElementById('tryTestDB');
-        button.addEventListener('click', async () => {
-            console.log("clicked");
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
             const response = await fetch('/test-db');
             const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+
+        const button = document.getElementById('addUser');
+        button.addEventListener('click', async () => {
+            const sname = document.getElementById('sname').value;
+            const lname = document.getElementById('lname').value;
+            const email = document.getElementById('email').value;
+            const phoneNum = document.getElementById('phoneNum').value;
+            const pw = document.getElementById('pw').value;
+
+            const response = await fetch(`/add-user?sname=${sname}&lname=${lname}&email=${email}&phoneNum=${phoneNum}&pw=${pw}&membership=0&professional=0`);
+            const data = await response.text();
             console.log(data);
-        }
-        )
+        });
+
+        const button_getLatestUser = document.getElementById('getLatestUser');
+        button_getLatestUser.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/get-latest-user');
+            const data = await response.json();
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("latestUser");
+            displayGet.innerHTML = jsonStr;
+        });
+
+        // const button_addUser = document.getElementById('addUser');
+        // button_addUser.addEventListener('click', async () => {
+        //     console.log("clicked");
+        //     const response = await fetch('/add-user', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             sname: 'Saya',
+        //             lname: 'Mi',
+        //             email: 'Saya@example.com',
+        //             phoneNum: '1234567890',
+        //             pw: '12345',
+        //             membership: 0,
+        //             professional: 0
+        //         })
+        //     });
+        //     const data = await response.json();
+        //     console.log(data);
+        // });
+
     </script>
 
 </body>
