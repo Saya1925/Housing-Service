@@ -111,20 +111,22 @@ app.get('/get-latest-user', async (req, res) => {
 
 
 // Route to create a new User on DB
-app.get('/add-user', async (req, res) => {
+app.post('/add-user', async (req, res) => {
     try {
-        const { sname, lname, email, phoneNum, pw, membership, professional } = req.query;
-
+        const { sname, lname, email, phoneNum, pw, membership, professional } = req.body;
+    
         const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
-                  VALUES ('${sname}', '${lname}', '${email}', '${phoneNum}', '${pw}', '${membership}', '${professional}')`;
-
+                    VALUES ('${sname}', '${lname}', '${email}', '${phoneNum}', '${pw}', '${membership}', '${professional}')`;
+    
         const [result] = await db.query(sql);
-
-        res.send(`New user with ID ${result.insertId} has been added`);
-    } catch (error) {
+    
+        res.send('Registration successful');
+        console.log(`New user with ID ${result.insertId} has been added`);
+        // res.send(`New user with ID ${result.insertId} has been added`);
+      } catch (error) {
         console.error(error);
-        res.status(500).send('Error connecting to database');
-    }
+        res.status(500).send('Registration failed');
+      }
 });
 
 // Login System
