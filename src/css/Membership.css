@@ -1,0 +1,26 @@
+h1 {
+    text-align: left;
+    margin-left: 70px;
+    font-size: 35px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+.radio-container {
+    margin-bottom: 10px;
+  }
+  
+.radio-container input[type='radio'] {
+    margin-right: 5px;
+  }
+  
+.radio-container label {
+    display: block;
+  }
+  
+.table-style {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    border-color: darkgrey;
+    /* Add any other desired font styles */
+  }
+  
