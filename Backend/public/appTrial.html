@@ -14,7 +14,7 @@
     <span><b>account registration related</b></span>
     <br><br>
 
-    <form action="/add-user" method="post">
+    <form action="/account/add-user" method="post">
         <label for="sname">First Name:</label>
         <input type="text" id="sname" name="sname"><br>
 
@@ -41,7 +41,7 @@
 
     <br><br>
 
-    <form action="/login" method="post">
+    <form action="/account/login" method="post">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
         <br>
@@ -55,7 +55,7 @@
     <span><b>Task list related</b></span>
     <br><br>
 
-    <form action="/add-task" method="post">
+    <form action="/createTask/add-task" method="post">
         <label for="createdBy">Created By:</label>
         <input type="text" id="createdBy" name="createdBy"><br>
 
@@ -107,7 +107,7 @@
         const button_testDB = document.getElementById('tryTestDB');
         button_testDB.addEventListener('click', async () => {
             // console.log("clicked");
-            const response = await fetch('/test-db');
+            const response = await fetch('/account/test-db');
             const data = await response.json();
             // console.log(data);
 
@@ -136,7 +136,7 @@
         const button_getLatestUser = document.getElementById('getLatestUser');
         button_getLatestUser.addEventListener('click', async () => {
             console.log("clicked");
-            const response = await fetch('/get-latest-user');
+            const response = await fetch('/account/get-latest-user');
             const data = await response.json();
             // console.log(data);
             const jsonStr = JSON.stringify(data);
@@ -148,7 +148,7 @@
         const button_getLatestTask = document.getElementById('getLatestTask');
         button_getLatestTask.addEventListener('click', async () => {
             console.log("clicked");
-            const response = await fetch('/get-latest-task');
+            const response = await fetch('/createTask/get-latest-task');
             const data = await response.json();
             // console.log(data);
             const jsonStr = JSON.stringify(data);
@@ -160,7 +160,7 @@
         const button_displayLatestTask = document.getElementById('displayLatestTask');
         button_displayLatestTask.addEventListener('click', async () => {
             console.log("clicked");
-            const response = await fetch('/get-latest-task');
+            const response = await fetch('/createTask/get-latest-task');
             const data = await response.json();
             console.log(data);
             // const jsonStr = JSON.stringify(data);

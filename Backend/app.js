@@ -70,8 +70,18 @@ const app = express();
 // calling the db connection
 const db = require('./db');
 
+// calling account.js
+const accountRoutes = require('./account.js');
+// calling createTask.js
+const createTaskRoutes = require('./createTask.js');
+
 // Serve static files from the public folder
 app.use(express.static('public'));
+
+// register the account routes
+app.use('/account', accountRoutes);
+// register the account routes
+app.use('/createTask', createTaskRoutes);
 
 //  use body-parser for login
 const bodyParser = require('body-parser');
@@ -84,6 +94,9 @@ app.use(bodyParser.json());
 //     res.send('Hello World!');
 //   });
 
+//////////////////
+// Moved to account.js
+/** 
 // Route to test the database connection
 app.get('/test-db', async (req, res) => {
     try {
@@ -154,6 +167,11 @@ app.post('/login', async (req, res) => {
     }
 });
 
+**/
+
+///// Moved to createTask.js
+
+/****
 // create a task
 app.post('/add-task', async (req, res) => {
     try {
@@ -190,6 +208,8 @@ app.get('/get-latest-task', async (req, res) => {
         res.status(500).send('Error connecting to database');
     }
 });
+
+****/
 
 
 // Start the server
