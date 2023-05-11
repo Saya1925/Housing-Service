@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './css/CreateTask.css';
 
-
 const RequestServicePage = () => {
   const [need, setNeed] = useState('');
   const [budget, setBudget] = useState('');
@@ -12,13 +11,18 @@ const RequestServicePage = () => {
   const [location, setLocation] = useState('');
   const [onlineTask, setOnlineTask] = useState(false);
   const [details, setDetails] = useState('');
+  const [isNextClicked, setIsNextClicked] = useState(false);
+  //const [handleBack, setHandleBack] = useState(() => {});
+  //const [handlePublish, setHandlePublish] = useState(() => {});
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // handle form submission here
+    setIsNextClicked(true);
   };
 
   return (
+    <>
+    {!isNextClicked && (
     <div className="form-container">
       <h1 className="form-title">Request Service</h1>
       <form onSubmit={handleSubmit}>
@@ -61,11 +65,62 @@ const RequestServicePage = () => {
           </div>
         )}
         <div className="form-actions">
-          <button type="submit" className="form-submit-btn">Submit</button>
+          <button type="submit" className="form-submit-btn">Next</button>
         </div>
-      </form>
+        </form>
+</div>
+ )}
+ {isNextClicked && (
+   <div>
+     {/* Render the next component here */}
+     <div className="confirm-task-container">
+  <h1 className="confirm-task-title">Create a Service Request</h1>
+  <p className="confirm-task-subtitle">Please confirm your request details:</p>
+  <div className="confirm-task-details">
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">Request:</div>
+      <div className="confirm-task-value">{need}</div>
     </div>
-  );
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">Budget:</div>
+      <div className="confirm-task-value">{budget}</div>
+    </div>
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">Category:</div>
+      <div className="confirm-task-value">{category}</div>
+    </div>
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">Start Date:</div>
+      <div className="confirm-task-value">{startDate}</div>
+    </div>
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">End Date:</div>
+      <div className="confirm-task-value">{endDate}</div>
+    </div>
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">Special Requirements:</div>
+      <div className="confirm-task-value">{specialReq}</div>
+    </div>
+    <div className="confirm-task-detail">
+      <div className="confirm-task-label">Location:</div>
+      <div className="confirm-task-value">{location}</div>
+    </div>
+    {onlineTask && (
+      <div className="confirm-task-detail">
+        <div className="confirm-task-label">Details:</div>
+        <div className="confirm-task-value">{details}</div>
+      </div>
+    )}
+  </div>
+  <div className="form-actions" style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <button className="form-back-btn" onClick={() => setIsNextClicked(false)}>Back</button>
+    <button className="form-publish-btn" onClick={() => alert("Task Published")}>Publish</button>
+  </div>
+</div>
+   </div>
+ )}
+</>
+);
 };
 
 export default RequestServicePage;

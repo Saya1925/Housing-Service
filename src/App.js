@@ -11,6 +11,7 @@ import MembershipCustomer2 from "./MembershipCustomer2";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   return (
     <div>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/ViewTask" element={<ViewTask />} />
         <Route path="/SignUp" element={<SignUp />} />
       </Routes>
+     
     </div>
   );
 }
