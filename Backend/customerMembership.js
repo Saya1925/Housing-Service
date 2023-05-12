@@ -13,13 +13,12 @@ router.use(bodyParser.json());
 // change the status for customer memberShip
 
 // get the customer membership form database
-router.post('/customerMembership1', async(req, res) => {
+router.get('/customerMembershipS', async(req, res) => {
     try {
         const{userID} = req.body;
 
-        const sql ='UPDATE membership SET status = 1 WHERE userID = 18'
+        const sql ='UPDATE user SET membership = 1 WHERE userID = ?'
         await db.query(sql,[userID]);
-
         res.send('Congratulations! Successful subscriber memberhsip')
     }  catch (error) {
         console.error(error);
