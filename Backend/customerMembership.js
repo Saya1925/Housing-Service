@@ -1,17 +1,5 @@
 // connect to the database
-const mysql = require('mysql2/promise');
-const connection = mysql.createConnection({
-  host: 'housingservice.c33lugaz7gku.us-east-1.rds.amazonaws.com',
-  port: '3306',
-  user: 'admin',
-  password: '950Housing',
-  database: 'HousingService',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
-
-
+const db = require('./db');
 const express = require('express');
 const router = express.Router();
 const app = express();
@@ -25,25 +13,19 @@ router.use(bodyParser.json());
 // change the status for customer memberShip
 
 // get the customer membership form database
-app.post('/customerMembership', async(req, res) => {
-    const {userID} = req.params;
-    const {newStatus} = req.body;
+router.post('/customerMembership1', async(req, res) => {
+    try {
+        const{userID} = req.body;
 
-    (await connection).query(
-        'UPDATE CustomerMembership SET status = 1 WHERE user_id = ? ',
-        [newStatus, userID],
-        (error, results) => {
-            if (error) {
-                console.error(error);
-                res.status(500).send('Error, can not update membership status');
-            } else{
-                res.send('Congratulations! Successful subscriber membership')
-            }
-        }
-    );
-});
+        const sql ='UPDATE membership SET status = 1 WHERE userID = 18'
+        await db.query(sql,[userID]);
 
-const port  = 3000;
-app.listen(port, () => {
-    console.log('Server is running')
+        res.send('Congratulations! Successful subscriber memberhsip')
+    }  catch (error) {
+        console.error(error);
+        res.status(500).send('Error connecting to database');
+    }
 });
+  
+
+module.exports = router;
