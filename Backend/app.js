@@ -72,6 +72,13 @@ const db = require('./db');
 
 // calling account.js
 const accountRoutes = require('./account.js');
+
+// calling membership.js
+const customerMembershipRoutes = require('./customerMembership.js')
+
+// calling professional.js
+const professionalsMembershipRoutes = require('./professionalsMembership.js')
+
 // calling createTask.js
 const createTaskRoutes = require('./createTask.js');
 
@@ -82,6 +89,12 @@ app.use(express.static('public'));
 app.use('/account', accountRoutes);
 // register the account routes
 app.use('/createTask', createTaskRoutes);
+
+// register the customer membership routes
+app.use('/customerMembership', customerMembershipRoutes);
+
+// register the professional membership routes
+app.use('/professionalsMembership', professionalsMembershipRoutes);
 
 //  use body-parser for login
 const bodyParser = require('body-parser');
@@ -213,6 +226,6 @@ app.get('/get-latest-task', async (req, res) => {
 
 
 // Start the server
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
+app.listen(3001, () => {
+    console.log('Server started on port 3001');
 });

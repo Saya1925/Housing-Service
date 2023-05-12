@@ -101,6 +101,12 @@
     <button id="displayLatestTask">Display latest Task</button>
     <div id="LatestTaskTidy"></div>
 
+    <button id="getmembership">membership button</button>
+    <div id="membership"></div>
+
+    <button id="getprofessional">professional button</button>
+    <div id="professionals"></div>
+
 
     <script>
         // to test the connectivity to DB
@@ -156,6 +162,25 @@
             displayGet.innerHTML = jsonStr;
         });
 
+        // to change the status of customer membership
+        const button_getmembership = document.getElementById('getmembership');
+        button_getmembership.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/customerMembership/customerMembershipS');
+           // const data = await response.json();
+            // console.log(data);
+            //const jsonStr = JSON.stringify(data);
+            //var displayGet = document.getElementById("membership");
+            //displayGet.innerHTML = jsonStr;
+        });
+
+        // to change the status of customer membership
+        const button_getprofessional = document.getElementById('getprofessional');
+        button_getprofessional.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/professionalsMembership/professionalsMembershipS');
+        });
+
         // to Display the latest created task
         const button_displayLatestTask = document.getElementById('displayLatestTask');
         button_displayLatestTask.addEventListener('click', async () => {
@@ -198,6 +223,8 @@
                 locationInput.disabled = false;
             }
         }
+
+        
 
 
         // const button_addUser = document.getElementById('addUser');
