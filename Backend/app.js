@@ -72,6 +72,10 @@ const db = require('./db');
 
 // calling account.js
 const accountRoutes = require('./account.js');
+
+// calling membership.js
+const customerMembershipRoutes = require('./customerMembership.js')
+
 // calling createTask.js
 const createTaskRoutes = require('./createTask.js');
 
@@ -82,6 +86,9 @@ app.use(express.static('public'));
 app.use('/account', accountRoutes);
 // register the account routes
 app.use('/createTask', createTaskRoutes);
+
+// register the customer membership routes
+app.use('/customerMembership', customerMembershipRoutes);
 
 //  use body-parser for login
 const bodyParser = require('body-parser');
