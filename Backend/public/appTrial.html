@@ -104,6 +104,9 @@
     <button id="getmembership">membership button</button>
     <div id="membership"></div>
 
+    <button id="getprofessional">professional button</button>
+    <div id="professionals"></div>
+
 
     <script>
         // to test the connectivity to DB
@@ -159,7 +162,7 @@
             displayGet.innerHTML = jsonStr;
         });
 
-        // to get the latest created task
+        // to change the status of customer membership
         const button_getmembership = document.getElementById('getmembership');
         button_getmembership.addEventListener('click', async () => {
             console.log("clicked");
@@ -169,6 +172,13 @@
             //const jsonStr = JSON.stringify(data);
             //var displayGet = document.getElementById("membership");
             //displayGet.innerHTML = jsonStr;
+        });
+
+        // to change the status of customer membership
+        const button_getprofessional = document.getElementById('getprofessional');
+        button_getprofessional.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/professionalsMembership/professionalsMembershipS');
         });
 
         // to Display the latest created task
