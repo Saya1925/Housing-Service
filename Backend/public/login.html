@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example Page</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">try GET request</button>
+    <div id="displayGET"></div>
+
+    <br><br>
+    <span><b>account login</b></span>
+    <br><br>
+
+    <form id="loginForm" action="/account/login" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="pw" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    <span id="loginStatus"></span>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loginStatus = document.getElementById('loginStatus');
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = loginForm.email.value;
+            const pw = loginForm.pw.value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/account/login');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        // Update the login status message
+                        loginStatus.textContent = data.message;
+                    } else {
+                        // Handle errors...
+                        loginStatus.textContent = 'Error submitting login form';
+                    }
+                }
+            };
+            const data = JSON.stringify({ email, pw });
+            xhr.send(data);
+        });
+
+        // const button_addUser = document.getElementById('addUser');
+        // button_addUser.addEventListener('click', async () => {
+        //     console.log("clicked");
+        //     const response = await fetch('/add-user', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             sname: 'Saya',
+        //             lname: 'Mi',
+        //             email: 'Saya@example.com',
+        //             phoneNum: '1234567890',
+        //             pw: '12345',
+        //             membership: 0,
+        //             professional: 0
+        //         })
+        //     });
+        //     const data = await response.json();
+        //     console.log(data);
+        // });
+
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+    </script>
+
+</body>
+
+</html>
