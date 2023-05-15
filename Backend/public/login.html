@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Panel</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">testing connection to db</button>
+    <div id="displayGET"></div>
+
+    <br><br>
+    <span><b>account login</b></span>
+    <br><br>
+
+    <form id="loginForm" action="/account/login" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="pw" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    <span id="loginStatus"></span>
+
+    <br><br>
+
+    <span><u>here are the two type of data after login success:</u></span><br>
+    <span id="dataFromRes"></span><br>
+    <span id="dataFromLocalSession"></span><br>
+
+    <br>
+    <span><u>auto getting the local session data:</u></span><br>
+    <span id="displayStoredSession"></span>
+    <br>
+    <br>
+    <button id="signout">sign out</button>
+    <br>
+    <br>
+    <button id="goUpgradePage">to go membership/ profession subscribe page</button>
+
+
+    <script>
+        // display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
+        signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/login.html';
+        });
+
+        // redirect to membership/ profession subscription page
+        const goUpgradePageButton = document.getElementById('goUpgradePage');
+        goUpgradePageButton.addEventListener('click', () => {
+            // Redirect the user to the upgradeAccount.html page
+            window.location.href = '/upgradeAccount.html';
+        });
+
+        // XMLHttpRequest
+        const loginForm = document.getElementById('loginForm');
+        const loginStatus = document.getElementById('loginStatus');
+        let response;
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = loginForm.email.value;
+            const pw = loginForm.pw.value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/account/login');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        // Update the login status message
+                        loginStatus.textContent = data.message;
+
+                        const resUserName = document.getElementById('dataFromRes');
+                        resUserName.textContent = "(message from res, server session) User Name: " + data.userName + " #ID: " + data.userID;
+
+                        // Make a GET request to retrieve session data
+                        const xhr2 = new XMLHttpRequest();
+                        xhr2.open('GET', '/account/session');
+                        xhr2.onreadystatechange = function () {
+                            if (xhr2.readyState === XMLHttpRequest.DONE) {
+                                if (xhr2.status === 200) {
+                                    const sessionData = JSON.parse(xhr2.responseText);
+                                    const userName = sessionData.userName;
+                                    const userID = sessionData.userID;
+                                    // Store session data in localStorage
+                                    localStorage.setItem('userName', userName);
+                                    localStorage.setItem('userID', userID);
+                                    updateDisplayedSession();
+
+                                    // Use the session data as needed
+                                    const storedUserName = localStorage.getItem('userName');
+                                    const storedUserID = localStorage.getItem('userID');
+                                    console.log(storedUserName);
+                                    console.log(storedUserID);
+
+                                    // Update the client UI with the session data
+                                    document.getElementById('dataFromLocalSession').textContent = "(message from local session) User Name: " + storedUserName + " #ID: " + storedUserID;
+                                } else {
+                                    // Handle errors...
+                                }
+                            }
+                        };
+                        xhr2.send();
+                    } else {
+                        // Handle errors...
+                        loginStatus.textContent = 'Error submitting login form';
+                    }
+                }
+            };
+            const data = JSON.stringify({ email, pw });
+            xhr.send(data);
+        });
+
+        // const button_addUser = document.getElementById('addUser');
+        // button_addUser.addEventListener('click', async () => {
+        //     console.log("clicked");
+        //     const response = await fetch('/add-user', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             sname: 'Saya',
+        //             lname: 'Mi',
+        //             email: 'Saya@example.com',
+        //             phoneNum: '1234567890',
+        //             pw: '12345',
+        //             membership: 0,
+        //             professional: 0
+        //         })
+        //     });
+        //     const data = await response.json();
+        //     console.log(data);
+        // });
+
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+    </script>
+
+</body>
+
+</html>

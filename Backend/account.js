@@ -1,12 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db');
+const session = require('express-session');
 
 //  use body-parser for login
 const bodyParser = require('body-parser');
-
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+
+// use session
+router.use(
+    session({
+      secret: 'your-secret-key',
+      resave: false,
+      saveUninitialized: false
+    })
+  );
 
 
 // Route to test the database connection
@@ -55,16 +64,19 @@ router.post('/add-user', async (req, res) => {
 });
 
 // Login System
-router.get('/login', (req, res) => {
-    res.render('login');
-});
+// router.get('/login', (req, res) => {
+//     res.render('login');
+// });
 
+/** Backup
 router.post('/login', async (req, res) => {
-    const { email, pw } = req.body;
+  const { email, pw } = req.body;
 
     try {
         const sql = `SELECT * FROM user WHERE email='${email}' AND pw='${pw}'`;
         const [result] = await db.query(sql);
+        console.log("using: " + email + " ; " + pw);
+        // console.log(req.body.email);
 
         if (result.length > 0) {
             // User exists, login successful
@@ -78,5 +90,41 @@ router.post('/login', async (req, res) => {
         res.status(500).send('Error connecting to database');
     }
 });
+**/
+router.post('/login', async (req, res) => {
+    const { email, pw } = req.body;
+  
+    try {
+      const sql = `SELECT * FROM user WHERE email='${email}' AND pw='${pw}'`;
+      const [result] = await db.query(sql);
+      console.log("using: " + email + " ; " + pw);
+  
+      if (result.length > 0) {
+        // User exists, login successful
+        req.session.userName = result[0].sname + " " + result[0].lname;
+        req.session.userID = result[0].userID;
+        res.send({ message: 'Login successful', userID: result[0].userID, userName: result[0].sname +" " +result[0].lname });
+        console.log(req.session);
+        console.log(result);
+      } else {
+        // User doesn't exist or wrong password
+        res.send({ message: 'Invalid email or password' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to database');
+    }
+  });
+
+  // define session
+  router.get('/session', (req, res) => {
+    const sessionData = {
+      email: req.session.email,
+      userID: req.session.userID,
+      userName: req.session.userName,
+    };
+    res.json(sessionData);
+  });
+  
 
 module.exports = router;
