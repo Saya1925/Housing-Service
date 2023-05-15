@@ -5,27 +5,87 @@ h1 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
 
+.description{
+  color: #555555;
+}
+
+/*1st table*/
+.table-feeChoice {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  border-color: darkgrey;
+  margin-bottom: 30px;
+}
+
+.label-fee-coral {
+  color: coral;
+}
+
+.label-fee {
+  font-size: 40px; /* Adjust the font size as desired */
+  font-weight: bold;
+  color: inherit;
+  margin-left: 100px;
+}
+
+.additional-text {
+  font-size: 20px; /* Adjust the font size as desired */
+  color:   #555555; /* Adjust the color as needed */
+  text-align: left;
+}
+
 .radio-container {
+    margin-bottom: 10px;
+  }  
+
+  .inputWithMargin {
+    margin-top: 10px;
+    margin-left: 130px;
     margin-bottom: 10px;
   }
   
-.radio-container input[type='radio'] {
-    margin-right: 5px;
-  }
-  
-.radio-container label {
-    display: block;
-  }
-  
-.table-style {
-    font-family: Arial, sans-serif;
+/*2nd table*/
+  .table-style {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 20px;
     border-color: darkgrey;
+    border: ;
     margin-left: 100px;
+    color: #555555;
+    border-collapse: collapse;
   }
 
-  .inputWithMargin {
-    margin-left: 100px; /* Adjust the value as needed */
+
+  .table-style price-details {
+    height: 30px;
   }
-  
-  
+
+  .table-style .row-label {
+    border: 1px solid #888;
+    border-collapse:separate;
+    width: 100px;
+  }
+
+  .table-style .total-label {
+    font-weight: bold;
+  }
+
+  .table-style .row-empty {
+    border: 1px solid #888;
+    margin: 30px;
+  }  
+
+/*Next Button*/
+.next-button {
+  background-color: coral;
+  margin-top: 20px;
+  margin-left: 200px;
+  margin-bottom: 0px;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px; 
+  font-size: 18px;
+  cursor: pointer;
+  width: 200px;
+}
