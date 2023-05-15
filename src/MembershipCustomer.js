@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './css/Membership.css';
 import styles from './css/Membership.css';
 
-const MembershipCustomer1 = () => {
+const MembershipCustomer = () => {
 
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('18');
@@ -122,4 +122,4 @@ const MembershipCustomer1 = () => {
   );
 };
 
-export default MembershipCustomer1;
+export default MembershipCustomer;
