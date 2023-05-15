@@ -9,6 +9,7 @@ import ViewTask from "./ViewTask";
 import SignUp from "./SignUp";
 import MembershipCustomer1 from "./MembershipCustomer1";
 import MembershipCustomer2 from "./MembershipCustomer2";
+import MembershipCustomer3 from "./MembershipCustomer3";
 import ServicePublised from "./ServicePublised";
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/MembershipCustomer1" element={<MembershipCustomer1 />} />
         <Route path="/MembershipCustomer2" element={<MembershipCustomer2 />} />
+        <Route path="/MembershipCustomer3" element={<MembershipCustomer3 />} />
         <Route path="/Professionals" element={<Professionals />} />
         <Route path="/CreateTask" element={<CreateTask />} />
         <Route path="/ViewTask" element={<ViewTask />} />

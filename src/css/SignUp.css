@@ -21,7 +21,7 @@
   display: block;
   margin: 5px;
   padding: 5px;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   color: #999999;
   align-items: center;
 }
@@ -51,7 +51,7 @@
   padding: 12px;
   margin-left: 250px;
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 18px;
   color: #999999;
   background-color: #fff;
   border: none;
@@ -63,7 +63,7 @@
   height: 40px;
   padding: 12px;
   margin-left: 250px;
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
   background-color: #F99746;
   border: none;

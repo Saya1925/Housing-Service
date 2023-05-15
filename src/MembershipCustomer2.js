@@ -37,13 +37,16 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
     handleProceed();
   };
 
+  const handleBackClick = () => {
+    handleBack();
+  };
   return (
     <div>
       <h1>Subscribe Customer Membership</h1>
       <p>for unlimited service request</p>
       <p>please select your membership options:</p><br/><br/>
 
-      <form onSubmit={handleSubmit}>
+      <form className="handleSubmit" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="cardNumber">Card Number:</label><br/>
           <input
@@ -52,6 +55,7 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
             value={cardNumber}
             onChange={handleCardNumberChange}
             required
+            className="input-style"
           />
         </div>
         <div>
@@ -62,6 +66,7 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
             value={cardHolder}
             onChange={handleCardHolderChange}
             required
+            className="input-style"
           />
         </div>
         <div>
@@ -72,6 +77,7 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
             value={expirationDate}
             onChange={handleExpirationDateChange}
             required
+            className="input-style"
           />
         </div>
         <div>
@@ -82,6 +88,7 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
             value={cvc}
             onChange={handleCVCChange}
             required
+            className="input-style"
           />
         </div>
         <div>
@@ -92,11 +99,12 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
             value={billAddress}
             onChange={handleBillAddressChange}
             required
+            className="input-style"
           />
         </div>
         <div>
-          <button type="button" onClick={handleBack}>Back</button>
-          <button type="submit">Proceed</button>
+          <button className="back-button" onClick={handleBack}>Back</button>
+          <button className="proceed-button" type="submit">Proceed</button>
         </div>
       </form>
     </div>
