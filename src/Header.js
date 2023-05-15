@@ -26,7 +26,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const commonButtons = [
     { label: 'HOME', path: '/' },
-    { label: 'SERVICE', path: '/MakeOffer' },
+    { label: 'SERVICE', path: '/ServicePublished' },
     { label: 'ABOUT US', path: '/About' },
   ];
 

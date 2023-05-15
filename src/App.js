@@ -9,6 +9,8 @@ import ViewTask from "./ViewTask";
 import SignUp from "./SignUp";
 import MembershipCustomer1 from "./MembershipCustomer1";
 import MembershipCustomer2 from "./MembershipCustomer2";
+import ServicePublised from "./ServicePublised";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,6 +28,7 @@ function App() {
         <Route path="/ViewTask" element={<ViewTask />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/HomePageReg" element={<HomePageReg />} />
+        <Route path="/ServicePublised" element={<ServicePublised />} />  
       </Routes>
      
     </div>

@@ -43,27 +43,40 @@ const MembershipCustomer1 = () => {
       <p>for unlimited service request</p>
       <p>please select your membership options:</p><br/><br/>
       <div>
-        <input
-          type="radio"
-          id="option-18"
-          name="membership-option"
-          value="18"
-          checked={selectedOption === '18'}
-          onChange={handleOptionChange}
-          className={styles.inputWithMargin}
-        />
-        <label htmlFor="option-18">$18</label>
 
-        <input
-          type="radio"
-          id="option-25"
-          name="membership-option"
-          value="25"
-          checked={selectedOption === '25'}
-          onChange={handleOptionChange}
-          className={styles.inputWithMargin}
-        />
-        <label htmlFor="option-25">$25</label>
+{/*$18 or $25*/}
+      <table className="table-feeChoice">
+        <tbody>
+          <tr>
+            <td><label htmlFor="option-18">$18</label></td>
+            <td><label htmlFor="option-25">$25</label></td>
+          </tr>
+          <tr>
+            <tr>
+              <input
+              type="radio"
+              id="option-18"
+              name="membership-option"
+              value="18"
+              checked={selectedOption === '18'}
+              onChange={handleOptionChange}
+              className={styles.inputWithMargin}
+              />
+            </tr>
+            <td>
+              <input
+                type="radio"
+                id="option-25"
+                name="membership-option"
+                value="25"
+                checked={selectedOption === '25'}
+                onChange={handleOptionChange}
+                className={styles.inputWithMargin}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>        
       </div>
 
       <table className="table-style">
