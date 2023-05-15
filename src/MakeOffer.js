@@ -60,7 +60,7 @@ return (
 
   <html>
   <head>
-    <title>左右分栏网页</title>
+    <title></title>
   </head>
   <body>
     <div style={{ display: 'flex' }}>
