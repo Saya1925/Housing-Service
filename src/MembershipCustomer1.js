@@ -6,12 +6,19 @@ import styles from './css/Membership.css';
 const MembershipCustomer1 = () => {
 
   const navigate = useNavigate();
-
   const [selectedOption, setSelectedOption] = useState('18');
 
+  // Define a state to track if the button is clicked
+  const [buttonClicked, setButtonClicked] = useState(false);
+  
+  // Modify the handleOptionChange function to reset the buttonClicked state when an option is changed
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    setButtonClicked(false);
   };
+  
+  // Add a variable to store the CSS class based on buttonClicked state
+  const radioLabelClass = selectedOption === '18' ? styles['label-fee-coral'] : styles['label-fee'];
 
   const calculateAnnualFee = () => {
     const basePrice = parseInt(selectedOption);
@@ -29,7 +36,7 @@ const MembershipCustomer1 = () => {
     const annualFee = calculateAnnualFee();
     const GTS = calculateGTS();
     const totalFee = annualFee + GTS;
-    return GTS;
+    return totalFee;
   };
 
   const handleNextClick = () => {
@@ -40,19 +47,27 @@ const MembershipCustomer1 = () => {
   return (
     <div>
       <h1>Subscribe Customer Membership</h1>
-      <p>for unlimited service request</p>
-      <p>please select your membership options:</p><br/><br/>
+      <p className="description">for unlimited service request</p>
+      <p className="description">please select your membership options:</p><br/><br/>
       <div>
 
 {/*$18 or $25*/}
       <table className="table-feeChoice">
         <tbody>
           <tr>
-            <td><label htmlFor="option-18">$18</label></td>
-            <td><label htmlFor="option-25">$25</label></td>
+            <td>
+              <label htmlFor="option-18" className="label-fee">
+                <span>$18</span></label>
+                <p className="additional-text">pay annually ($216)</p>
+            </td>
+            <td>
+              <label htmlFor="option-25" className="label-fee">
+                <span>$25</span></label>
+                <p className="additional-text">pay monthly</p>
+            </td>
           </tr>
           <tr>
-            <tr>
+            <td>
               <input
               type="radio"
               id="option-18"
@@ -60,9 +75,9 @@ const MembershipCustomer1 = () => {
               value="18"
               checked={selectedOption === '18'}
               onChange={handleOptionChange}
-              className={styles.inputWithMargin}
+              className={`${styles.inputWithMargin} inputWithMargin`}
               />
-            </tr>
+            </td>
             <td>
               <input
                 type="radio"
@@ -71,7 +86,7 @@ const MembershipCustomer1 = () => {
                 value="25"
                 checked={selectedOption === '25'}
                 onChange={handleOptionChange}
-                className={styles.inputWithMargin}
+                className={`${styles.inputWithMargin} inputWithMargin`}
               />
             </td>
           </tr>
@@ -81,25 +96,28 @@ const MembershipCustomer1 = () => {
 
       <table className="table-style">
         <tbody>
-          <tr>
+          <tr className="price-details">
             <td>price details</td>
           </tr>
           <tr>
-            <tr>fee</tr>
-            <td>${calculateAnnualFee()}</td>
+            <td className="row-label">fee</td>
+            <td className="row-label">${calculateAnnualFee()}</td>
           </tr>
           <tr>
-            <tr>GTS.</tr>
-            <td>${calculateGTS()}</td>
+            <td className="row-label">GTS.</td>
+            <td className="row-label">${calculateGTS()}</td>
           </tr>
           <tr>
-            <tr>TOTAL</tr>
-            <td>${calculateTotalFee()}</td>
+            <td className="row-empty"> </td>
+          </tr>
+          <tr className="total-label">
+            <td className="row-label">TOTAL</td>
+            <td className="row-label">${calculateTotalFee()}</td>
           </tr>
         </tbody>
       </table>
 
-      <button onClick={handleNextClick}>Next</button>
+      <button className="next-button" onClick={handleNextClick}>Next</button>
     </div>
   );
 };
