@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Panel</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">testing connection to db</button>
+    <div id="displayGET"></div>
+
+    <br><br>
+
+    <span><u>here are the local session data:</u></span><br>
+    <span id="displayStoredSession"></span>
+    <br>
+    <br>
+    <button id="logout">logout session</button>
+    <br>
+    <br>
+    <button id="getmembership">membership button</button>
+    <div id="membership"></div>
+    <br>
+    <button id="getprofessional">professional button</button>
+    <div id="professionals"></div>
+
+    <script>
+        // display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+
+
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+    </script>
+
+</body>
+
+</html>
