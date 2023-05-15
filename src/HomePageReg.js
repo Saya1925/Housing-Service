@@ -1,13 +1,15 @@
+//This page is home screen for registered user, membership user and professional user
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from './images/hero_homePage.jpg'; 
 import './css/HomePage.css';
 
-const HomePage = () => {
+const HomePageReg = () => {
   const navigate = useNavigate();
 
-  const handleSignUp = () => {
-    navigate('/SignUp');
+  const browseServices = () => {
+    navigate('/MakeOffer');
   };
 
   return (
@@ -18,11 +20,11 @@ const HomePage = () => {
         <p>Find the perfect service provider, request a quote,</p>
         <p>and experience top-notch service. Join us today and</p>
         <p>simplify your house servicing tasks!</p>
-        <button className="signup-button" onClick={handleSignUp}>SIGN UP</button> 
+        <button className="browse-button" onClick={browseServices}>Browse Services</button> 
         <img src={heroImage} alt="Hero" />
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default HomePageReg;

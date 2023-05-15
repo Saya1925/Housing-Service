@@ -25,56 +25,96 @@ const SignUp = () => {
     <div className="signup-container">
       <h2>Register Your Account</h2>
       <form onSubmit={handleSubmit} className="signup-form">
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First Name"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last Name"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Re-enter Your Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Register</button>
-        <button type="clear">Clear All</button>
+        <table className="signup-table">
+          <tbody>
+            <tr>
+              <td>
+                <label>First Name:</label>
+              </td>
+              <td>
+                <label>Last Name:</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>Email Address:</label>
+              </td>
+              <td>
+                <label>Phone Number:</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>Password:</label>
+              </td>
+              <td>
+                <label>Re-enter Your Password:</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button className={`clear-button`} type="clear">Clear All</button>
+        <button className={`submit-button`} type="submit">Register</button>
       </form>
     </div>
   );

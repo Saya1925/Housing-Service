@@ -19,8 +19,13 @@ h1 {
   
 .table-style {
     font-family: Arial, sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     border-color: darkgrey;
-    /* Add any other desired font styles */
+    margin-left: 100px;
   }
+
+  .inputWithMargin {
+    margin-left: 100px; /* Adjust the value as needed */
+  }
+  
   

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import HomePage from "./HomePage";
+import HomePageReg from "./HomePageReg";
 import Professionals from "./Professionals";
 import CreateTask from "./CreateTask";
 import ViewTask from "./ViewTask";
 import SignUp from "./SignUp";
 import MembershipCustomer1 from "./MembershipCustomer1";
 import MembershipCustomer2 from "./MembershipCustomer2";
+import ServicePublised from "./ServicePublised";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +27,8 @@ function App() {
         <Route path="/CreateTask" element={<CreateTask />} />
         <Route path="/ViewTask" element={<ViewTask />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/HomePageReg" element={<HomePageReg />} />
+        <Route path="/ServicePublised" element={<ServicePublised />} />  
       </Routes>
      
     </div>
