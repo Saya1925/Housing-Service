@@ -12,19 +12,19 @@ router.use(bodyParser.json());
 
 // change the status for customer memberShip
 
-// get the customer membership form database
-router.get('/professionalsMembershipS', async(req, res) => {
+// get the professional membership form database
+router.get('/professionalsMembershipS', async (req, res) => {
     try {
-        const{userID} = req.body;
-
-        const sql ='UPDATE user SET professional = 1 WHERE userID = ?'
-        await db.query(sql,[userID]);
-        res.send('Congratulations! Successful subscriber memberhsip')
-    }  catch (error) {
-        console.error(error);
-        res.status(500).send('Error connecting to database');
-    }
-});
+      const { userID } = req.query;
   
-
+      const sql = 'UPDATE user SET professional = 1 WHERE userID = ?';
+      await db.query(sql, [userID]);
+      res.send('Congratulations! Successful subscriber membership');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to the database');
+    }
+  });
+  
+  
 module.exports = router;

@@ -38,6 +38,26 @@
         updateDisplayedSession();
 
 
+        // to change the status of professional membership by sending userID
+        const button_getprofessional = document.getElementById('getprofessional');
+        button_getprofessional.addEventListener('click', async () => {
+            const userID = localStorage.getItem('userID');
+
+            try {
+                const response = await fetch(`/professionalsMembership/professionalsMembershipS?userID=${userID}`);
+
+                if (response.ok) {
+                    const message = await response.text();
+                    console.log(message);
+                } else {
+                    console.log('Error:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+
 
         // to test the connectivity to DB
         const button_testDB = document.getElementById('tryTestDB');
