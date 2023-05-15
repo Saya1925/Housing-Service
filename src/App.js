@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import HomePage from "./HomePage";
+import HomePageReg from "./HomePageReg";
 import Professionals from "./Professionals";
 import CreateTask from "./CreateTask";
 import ViewTask from "./ViewTask";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/CreateTask" element={<CreateTask />} />
         <Route path="/ViewTask" element={<ViewTask />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/HomePageReg" element={<HomePageReg />} />
       </Routes>
      
     </div>
