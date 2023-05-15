@@ -18,7 +18,7 @@
 .nav-link {
   margin-left: 30px;
   font-size: 20px;
-  font-family: cursive;
+  font-family:  'Montserrat';
 }
 
 @media screen and (max-width: 600px) {

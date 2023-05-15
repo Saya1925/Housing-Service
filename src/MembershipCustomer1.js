@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/Membership.css';
+import styles from './css/Membership.css';
 
 const MembershipCustomer1 = () => {
 
@@ -49,6 +50,7 @@ const MembershipCustomer1 = () => {
           value="18"
           checked={selectedOption === '18'}
           onChange={handleOptionChange}
+          className={styles.inputWithMargin}
         />
         <label htmlFor="option-18">$18</label>
 
@@ -59,6 +61,7 @@ const MembershipCustomer1 = () => {
           value="25"
           checked={selectedOption === '25'}
           onChange={handleOptionChange}
+          className={styles.inputWithMargin}
         />
         <label htmlFor="option-25">$25</label>
       </div>
