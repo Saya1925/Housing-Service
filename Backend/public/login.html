@@ -7,15 +7,12 @@
 
 <body>
     <span id="example"></span>
-    <button id="tryTestDB">try GET request</button>
+    <button id="tryTestDB">testing connection to db</button>
     <div id="displayGET"></div>
 
     <br><br>
     <span><b>account login</b></span>
     <br><br>
-
-    <span id="userName1"></span><br>
-    <span id="userName2"></span><br>
 
     <form id="loginForm" action="/account/login" method="post">
         <label for="email">Email:</label>
@@ -29,9 +26,17 @@
     <span id="loginStatus"></span>
 
     <br><br>
-    <button id="getStoredSession">get stored session</button>
+
+    <span><u>here are the two type of data after login success:</u></span><br>
+    <span id="dataFromRes"></span><br>
+    <span id="dataFromLocalSession"></span><br>
+
     <br>
+    <span><u>auto getting the local session data:</u></span><br>
     <span id="displayStoredSession"></span>
+    <br>
+    <br>
+    <button id="logout">logout session</button>
 
     <script>
         // display local store session
@@ -67,8 +72,8 @@
                         // Update the login status message
                         loginStatus.textContent = data.message;
 
-                        const resUserName = document.getElementById('userName1');
-                        resUserName.textContent = "(message from res) User Name: " + data.userName + " #ID: " + data.userID;
+                        const resUserName = document.getElementById('dataFromRes');
+                        resUserName.textContent = "(message from res, server session) User Name: " + data.userName + " #ID: " + data.userID;
 
                         // Make a GET request to retrieve session data
                         const xhr2 = new XMLHttpRequest();
@@ -91,7 +96,7 @@
                                     console.log(storedUserID);
 
                                     // Update the client UI with the session data
-                                    document.getElementById('userName2').textContent = "(message from session) User Name: " + storedUserName + " #ID: " + storedUserID;
+                                    document.getElementById('dataFromLocalSession').textContent = "(message from local session) User Name: " + storedUserName + " #ID: " + storedUserID;
                                 } else {
                                     // Handle errors...
                                 }
