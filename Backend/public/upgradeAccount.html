@@ -19,11 +19,14 @@
     <button id="logout">logout session</button>
     <br>
     <br>
-    <button id="getmembership">membership button</button>
-    <div id="membership"></div>
+    <button id="getmembership">Customer subscribe membership button</button>
     <br>
-    <button id="getprofessional">professional button</button>
-    <div id="professionals"></div>
+    <span id="membershipStutas"></span>
+    <br>
+    <br>
+    <button id="getprofessional">Professional subscribe button</button>
+    <br>
+    <span id="professionalStutas"></span>
 
     <script>
         // display local store session
@@ -36,6 +39,49 @@
         }
         // Initial display of stored session information
         updateDisplayedSession();
+
+
+        // to change the status of Customer membership by sending userID
+        const button_getMembership = document.getElementById('getmembership');
+        button_getMembership.addEventListener('click', async () => {
+            const userID = localStorage.getItem('userID');
+
+            try {
+                const response = await fetch(`/customerMembership/customerMembershipS?userID=${userID}`);
+
+                if (response.ok) {
+                    const message = await response.text();
+                    const membershipStutas = document.getElementById("membershipStutas");
+                    membershipStutas.textContent = message;
+                    console.log(message);
+                } else {
+                    console.log('Error:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        // to change the status of Professional membership by sending userID
+        const button_getProfessional = document.getElementById('getprofessional');
+        button_getProfessional.addEventListener('click', async () => {
+            const userID = localStorage.getItem('userID');
+
+            try {
+                const response = await fetch(`/professionalsMembership/professionalsMembershipS?userID=${userID}`);
+
+                if (response.ok) {
+                    const message = await response.text();
+                    const professionStutas = document.getElementById("professionalStutas");
+                    professionStutas.textContent = message;
+                    console.log(message);
+                } else {
+                    console.log('Error:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
 
 
 
