@@ -1,12 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db');
+const session = require('express-session');
 
 //  use body-parser for login
 const bodyParser = require('body-parser');
-
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+
+// use session
+router.use(
+    session({
+      secret: 'your-secret-key',
+      resave: false,
+      saveUninitialized: false
+    })
+  );
 
 
 // Route to test the database connection
@@ -92,7 +101,11 @@ router.post('/login', async (req, res) => {
   
       if (result.length > 0) {
         // User exists, login successful
-        res.send({ message: 'Login successful' });
+        req.session.userName = result[0].sname + " " + result[0].lname;
+        req.session.userID = result[0].userID;
+        res.send({ message: 'Login successful', userID: result[0].userID, userName: result[0].sname +" " +result[0].lname });
+        console.log(req.session);
+        // console.log(result);
       } else {
         // User doesn't exist or wrong password
         res.send({ message: 'Invalid email or password' });
@@ -101,6 +114,16 @@ router.post('/login', async (req, res) => {
       console.error(error);
       res.status(500).send('Error connecting to database');
     }
+  });
+
+  // define session
+  router.get('/session', (req, res) => {
+    const sessionData = {
+      email: req.session.email,
+      userID: req.session.userID,
+      userName: req.session.userName,
+    };
+    res.json(sessionData);
   });
   
 

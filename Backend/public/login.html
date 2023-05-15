@@ -14,6 +14,9 @@
     <span><b>account login</b></span>
     <br><br>
 
+    <span id="userName1"></span><br>
+    <span id="userName2"></span><br>
+
     <form id="loginForm" action="/account/login" method="post">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
@@ -26,8 +29,10 @@
     <span id="loginStatus"></span>
 
     <script>
+        // XMLHttpRequest
         const loginForm = document.getElementById('loginForm');
         const loginStatus = document.getElementById('loginStatus');
+        let response;
 
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent the default form submission
@@ -44,6 +49,30 @@
                         const data = JSON.parse(xhr.responseText);
                         // Update the login status message
                         loginStatus.textContent = data.message;
+
+                        const resUserName = document.getElementById('userName1');
+                        resUserName.textContent = "(message from res) User Name: " + data.userName + " #ID: " + data.userID;
+
+                        // Make a GET request to retrieve session data
+                        const xhr2 = new XMLHttpRequest();
+                        xhr2.open('GET', '/account/session');
+                        xhr2.onreadystatechange = function () {
+                            if (xhr2.readyState === XMLHttpRequest.DONE) {
+                                if (xhr2.status === 200) {
+                                    const sessionData = JSON.parse(xhr2.responseText);
+                                    const userName = sessionData.userName;
+                                    const userID = sessionData.userID;
+                                    // Use the session data as needed
+                                    console.log(sessionData);
+                                    console.log('UserID:', userID);
+                                    // Update the client UI with the session data
+                                    document.getElementById('userName2').textContent = "(message from session) User Name: " + userName + " #ID: " + userID;
+                                } else {
+                                    // Handle errors...
+                                }
+                            }
+                        };
+                        xhr2.send();
                     } else {
                         // Handle errors...
                         loginStatus.textContent = 'Error submitting login form';
