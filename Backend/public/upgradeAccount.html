@@ -19,11 +19,27 @@
     <button id="logout">logout session</button>
     <br>
     <br>
-    <button id="getmembership">Customer subscribe membership button</button>
+    <div>
+        <input type="radio" id="annual" name="memSub" value="annual">
+        <label for="annual">Annual</label>
+    </div>
+    <div>
+        <input type="radio" id="monthly" name="memSub" value="monthly">
+        <label for="monthly">Monthly</label>
+    </div>
+    <button id="getMembership">Customer subscribe membership button</button>
     <br>
     <span id="membershipStutas"></span>
     <br>
     <br>
+    <div>
+        <input type="radio" id="annual" name="proSub" value="annual">
+        <label for="annual">Annual</label>
+    </div>
+    <div>
+        <input type="radio" id="monthly" name="proSub" value="monthly">
+        <label for="monthly">Monthly</label>
+    </div>
     <button id="getprofessional">Professional subscribe button</button>
     <br>
     <span id="professionalStutas"></span>
@@ -42,17 +58,27 @@
 
 
         // to change the status of Customer membership by sending userID
-        const button_getMembership = document.getElementById('getmembership');
+        const button_getMembership = document.getElementById('getMembership');
         button_getMembership.addEventListener('click', async () => {
             const userID = localStorage.getItem('userID');
+            const subscriptionType = document.querySelector('input[name="memSub"]:checked');
+            if (subscriptionType.value == "monthly"){
+                var membershipFee = "$25/monthly";
+                // console.log(professionFee);
+            }
+            if (subscriptionType.value == "annual"){
+                var membershipFee = "$216/annual";
+                // console.log(professionFee);
+            }
 
             try {
-                const response = await fetch(`/customerMembership/customerMembershipS?userID=${userID}`);
+                const response = await fetch(`/customerMembership/customerMembershipS?userID=${userID}&membershipFee=${membershipFee}`);
 
                 if (response.ok) {
                     const message = await response.text();
                     const membershipStutas = document.getElementById("membershipStutas");
                     membershipStutas.textContent = message;
+                    console.log(membershipFee);
                     console.log(message);
                 } else {
                     console.log('Error:', response.status);
@@ -66,15 +92,26 @@
         const button_getProfessional = document.getElementById('getprofessional');
         button_getProfessional.addEventListener('click', async () => {
             const userID = localStorage.getItem('userID');
+            const subscriptionType = document.querySelector('input[name="proSub"]:checked');
+            if (subscriptionType.value == "monthly"){
+                var professionFee = "$10/monthly";
+                // console.log(professionFee);
+            }
+            if (subscriptionType.value == "annual"){
+                var professionFee = "$96/annual";
+                // console.log(professionFee);
+            }
 
             try {
-                const response = await fetch(`/professionalsMembership/professionalsMembershipS?userID=${userID}`);
+                const response = await fetch(`/professionalsMembership/professionalsMembershipS?userID=${userID}&professionalFee=${professionFee}`);
 
                 if (response.ok) {
                     const message = await response.text();
                     const professionStutas = document.getElementById("professionalStutas");
                     professionStutas.textContent = message;
+                    console.log(professionFee);
                     console.log(message);
+
                 } else {
                     console.log('Error:', response.status);
                 }

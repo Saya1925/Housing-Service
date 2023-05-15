@@ -15,11 +15,14 @@ router.use(bodyParser.json());
 // get the customer membership form database
 router.get('/customerMembershipS', async (req, res) => {
     try {
-        const { userID } = req.query;
+        const { userID, membershipFee } = req.query;
 
-        const sql = 'UPDATE user SET membership = 1 WHERE userID = ?';
-        await db.query(sql, [userID]);
+        const membershipDate = new Date().toISOString(); // Get the current date in ISO format
+
+        const sql = 'UPDATE user SET membership = 1, membershipFee = ?, membershipDate = ? WHERE userID = ?';
+        await db.query(sql, [membershipFee, membershipDate, userID]);
         res.send('Congratulations! Successful subscriber membership');
+        console.log(membershipFee);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error connecting to the database');
