@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Example Page</title>
+    <title>Login Panel</title>
 </head>
 
 <body>
@@ -28,7 +28,24 @@
     </form>
     <span id="loginStatus"></span>
 
+    <br><br>
+    <button id="getStoredSession">get stored session</button>
+    <br>
+    <span id="displayStoredSession"></span>
+
     <script>
+        // display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+
+
         // XMLHttpRequest
         const loginForm = document.getElementById('loginForm');
         const loginStatus = document.getElementById('loginStatus');
@@ -62,11 +79,19 @@
                                     const sessionData = JSON.parse(xhr2.responseText);
                                     const userName = sessionData.userName;
                                     const userID = sessionData.userID;
+                                    // Store session data in localStorage
+                                    localStorage.setItem('userName', userName);
+                                    localStorage.setItem('userID', userID);
+                                    updateDisplayedSession();
+                                    
                                     // Use the session data as needed
-                                    console.log(sessionData);
-                                    console.log('UserID:', userID);
+                                    const storedUserName = localStorage.getItem('userName');
+                                    const storedUserID = localStorage.getItem('userID');
+                                    console.log(storedUserName);
+                                    console.log(storedUserID);
+
                                     // Update the client UI with the session data
-                                    document.getElementById('userName2').textContent = "(message from session) User Name: " + userName + " #ID: " + userID;
+                                    document.getElementById('userName2').textContent = "(message from session) User Name: " + storedUserName + " #ID: " + storedUserID;
                                 } else {
                                     // Handle errors...
                                 }

@@ -105,7 +105,7 @@ router.post('/login', async (req, res) => {
         req.session.userID = result[0].userID;
         res.send({ message: 'Login successful', userID: result[0].userID, userName: result[0].sname +" " +result[0].lname });
         console.log(req.session);
-        // console.log(result);
+        console.log(result);
       } else {
         // User doesn't exist or wrong password
         res.send({ message: 'Invalid email or password' });
