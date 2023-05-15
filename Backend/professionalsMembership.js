@@ -7,7 +7,7 @@ const app = express();
 // use body-parser for subscribe
 const bodyParser = require('body-parser');
 
-router.use(bodyParser.urlencoded({extended: true}));
+router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 // change the status for customer memberShip
@@ -15,16 +15,19 @@ router.use(bodyParser.json());
 // get the professional membership form database
 router.get('/professionalsMembershipS', async (req, res) => {
     try {
-      const { userID } = req.query;
-  
-      const sql = 'UPDATE user SET professional = 1 WHERE userID = ?';
-      await db.query(sql, [userID]);
-      res.send('Congratulations! Successful subscriber membership');
+        const { userID, professionalFee } = req.query;
+
+        const professionalDate = new Date().toISOString(); // Get the current date in ISO format
+
+        const sql = 'UPDATE user SET professional = 1, professionalFee = ?, professionalDate = ? WHERE userID = ?';
+        await db.query(sql, [professionalFee, professionalDate, userID]);
+        res.send('Congratulations! Successful subscriber membership');
+        console.log(professionalFee);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Error connecting to the database');
+        console.error(error);
+        res.status(500).send('Error connecting to the database');
     }
-  });
-  
-  
+});
+
+
 module.exports = router;
