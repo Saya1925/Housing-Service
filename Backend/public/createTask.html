@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Task</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">testing connection to db</button>
+    <div id="displayGET"></div>
+
+    <br><br>
+    <span>this page is under construction</span>
+
+    <script>
+
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+    </script>
+</body>
+
+</html>

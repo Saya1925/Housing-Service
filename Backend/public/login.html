@@ -40,6 +40,9 @@
     <br>
     <br>
     <button id="goUpgradePage">to go membership/ profession subscribe page</button>
+    <br>
+    <br>
+    <button id="goCreateTaskPage">to go Create Task page</button>
 
 
     <script>
@@ -65,11 +68,18 @@
             window.location.href = '/login.html';
         });
 
+        /// Redirecting ///////
         // redirect to membership/ profession subscription page
         const goUpgradePageButton = document.getElementById('goUpgradePage');
         goUpgradePageButton.addEventListener('click', () => {
             // Redirect the user to the upgradeAccount.html page
             window.location.href = '/upgradeAccount.html';
+        });
+        // redirect to Create Task page
+        const goCreateTaskPageButton = document.getElementById('goCreateTaskPage');
+        goCreateTaskPageButton.addEventListener('click', () => {
+            // Redirect the user to the upgradeAccount.html page
+            window.location.href = '/createTask.html';
         });
 
         // XMLHttpRequest
