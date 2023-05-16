@@ -44,6 +44,11 @@ const getLast10TasksRoutes = require('./getLast10Tasks.js');
 // register the get the last 10 tasks routes
 app.use('/getLast10Tasks', getLast10TasksRoutes);
 
+// calling getTask.js
+const getTaskRoutes = require('./getTask.js');
+// register the create task routes
+app.use('/getTask', getTaskRoutes);
+
 
 /**********
  * set up the running of the backend application..

@@ -9,12 +9,28 @@
     <span id="example"></span>
     <button id="tryTestDB">testing connection to db</button>
     <div id="displayGET"></div>
+    <br>
+    <span><u>here are the localStorage session data:</u></span><br>
+    <span id="displayStoredSession"></span>
+    <br>
 
     <br><br>
-    <span>this page is under construction</span>
+    <span>this page is under construction</span><br>
+
 
     <script>
 
+
+        /////////// display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
 
         // to test the connectivity to DB
         const button_testDB = document.getElementById('tryTestDB');
