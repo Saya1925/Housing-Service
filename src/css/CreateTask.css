@@ -5,28 +5,30 @@
     background-color: #f8f8f8;
     border-radius: 8px;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-title {
+}
+
+.form-title {
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 32px;
     font-weight: bold;
     text-align: center;
-  }
-  
-  .form-field {
+    color: #333;
+}
+
+.form-field {
     margin-bottom: 20px;
-  }
-  
-  .form-label {
+}
+
+.form-label {
     display: block;
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: bold;
-  }
-  
-  .form-input {
+    color: #555;
+}
+
+.form-input {
     display: block;
     width: 100%;
     padding: 12px;
@@ -35,19 +37,20 @@
     border-radius: 4px;
     box-shadow: none;
     transition: border-color 0.2s ease-in-out;
-  }
-  
-  .form-input:focus {
+    color: #333;
+}
+
+.form-input:focus {
     outline: none;
     border-color: #F99746;
     box-shadow: 0px 0px 8px #F99746;
-  }
-  
-  .form-checkbox {
+}
+
+.form-checkbox {
     margin-right: 8px;
-  }
-  
-  .form-submit-btn {
+}
+
+.form-submit-btn {
     display: block;
     width: 100%;
     padding: 12px;
@@ -60,76 +63,104 @@
     box-shadow: none;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
-  }
-  
-  .form-submit-btn:hover {
+}
+
+.form-submit-btn:hover {
     background-color: #F99746;
-  }
-  
-  @media screen and (max-width: 480px) {
+}
+
+@media screen and (max-width: 480px) {
+
     .form-input,
     .form-submit-btn {
-      font-size: 14px;
+        font-size: 14px;
     }
-  }
-  
-  .confirm-task-container {
+}
+
+.confirm-task-container {
     max-width: 600px;
     margin: 0 auto;
     padding: 40px;
     background-color: #f8f8f8;
     border-radius: 8px;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .confirm-task-title {
+}
+
+.orders-container {
+    display: flex;
+    /* Use flexbox for layout */
+}
+
+.order-summary-container {
+
+    width: 30%;
+    height: 90%;
+    padding: 40px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.selected-order-details {
+    width: 70%;
+    height: 90%;
+    padding: 40px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-task-title {
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 32px;
     font-weight: bold;
     text-align: center;
-  }
-  
-  .confirm-task-subtitle {
+    color: #333;
+}
+
+.confirm-task-subtitle {
     margin-bottom: 10px;
     font-size: 16px;
     font-weight: bold;
-  }
-  
-  .confirm-task-details {
+    color: #555;
+}
+
+.confirm-task-details {
     margin-bottom: 20px;
     border-radius: 4px;
     border: 1px solid #ccc;
     padding: 12px;
-  }
-  
-  .confirm-task-detail {
+    background-color: #fff;
+}
+
+.confirm-task-detail {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
-  }
-  
-  .confirm-task-label {
+}
+
+.confirm-task-label {
     display: block;
     margin-right: 8px;
     font-size: 16px;
     font-weight: bold;
-  }
-  
-  .confirm-task-value {
+}
+
+.confirm-task-value {
     display: block;
     font-size: 16px;
-  }
-  
-  .confirm-task-actions {
+}
+
+.confirm-task-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .form-back-btn,
-  .form-publish-btn {
+}
+
+.form-back-btn,
+.form-publish-btn {
     display: block;
     width: 100%;
     padding: 12px;
@@ -138,34 +169,52 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
-  }
-  
-  .form-back-btn {
+}
+
+.form-back-btn {
     background-color: #ddd;
     border: none;
     color: #333;
-  }
-  
-  .form-publish-btn {
+}
+
+.form-publish-btn {
     background-color: #F99746;
     border: none;
     color: #fff;
-  }
-  
-  .form-back-btn:hover {
+}
+
+.form-back-btn:hover {
     background-color: #ccc;
-  }
-  
-  .form-publish-btn:hover {
+}
+
+.form-publish-btn:hover {
     background-color: #F87E2C;
-  }
-  
-  @media screen and (max-width: 480px) {
+}
+
+.order-summary.selected {
+    border: 5px solid #F99746;
+}
+
+.order-summary {
+    background-color: #fff;
+    border: 3px solid rgba(192, 202, 224, 0.647);
+    margin-top: 2%;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s ease-in-out;
+    }
+    
+    .order-summary:hover {
+    border-color: #F99746;
+    }    
+
+@media screen and (max-width: 480px) {
+
     .confirm-task-label,
     .confirm-task-value,
-    .form-back-btn,
+    C .form-back-btn,
     .form-publish-btn {
-      font-size: 14px;
+    font-size: 14px;
     }
-  }
-  
+}
