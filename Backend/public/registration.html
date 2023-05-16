@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Create Task</title>
+    <title>Example Page</title>
 </head>
 
 <body>
@@ -18,23 +18,35 @@
     <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
 
     <br><br>
-    <span>this page is under construction</span><br>
+    <span><b>for Vistor: new account registration</b></span>
+    <br><br>
 
+    <form action="/account/add-user" method="post">
+        <label for="sname">First Name:</label>
+        <input type="text" id="sname" name="sname"><br>
+
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="lname"><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+
+        <label for="phoneNum">Phone Number:</label>
+        <input type="text" id="phoneNum" name="phoneNum"><br>
+
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="pw"><br>
+
+        <button type="submit">Register</button>
+    </form>
+    <div id="newAddedUser"></div>
+
+    <br><br>
+
+    <button id="getLatestUser">GET latest user</button>
+    <div id="latestUser"></div>
 
     <script>
-
-
-        /////////// display local store session
-        // Function to update the displayed session information
-        function updateDisplayedSession() {
-            const userName = localStorage.getItem('userName');
-            const userID = localStorage.getItem('userID');
-            const displayElement = document.getElementById('displayStoredSession');
-            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
-        }
-        // Initial display of stored session information
-        updateDisplayedSession();
-
         // to test the connectivity to DB
         const button_testDB = document.getElementById('tryTestDB');
         button_testDB.addEventListener('click', async () => {
@@ -50,7 +62,21 @@
                 " <br> the user first name: " + data[0].sname +
                 " <br> the user last name: " + data[0].lname;
         });
+
+        // to get the latest registered user info
+        const button_getLatestUser = document.getElementById('getLatestUser');
+        button_getLatestUser.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/account/get-latest-user');
+            const data = await response.json();
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("latestUser");
+            displayGet.innerHTML = jsonStr;
+        });
+
     </script>
+
 </body>
 
 </html>
