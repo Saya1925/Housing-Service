@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>display last 10 tasks function</title>
+    <h1>Tasks table</h1>
+    <div id= 'display'>
+        <table id='tasktable' class='task-table' border="1">
+            <thead>
+                <tr>
+                    <th>Summary</th>
+                    <th>Request</th>
+                    <th>Budget</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Requirement</th>
+                    <th>Description</th>
+                </tr>       
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</head>
+
+<body>
+
+    <button id="displayLatest">Display latest 10 Tasks</button>
+    <div id="displayTasks"></div>
+
+
+    <script>
+
+
+
+         // get the last 10 tasks
+         const button_displayTask = document.getElementById('displayLatest');
+        button_displayTask.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/getLast10Tasks/getTasks');
+            const data = await response.json();
+            console.log(data);
+
+
+            var displayGet = document.getElementById("display");
+            var taskTable = document.getElementById("tasktable");
+            var tableBody = taskTable.querySelector("tbody");
+          
+             // Add slide functionality to the table
+            function slideTable() {
+                taskTable.classList.toggle('slide');
+            }
+            displayGet.addEventListener('click', slideTable);
+
+            for (let i = 0; i < data.length; i++) {
+                let taskID = data[i]?.taskID;
+                let formattedTaskID = taskID?.toString().padStart(5, '0');
+                let startDateStr = data[i]?.startDate;
+                let startDate = startDateStr ? new Date(startDateStr) : null;
+                let formattedStartDate = startDate ? startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/') : '';
+                let endDateStr = data[i]?.endDate;
+                let endDate = endDateStr ? new Date(endDateStr) : null;
+                let formattedEndDate = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/') : '';
+
+                // Create table row
+                let row = document.createElement('tr');
+
+                // Create table cells
+                let summaryCell = document.createElement('td');
+                summaryCell.textContent = formattedTaskID;
+                let requestCell = document.createElement('td');
+                requestCell.textContent = data[i]?.taskName;
+                let budgetCell = document.createElement('td');
+                budgetCell.textContent = data[i]?.budget || 'N/A';
+                let categoryCell = document.createElement('td');
+                categoryCell.textContent = data[i]?.category || 'N/A';
+                let dateCell = document.createElement('td');
+                dateCell.textContent = `Start: ${formattedStartDate}\nEnd: ${formattedEndDate}`;
+                let locationCell = document.createElement('td');
+                locationCell.textContent = data[i]?.location || 'N/A';
+                let requirementCell = document.createElement('td');
+                requirementCell.textContent = data[i]?.specialReq || 'N/A';
+                let descriptionCell = document.createElement('td');
+                descriptionCell.textContent = data[i]?.details || 'N/A';
+
+                // Append cells to the row
+                row.appendChild(summaryCell);
+                row.appendChild(requestCell);
+                row.appendChild(budgetCell);
+                row.appendChild(categoryCell);
+                row.appendChild(dateCell);
+                row.appendChild(locationCell);
+                row.appendChild(requirementCell);
+                row.appendChild(descriptionCell);
+
+                // Append the row to the table body
+                tableBody.appendChild(row);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
