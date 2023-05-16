@@ -49,6 +49,11 @@ const getTaskRoutes = require('./getTask.js');
 // register the create task routes
 app.use('/getTask', getTaskRoutes);
 
+// calling getTask.js
+const offerRoutes = require('./offer.js');
+// register the create task routes
+app.use('/offer', offerRoutes);
+
 
 /**********
  * set up the running of the backend application..

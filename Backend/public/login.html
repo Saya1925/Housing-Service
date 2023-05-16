@@ -118,18 +118,28 @@
                             if (xhr2.readyState === XMLHttpRequest.DONE) {
                                 if (xhr2.status === 200) {
                                     const sessionData = JSON.parse(xhr2.responseText);
-                                    const userName = sessionData.userName;
-                                    const userID = sessionData.userID;
+                                    // const userName = sessionData.userName;
+                                    // const userID = sessionData.userID;
+                                    console.log(sessionData);
                                     // Store session data in localStorage
-                                    localStorage.setItem('userName', userName);
-                                    localStorage.setItem('userID', userID);
+                                    localStorage.setItem('userName', sessionData.userName);
+                                    localStorage.setItem('userID', sessionData.userID);
+                                    localStorage.setItem('email', sessionData.email);
+                                    localStorage.setItem('member', sessionData.member);
+                                    localStorage.setItem('pro', sessionData.pro);
                                     updateDisplayedSession();
 
                                     // Use the session data as needed
                                     const storedUserName = localStorage.getItem('userName');
                                     const storedUserID = localStorage.getItem('userID');
-                                    console.log(storedUserName);
-                                    console.log(storedUserID);
+                                    const storedEmail = localStorage.getItem('email');
+                                    const storedMember = localStorage.getItem('member');
+                                    const storedPro = localStorage.getItem('pro');
+                                    console.log("name: " + storedUserName);
+                                    console.log("userID: " + storedUserID);
+                                    console.log("email: " + storedEmail);
+                                    console.log("membership: " + storedMember);
+                                    console.log("profession: " + storedPro);
 
                                     // Update the client UI with the session data
                                     document.getElementById('dataFromLocalSession').textContent = "(message from local session) User Name: " + storedUserName + " #ID: " + storedUserID;

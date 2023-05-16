@@ -103,6 +103,13 @@ router.post('/login', async (req, res) => {
         // User exists, login successful
         req.session.userName = result[0].sname + " " + result[0].lname;
         req.session.userID = result[0].userID;
+        req.session.email = result[0].email;
+        req.session.member = result[0].membership;
+        req.session.memberFee = result[0].membershipFee;
+        req.session.memberDate = result[0].membershipDate;
+        req.session.pro = result[0].professional;
+        req.session.proFee = result[0].professionalFee;
+        req.session.proDate = result[0].professionalDate;
         res.send({ message: 'Login successful', userID: result[0].userID, userName: result[0].sname +" " +result[0].lname });
         console.log(req.session);
         console.log(result);
@@ -122,6 +129,12 @@ router.post('/login', async (req, res) => {
       email: req.session.email,
       userID: req.session.userID,
       userName: req.session.userName,
+      member: req.session.member,
+      memberFee: req.session.memberFee,
+      memberDate: req.session.memberDate,
+      pro: req.session.pro,
+      proFee: req.session.proFee,
+      proDate: req.session.proDate
     };
     res.json(sessionData);
   });
