@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-const HeaderUser = ({ isLoggedIn, setIsLoggedIn, userName }) => {
+const HeaderRegistered = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -117,4 +117,4 @@ const HeaderUser = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   );
 };
 
-export default HeaderUser;
+export default HeaderRegistered;

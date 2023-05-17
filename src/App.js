@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
-import HeaderUser from "./HeaderUser";
+import HeaderRegistered from "./HeaderRegistered";
 import HeaderMembership from "./HeaderMembership";
 import HeaderProfessional from "./HeaderProfessional";
 import HomePage from "./HomePage";
-import HomePageUser from "./HomePageUser";
+import HomePageRegistered from "./HomePageRegistered";
 import HomePageMembership from "./HomePageMembership";
 import HomePageProfessional from "./HomePageProfessional";
 import CreateTask from "./CreateTask";
@@ -29,11 +29,11 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/HomePageUser" element={<HomePageUser />} />
+        <Route path="/HomePageRegistered" element={<HomePageRegistered />} />
         <Route path="/HomePageMembership" element={<HomePageMembership />} />
         <Route path="/HomePageProfessional" element={<HomePageProfessional />} />
         <Route path="/Header" element={<Header />} />
-        <Route path="/HeaderUser" element={<HeaderUser />} />
+        <Route path="/HeaderRegistered" element={<HeaderRegistered />} />
         <Route path="/HeaderMembership" element={<HeaderMembership />} />
         <Route path="/HeaderProfessional" element={<HeaderProfessional />} />
         <Route path="/MembershipCustomer" element={<MembershipCustomer />} />

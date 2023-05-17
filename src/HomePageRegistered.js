@@ -4,9 +4,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from './images/hero_homePage.jpg'; 
 import './css/HomePage.css';
-import HeaderUser from './HeaderUser';
+import HeaderRegistered from './HeaderRegistered';
 
-const HomePageUser = () => {
+const HomePageRegistered = () => {
   const navigate = useNavigate();
 
   const browseServices = () => {
@@ -15,7 +15,7 @@ const HomePageUser = () => {
 
   return (
     <div className="page-container">
-    <HeaderUser />
+    <HeaderRegistered />
       <div className="content">
         <h2>Easy House Services</h2>
         <p>Welcome to our Housing Service Platform!</p>
@@ -29,4 +29,4 @@ const HomePageUser = () => {
   );
 };
 
-export default HomePageUser;
+export default HomePageRegistered;
