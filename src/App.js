@@ -20,7 +20,7 @@ import Professionals from "./Professionals";
 import Professionals2 from "./Professionals2";
 import Professionals3 from "./Professionals3";
 import Account from "./Account";
-
+import logoHeader from './images/logoHeader.jpg';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,10 +33,10 @@ function App() {
         <Route path="/HomePageRegistered" element={<HomePageRegistered />} />
         <Route path="/HomePageMembership" element={<HomePageMembership />} />
         <Route path="/HomePageProfessional" element={<HomePageProfessional />} />
-        <Route path="/Header" element={<Header />} />
-        <Route path="/HeaderRegistered" element={<HeaderRegistered />} />
-        <Route path="/HeaderMembership" element={<HeaderMembership />} />
-        <Route path="/HeaderProfessional" element={<HeaderProfessional />} />
+        <Route path="/Header" element={<Header logoHeader={logoHeader} />} />
+        <Route path="/HeaderRegistered" element={<Header logoHeader={logoHeader} />} />
+        <Route path="/HeaderMembership" element={<Header logoHeader={logoHeader} />} />
+        <Route path="/HeaderProfessional" element={<Header logoHeader={logoHeader} />} />
         <Route path="/MembershipCustomer" element={<MembershipCustomer />} />
         <Route path="/MembershipCustomer2" element={<MembershipCustomer2 />} />
         <Route path="/MembershipCustomer3" element={<MembershipCustomer3 />} />

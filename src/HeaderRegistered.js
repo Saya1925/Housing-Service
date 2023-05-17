@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import logo from './images/logo.jpg';
+import logoHeader from './images/logoHeader.jpg';
 import './css/Header.css';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -49,7 +49,7 @@ const HeaderRegistered = ({ isLoggedIn, setIsLoggedIn, userName }) => {
     <header className="header">
       <nav className="nav">
         <div className="logo-container">
-          <img src={logo} alt="Logo" />
+          <img src={logoHeader} alt="logoHeader" />
         </div>
         <div className="nav-links">
           {buttons.map((button, index) => (
