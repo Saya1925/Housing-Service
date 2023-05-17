@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logoHeader from './images/logoHeader.jpg';
-import './css/Header.css';
 import Modal from '@mui/material/Modal';
-import './css/Modal.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import './css/Modal.css';
+import './css/Header.css';
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [open, setOpen] = useState(false);
@@ -23,25 +23,13 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     handleClose();  // Close the login modal
   };
 
-  const commonButtons = [
+  const buttons = [
     { label: 'HOME', path: '/' },
     { label: 'SERVICE', path: '/ServicePublished' },
-    { label: 'ABOUT US', path: '/About' },
+    { label: 'ABOUT US', path: '' },
+    { label: 'LOGIN', onClick: handleOpen },
   ];
-
-  const loggedInButtons = [
-    { label: 'REQUEST SERVICES', path: '/CreateTask' },
-    { label: 'ACCOUNT', path: '/Account' },
-  ];
-
-  const loggedOutButtons = [
-    { label: 'LOG IN', path: '', onClick: handleOpen },
-  ];
-
-  const buttons = isLoggedIn
-    ? [...commonButtons, ...loggedInButtons]
-    : [...commonButtons, ...loggedOutButtons];
-
+  
   return (
     <header className="header">
       <nav className="nav">
@@ -92,7 +80,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             shrink: true,
           }}
         />
-          <Button className="login-button" onClick={handleLogin} variant="contained" sx={{ mt: 2 }}>
+          <Button 
+            className="login-button" 
+            onClick={handleLogin} 
+            variant="contained" 
+            sx={{ mt: 2 }}>
             Log In
           </Button>
         </Box>
