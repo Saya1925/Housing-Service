@@ -1,7 +1,6 @@
 module.exports = {
-  transform: {
-    "^.+\\.jsx?$": "babel-jest",
-    "^.+\\.js?$": "babel-jest",
-  },
-  setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"]
+  transformIgnorePatterns: [
+    "/node_modules/",
+    "logo\\.jpg$" // Add this line to exclude logo.jpg
+  ]
 };
