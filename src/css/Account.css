@@ -1,0 +1,46 @@
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+table{
+    border-collapse: collapse;
+    border-color: #333;
+  }
+
+.profile-table {
+    width: 100%;
+  }
+
+table td {
+    /* Styles for table cell */
+    font-size: 20px; /* Change the font size of the cell */
+    border: 1px solid darkgrey; /* Add border to the cell */
+    padding: 8px; /* Add padding to the cell */
+  }
+  
+.left-column {
+width: 40px !important; /* Adjust the width of the left column */
+}
+
+.right-column {
+width: 150px !important;
+}
+
+{/*Memberhip table*/}
+.membership-table,
+.professional-table {
+    width: 70%;
+    border-collapse: collapse;
+  }
+
+.m-left-column, 
+.p-left-column{
+width: 50px; /* Adjust the width of the left column */
+}
+
+.m-right-column,
+.p-right-column {
+width: 100px;
+}
