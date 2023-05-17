@@ -19,6 +19,8 @@ import ServicePublised from "./ServicePublised";
 import Professionals from "./Professionals";
 import Professionals2 from "./Professionals2";
 import Professionals3 from "./Professionals3";
+import Account from "./Account";
+
 
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/SignUp2" element={<SignUp2 />} />
         <Route path="/ServicePublised" element={<ServicePublised />} />  
+        <Route path="/Account" element={<Account />} />
       </Routes>
      
     </div>
