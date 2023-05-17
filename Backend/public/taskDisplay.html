@@ -3,6 +3,7 @@
 
 <head>
     <title>Task Display (Right Panel)</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -34,7 +35,7 @@
     <!-- <button id="getInfoTestButton">test getting info</button>
     <span id="infoDisplay"></span> -->
 
-    <!-- Display types of task sub-panel -->
+    <!-- Display the offer panel for professionals -->
     <h3>below is iFrame for pro.</h3>
 
     <!-- Empty container element for dynamically inserting the sharedDiv -->
@@ -46,37 +47,76 @@
 
         if (proValue === '1') {
             // Create an iframe element
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none'; // Hide the iframe
+            const offer_iframe = document.createElement('iframe');
+            offer_iframe.style.display = 'none'; // Hide the iframe
 
             // Set the source of the iframe to makeOffer.html
-            iframe.src = 'makeOffer.html';
+            offer_iframe.src = 'makeOffer.html';
 
             // Wait for the iframe to load
-            iframe.addEventListener('load', function () {
+            offer_iframe.addEventListener('load', function () {
                 // Access the content of makeOfferPanel from makeOffer.html of the iframe
-                const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
-                const makeOfferPanel = iframeContent.getElementById('makeOfferPanel');
+                const offer_iframeContent = offer_iframe.contentDocument || offer_iframe.contentWindow.document;
+                const makeOfferPanel = offer_iframeContent.getElementById('makeOfferPanel');
 
                 // Insert the makeOfferPanel into the container element
                 const makeOfferContainer = document.getElementById('makeOfferContainer');
                 makeOfferContainer.appendChild(makeOfferPanel);
 
                 // Execute the JavaScript code inside makeOffer.html
-                iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+                // offer_iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
             });
-        
 
-        // Append the iframe to the document body
-        document.body.appendChild(iframe);
+
+            // Append the iframe to the document body
+            document.body.appendChild(offer_iframe);
         }
     </script>
 
-    <!-- Display types of task sub-panel -->
+
+
+    <br>
+    <!-- Display the offerList panel -->
     <h3>below is iFrame for offerListContainer</h3>
 
     <!-- Empty container element for dynamically inserting the sharedDiv -->
     <div id="offerListContainer"></div>
+
+    <script>
+        // Create an iframe element
+        const offerList_iframe = document.createElement('iframe');
+        offerList_iframe.style.display = 'none'; // Hide the iframe
+
+        // Set the source of the iframe to makeOffer.html
+        offerList_iframe.src = 'offerListA.html';
+
+        // Wait for the iframe to load
+        offerList_iframe.addEventListener('load', function () {
+            // Access the content of makeOfferPanel from makeOffer.html of the iframe
+            const offerList_iframeContent = offerList_iframe.contentDocument || offerList_iframe.contentWindow.document;
+            const offerListPanel = offerList_iframeContent.getElementById('offerListPanel');
+
+            // Access the window object of the iframe's document
+            const iframeWindow = offerList_iframe.contentWindow;
+
+            // Access the offerContainer element within the iframe
+            const offerContainer = iframeWindow.document.getElementById('offerContainer');
+
+            // Insert the makeOfferPanel into the container element
+            const offerListContainer = document.getElementById('offerListContainer');
+            offerListContainer.appendChild(offerListPanel);
+
+            // Execute the JavaScript code inside makeOffer.html
+            // offerList_iframe.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+        });
+
+
+        // Append the iframe to the document body
+        document.body.appendChild(offerList_iframe);
+
+    </script>
+
+
 
 
     <script>
