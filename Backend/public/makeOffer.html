@@ -31,78 +31,90 @@
     <span>before submitting the offer, you need to manually enter <br>the target taskID and fetch who created this
         task</span><br>
     <br>
+    <div id="makeOfferPanel">
+        <style>
+            #message {
+                width: 276px;
+                height: 104px;
+                vertical-align: top;
+                padding-top: 0px;
+            }
 
-    <style>
-        #message {
-            width: 276px;
-            height: 104px;
-            vertical-align: top;
-            padding-top: 0px;
-        }
-
-        label {
-            display: inline-block;
-            vertical-align: top;
-        }
-    </style>
-    <form id="offerSubmit" action="/offer/submit-offer" method="POST">
-        <label for="message">Message:</label>
-        <textarea id="message" name="message"></textarea>
-        <br>
-        <label for="quotation">Quotation:</label>
-        <input type="number" id="quotation" name="quotation" max="20000">
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+            label {
+                display: inline-block;
+                vertical-align: top;
+            }
+        </style>
+        <form id="offerSubmit" action="/offer/submit-offer" method="POST">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea>
+            <br>
+            <label for="quotation">Quotation:</label>
+            <input type="number" id="quotation" name="quotation" max="20000">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
     <script>
         var targetTaskCreatedBy;
         var targetTaskID;
         // XMLHttpRequest for submit the offer
-        document.getElementById('offerSubmit').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
+        document.addEventListener('DOMContentLoaded', function () {
+            // Access the offerSubmit form within the iframe
+            var offerSubmit = document.getElementById('offerSubmit');
 
-            const message = offerSubmit.message.value;
-            const quotation = offerSubmit.quotation.value;
-            const offeredBy = localStorage.getItem('userID');
-            const createdBy = targetTaskCreatedBy;
-            const taskID = targetTaskID;
-            // var message = document.getElementById('message').value;
-            // var quotation = document.getElementById('quotation').value;
-            console.log(message + " ; " + quotation + " ; " + offeredBy + " ; " + createdBy + " ; " + taskID);
-            // var offeredBy = localStorage.getItem('userID');
-            // var createdBy = document.getElementById('targetTaskCreatedBy').textContent;
-            // var taskID = document.getElementById('targetTaskID').textContent;
+            // Check if the form exists
+            if (offerSubmit) {
+                offerSubmit.addEventListener('submit', function (event) {
+                    event.preventDefault(); // Prevent the default form submission
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/offer/submit-offer');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    console.log('Offer submitted successfully');
-                    // Perform any additional actions upon successful submission
-                } else {
-                    console.error('Error submitting offer');
-                    // Handle the error case
-                }
-            };
+                    var message = offerSubmit.message.value;
+                    var quotation = offerSubmit.quotation.value;
+                    var offeredBy = localStorage.getItem('userID');
+                    var createdBy = localStorage.getItem('targetTaskCreatedBy');
+                    var taskID = localStorage.getItem('targetTaskID');
+                    // var message = document.getElementById('message').value;
+                    // var quotation = document.getElementById('quotation').value;
+                    console.log(message + " ; " + quotation + " ; " + offeredBy + " ; " + createdBy + " ; " + taskID);
+                    // var offeredBy = localStorage.getItem('userID');
+                    // var createdBy = document.getElementById('targetTaskCreatedBy').textContent;
+                    // var taskID = document.getElementById('targetTaskID').textContent;
 
-            var formData = JSON.stringify({ message, quotation, offeredBy, createdBy, taskID });
-            // const data = JSON.stringify({ email, pw });
-            xhr.send(formData);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/offer/submit-offer');
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            console.log('Offer submitted successfully');
+                            // Perform any additional actions upon successful submission
+                        } else {
+                            console.error('Error submitting offer');
+                            // Handle the error case
+                        }
+                    };
+
+                    var formData = JSON.stringify({ message, quotation, offeredBy, createdBy, taskID });
+                    // const data = JSON.stringify({ email, pw });
+                    xhr.send(formData);
+
+                });
+            }
         });
+
 
 
         // XMLHttpRequest for getting the createdBy
         document.getElementById('fetchCreatedByButton').addEventListener('click', function () {
             targetTaskID = document.getElementById('taskIDInput').value;
-
+            localStorage.setItem('targetTaskID', targetTaskID);
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/offer/fetch-created-by?taskID=' + targetTaskID);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     targetTaskCreatedBy = response.createdBy;
+                    localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
                     document.getElementById('createdByDisplay').textContent = "createdBy(userID): " + targetTaskCreatedBy;
                 } else {
                     console.error('Error fetching createdBy');

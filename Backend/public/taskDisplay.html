@@ -30,8 +30,51 @@
     <span id="taskRowDisplay"></span>
     <br><br>
     <span id="targetTaskDisplay"></span>
+    <br>
+    <!-- <button id="getInfoTestButton">test getting info</button>
+    <span id="infoDisplay"></span> -->
+
+    <!-- Display types of task sub-panel -->
+    <h2>below is iFrame</h2>
+
+    <!-- Empty container element for dynamically inserting the sharedDiv -->
+    <div id="makeOfferContainer"></div>
 
     <script>
+        // Create an iframe element
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none'; // Hide the iframe
+
+        // Set the source of the iframe to makeOffer.html
+        iframe.src = 'makeOffer.html';
+
+        // Wait for the iframe to load
+        iframe.addEventListener('load', function () {
+            // Access the content of makeOfferPanel from makeOffer.html of the iframe
+            const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+            const makeOfferPanel = iframeContent.getElementById('makeOfferPanel');
+
+            // Insert the makeOfferPanel into the container element
+            const makeOfferContainer = document.getElementById('makeOfferContainer');
+            makeOfferContainer.appendChild(makeOfferPanel);
+
+            // Execute the JavaScript code inside makeOffer.html
+            iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+        });
+
+        // Append the iframe to the document body
+        document.body.appendChild(iframe);
+    </script>
+
+    <script>
+        // var retrievedData;
+        // // test getting info from the task separately
+        // getInfoTestButton.addEventListener('click', () => {
+        //     var infoDisplay = document.getElementById('infoDisplay');
+        //     infoDisplay.textContent = retrievedData.specialReq;
+
+        // });
+
         /// route to  get the target task /get-target-task/${taskID}
         const retrieveTaskButton = document.getElementById('retrieveTaskButton');
         const taskIDInput = document.getElementById('taskIDInput');
@@ -47,9 +90,18 @@
                     const data = await response.json();
                     // taskRowDisplay.textContent = JSON.stringify(data);
                     var targetTaskDisplay = document.getElementById("targetTaskDisplay");
-                    targetTaskDisplay.textContent = JSON.stringify(data);
+                    // targetTaskDisplay.textContent = JSON.stringify(data);
+                    retrievedData = data[0];
                     let taskID = data[0].taskID;
                     let formattedTaskID = taskID.toString().padStart(5, '0');
+
+                    // store the data in localStorage
+                    var targetTaskCreatedBy = data[0].createdBy;
+                    localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                    var targetTaskID = taskID;
+                    localStorage.setItem('targetTaskID', targetTaskID);
+                    console.log(localStorage.getItem('targetTaskCreatedBy'));
+                    console.log(localStorage.getItem('targetTaskID'));
 
                     let startDateStr = data[0].startDate;
                     let startDate = new Date(startDateStr);

@@ -138,6 +138,29 @@ router.post('/login', async (req, res) => {
     };
     res.json(sessionData);
   });
+
+  // check professional value
+  router.post('/checkProfessional', async (req, res) => {
+  const { userID } = req.body;
+  
+    try {
+      const sql = `SELECT profession FROM user WHERE userID='${userID}'`;
+      const [result] = await db.query(sql);
+      console.log("check userID's professional value: " + userID);
+  
+      if (result.length > 0) {
+        // return the value
+        res.send({ professional: result[0].professional });
+        console.log(result);
+      } else {
+        // User doesn't exist or wrong password
+        res.send({ message: 'Cannot find the row' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to database');
+    }
+  });
   
 
 module.exports = router;
