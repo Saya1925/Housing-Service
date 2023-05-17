@@ -4,8 +4,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from './images/hero_homePage.jpg'; 
 import './css/HomePage.css';
+import HeaderProfessional from './HeaderProfessional';
 
-const HomePageReg = () => {
+const HomePageProfessional = () => {
   const navigate = useNavigate();
 
   const browseServices = () => {
@@ -14,6 +15,7 @@ const HomePageReg = () => {
 
   return (
     <div className="page-container">
+    <HeaderProfessional />
       <div className="content">
         <h2>Easy House Services</h2>
         <p>Welcome to our Housing Service Platform!</p>
@@ -27,4 +29,4 @@ const HomePageReg = () => {
   );
 };
 
-export default HomePageReg;
+export default HomePageProfessional;

@@ -17,7 +17,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform form validation and submit the data to the backend
+    
     console.log(formData);
   };
 

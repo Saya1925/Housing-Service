@@ -1,41 +1,33 @@
-.page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   flex-grow: 1;
+  margin-left: 20px;
 }
   
   h2 {
     text-align: left;
     color: grey;
-    margin-left: 70px;
+    margin-top: 50px;
     margin-bottom: 0px;
     font-size: 35px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Montserrat';
+    
   }
   
   p {
     text-align: left;
     color: grey;
-    margin-left: 80px;
     margin-bottom: 0; 
-    font-size: 20px;
+    font-size: 23px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
 
-  .signup-button {
+{/*Button for Visitor*/}
+.signup-button {
     background-color: coral;
-    margin-top: 20px;
-    margin-left: 200px;
-    margin-bottom: 0px;
+    margin-top: 40px;
+    margin-bottom: 30px;
     color: #fff;
     padding: 12px 20px;
     border: none;
@@ -45,11 +37,11 @@
     width: 200px;
   }
 
+{/*Button for User, Membership, Professional*/}
   .browse-button {
     background-color: #26E0FA;
-    margin-top: 20px;
-    margin-left: 200px;
-    margin-bottom: 0px;
+    margin-top: 40px;
+    margin-bottom: 30px;
     color: #fff;
     padding: 12px 20px;
     border: none;
