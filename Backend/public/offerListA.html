@@ -1,0 +1,174 @@
+<span id="sharedDiv">
+    <span><u>here are the localStorage session data:</u></span><br>
+    <span id="displayStoredSession"></span>
+</span>
+<br><br><br>
+
+<span><b>targetTaskID:</b></span>
+<input type="text" id="targetTaskID">
+
+
+<button id="loadOfferListButton">Load its offerList</button>
+<br>
+<br>
+<span id="raw_offerListDisplay"></span>
+
+<style>
+    .offerContainer {
+        width: 600px;
+        height: 96px;
+        background-color: #F2F2F2;
+    }
+
+    .offer-container {
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+    }
+
+    .offer {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #F2f2f2;
+        border-radius: 8px;
+        /* border: 1px solid #CCCCCC; */
+    }
+
+    .offer .user-info {
+        width: 145px;
+        text-align: right;
+        padding-right: 10px;
+        padding-top: 8px;
+    }
+
+    .offer .user-info b {
+        font-weight: bold;
+    }
+
+    .offer .message {
+        width: 455px;
+        height: 50px;
+        padding-left: 10px;
+        padding-top: 8px;
+        white-space: pre-wrap;
+        background-color: #FFFFFF;
+        border-radius: 8px;
+    }
+</style>
+
+<div id="offerListContainer">
+    <div id="offerContainer" class="offer-container">
+        <table class="offerContainer">
+            <tr>
+                <td>
+                <td style="width: 145px; vertical-align: top; text-align: right; padding: 10px;">
+                    <span id="userName">placeholder</span><br>
+                    <span id="rating">placeholder</span>
+                </td>
+                <td style="width: 455px; vertical-align: top; padding: 10px; background-color: #FFFFFF;">
+                    <span id="message">placeholder</span>
+                </td>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    console.log("current target taskID: " + localStorage.getItem("targetTaskID"));
+    const loadOfferListButton = document.getElementById('loadOfferListButton');
+    // use to get manual targetTaskID
+    const targetTaskID = document.getElementById('targetTaskID');
+    var raw_offerListDisplay = document.getElementById('raw_offerListDisplay');
+    var offerContainer = document.getElementById("offerContainer");
+    var userName = document.getElementById("userName");
+    var rating = document.getElementById("rating");
+    var message = document.getElementById("message");
+    var taskID;
+
+    loadOfferListButton.addEventListener('click', async () => {
+        // // only work on single page, not work for DIV shared
+        // if (targetTaskID.value === ""){
+        // taskID = localStorage.getItem("targetTaskID");
+        // } else {
+        //     taskID = targetTaskID.value;
+        // }
+
+        // this works for Div shared
+        taskID = localStorage.getItem("targetTaskID");
+        try {
+            const response = await fetch(`/getTask/getOfferList?taskID=${taskID}`);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                console.log(data.length);
+                // for display the raw JSON
+                raw_offerListDisplay.textContent = JSON.stringify(data);
+
+                // Clear existing content in offerContainer
+                offerContainer.innerHTML = "";
+
+                // userName.innerHTML = "<b>" + data[0].userName + "</b>";
+                // rating.textContent = data[0].rating;
+                // message.textContent = data[0].message;
+
+                for (let i = 0; i < data.length; i++) {
+                const offerBlock = document.createElement('div');
+                offerBlock.classList.add('offer');
+                
+                const userInfo = document.createElement('div');
+                userInfo.classList.add('user-info');
+
+                const userName = document.createElement('span');
+                userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
+                userInfo.appendChild(userName);
+
+                const rating = document.createElement('span');
+                rating.textContent = data[i].rating;
+                userInfo.appendChild(rating);
+
+                offerBlock.appendChild(userInfo);
+                
+                const message = document.createElement('div');
+                message.classList.add('message');
+                message.textContent = data[i].message;
+                offerBlock.appendChild(message);
+                
+                offerContainer.appendChild(offerBlock);
+            }
+
+                // for (let i = 0; i < data.length; i++) {
+                //     console.log(data[i].userName + "; " + data[i].rating + "; " + data[i].quotation + "; " + data[i].message);
+                //     // userName.innerHTML = "<b>" + data[i].userName + "</b>";
+                //     // rating.textContent = data[i].rating;
+                //     // message.textContent = data[i].message;
+                // }
+
+                // // display
+                // targetTaskDisplay.innerHTML = "<b>Summary:</b> #" + formattedTaskID +
+                //     "<br><b>Request:</b> " + data[0].taskName +
+                //     "<br><b>Budget:</b> " + data[0].budget ;
+            } else {
+                console.log('Error:', response.status);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>
+
+<script>
+    function updateDisplayedSession() {
+        const userName = localStorage.getItem('userName');
+        const userID = localStorage.getItem('userID');
+        const displayElement = document.getElementById('displayStoredSession');
+        displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+    }
+    // Initial display of stored session information
+    updateDisplayedSession();
+    // // Wait for the sharedDiv to be inserted into the container
+    // document.addEventListener('DOMContentLoaded', updateDisplayedSession);
+</script>
