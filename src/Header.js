@@ -5,7 +5,6 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import './css/Modal.css';
 import './css/Header.css';
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -80,7 +79,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             shrink: true,
           }}
         />
-          <Button 
+          <Button
             className="login-button" 
             onClick={handleLogin} 
             variant="contained" 

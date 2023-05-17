@@ -21,7 +21,7 @@ header {
   }
 }
 
-.logIn-button {
+.login-button {
   background-color: white;
   margin-top: 40px;
   margin-bottom: 0px;
@@ -98,7 +98,3 @@ header {
   text-decoration: none !important; /* Remove the underline */
   color: grey;
 }
-
-
-/*Membership*/
-/*Professional*/

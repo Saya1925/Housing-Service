@@ -11,7 +11,7 @@ test('renders the homepage', () => {
   );
 
   // Assert that the homepage content is rendered
-  const homepageElement = screen.getByText(/Welcome to the homepage/i);
+  const homepageElement = screen.getByText(/Welcome to our Housing Service Platform!/i);
   expect(homepageElement).toBeInTheDocument();
 });
 
