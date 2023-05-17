@@ -2,7 +2,29 @@
 <html>
 
 <head>
-    <title>subscription function</title>
+    <title>Profile page</title>
+    <style>
+        .white-box1 {
+           width: 200px;
+           height: 200px;
+           background-color: white;
+           border: 1px solid black; 
+        }
+
+        .white-box2 {
+           width: 200px;
+           height: 200px;
+           background-color: white;
+           border: 1px solid black; 
+        }
+
+        .white-box3 {
+           width: 200px;
+           height: 200px;
+           background-color: white;
+           border: 1px solid black; 
+        }
+    </style>
 </head>
 
 <body>
@@ -16,6 +38,24 @@
     <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
     <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
     <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
+
+    <br /><br />
+
+    <span><b>Profile</b></span>
+    <br />
+    <div class="white-box1" id="userInfo"></div>
+    <button id="testOnly">Try to display information</button>
+
+    <br /><br />
+    <span><b>Membership</b></span>
+    <div class="white-box2" id="userMem"></div>
+    <button id="testMem">Test get Membership information</button>
+
+    
+    <br /><br />
+    <span><b>Professional</b></span>
+    <div class="white-box3" id="userPro"></div>
+    <button id="testPro">Test get Professional information</button>
 
 
     <script>
@@ -36,6 +76,55 @@
                 " <br> the user first name: " + data[0].sname +
                 " <br> the user last name: " + data[0].lname;
         });
+
+        // to display the user's profile information
+        const button_getTest = document.getElementById('testOnly');
+        button_getTest.addEventListener('click', async () => {
+            const response = await fetch('/account/get-latest-user');
+            const data = await response.json();
+            console.log("clicked");
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("userInfo");
+            displayGet.innerHTML = "Name: " + data[0].sname + " " + data[0].lname +
+            "<br> Email: " + data[0].email + 
+            "<br> Phone: " + data[0].phoneNum + 
+            "<br> UserID: " + data[0].userID; 
+        });
+
+
+        // to display the user's membership information
+        const button_getMembership = document.getElementById('testMem');
+        button_getMembership.addEventListener('click', async () => {
+            const response = await fetch('/account/get-latest-user');
+            const data = await response.json();
+            console.log("clicked");
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("userMem");
+            displayGet.innerHTML = "Fee:      " + data[0].membershipFee + 
+            "Start Date:    " + data[0].membershipDate;
+
+        });
+
+
+        // to display the user's professional information
+        const button_getProfessional = document.getElementById('testPro');
+        button_getProfessional.addEventListener('click', async () => {
+            const response = await fetch('/account/get-latest-user');
+            const data = await response.json();
+            console.log("clicked");
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("userPro");
+            displayGet.innerHTML = "Fee:      " + data[0].professionalFee + 
+            "Start Date:    " + data[0].professionalDate;
+
+        });
+
+
+
+        
     </script>
 </body>
 
