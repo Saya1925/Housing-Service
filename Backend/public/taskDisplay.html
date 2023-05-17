@@ -41,29 +41,35 @@
     <div id="makeOfferContainer"></div>
 
     <script>
-        // Create an iframe element
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none'; // Hide the iframe
+        // Check the value of localStorage.getItem('pro')
+        const proValue = localStorage.getItem('pro');
 
-        // Set the source of the iframe to makeOffer.html
-        iframe.src = 'makeOffer.html';
+        if (proValue === '1') {
+            // Create an iframe element
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none'; // Hide the iframe
 
-        // Wait for the iframe to load
-        iframe.addEventListener('load', function () {
-            // Access the content of makeOfferPanel from makeOffer.html of the iframe
-            const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
-            const makeOfferPanel = iframeContent.getElementById('makeOfferPanel');
+            // Set the source of the iframe to makeOffer.html
+            iframe.src = 'makeOffer.html';
 
-            // Insert the makeOfferPanel into the container element
-            const makeOfferContainer = document.getElementById('makeOfferContainer');
-            makeOfferContainer.appendChild(makeOfferPanel);
+            // Wait for the iframe to load
+            iframe.addEventListener('load', function () {
+                // Access the content of makeOfferPanel from makeOffer.html of the iframe
+                const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+                const makeOfferPanel = iframeContent.getElementById('makeOfferPanel');
 
-            // Execute the JavaScript code inside makeOffer.html
-            iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
-        });
+                // Insert the makeOfferPanel into the container element
+                const makeOfferContainer = document.getElementById('makeOfferContainer');
+                makeOfferContainer.appendChild(makeOfferPanel);
+
+                // Execute the JavaScript code inside makeOffer.html
+                iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+            });
+        
 
         // Append the iframe to the document body
         document.body.appendChild(iframe);
+        }
     </script>
 
     <script>
@@ -100,8 +106,9 @@
                     localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
                     var targetTaskID = taskID;
                     localStorage.setItem('targetTaskID', targetTaskID);
-                    console.log(localStorage.getItem('targetTaskCreatedBy'));
-                    console.log(localStorage.getItem('targetTaskID'));
+                    console.log(localStorage);
+                    console.log(localStorage.getItem('pro'));
+                    // console.log(localStorage.getItem('targetTaskID'));
 
                     let startDateStr = data[0].startDate;
                     let startDate = new Date(startDateStr);
