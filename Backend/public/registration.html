@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example Page</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">testing</button>
+    <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
+    <div id="displayGET"></div>
+    <button onclick="window.location.href='registration.html'">Registration page</button>
+    <button onclick="window.location.href='login.html'">Login page</button>
+    <button onclick="window.location.href='upgradeAccount.html'">upgrade account page</button><br>
+    <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
+    <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
+
+    <br><br>
+    <span><b>for Vistor: new account registration</b></span>
+    <br><br>
+
+    <form action="/account/add-user" method="post">
+        <label for="sname">First Name:</label>
+        <input type="text" id="sname" name="sname"><br>
+
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="lname"><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+
+        <label for="phoneNum">Phone Number:</label>
+        <input type="text" id="phoneNum" name="phoneNum"><br>
+
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="pw"><br>
+
+        <button type="submit">Register</button>
+    </form>
+    <div id="newAddedUser"></div>
+
+    <br><br>
+
+    <button id="getLatestUser">GET latest user</button>
+    <div id="latestUser"></div>
+
+    <script>
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+
+        // to get the latest registered user info
+        const button_getLatestUser = document.getElementById('getLatestUser');
+        button_getLatestUser.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/account/get-latest-user');
+            const data = await response.json();
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("latestUser");
+            displayGet.innerHTML = jsonStr;
+        });
+
+    </script>
+
+</body>
+
+</html>

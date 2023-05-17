@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task Display (Right Panel)</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">testing</button>
+    <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
+    <div id="displayGET"></div>
+    <button onclick="window.location.href='registration.html'">Registration page</button>
+    <button onclick="window.location.href='login.html'">Login page</button>
+    <button onclick="window.location.href='upgradeAccount.html'">upgrade account page</button><br>
+    <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
+    <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
+    <br>
+    <br>
+    <span><u>here are the localStorage session data:</u></span><br>
+    <span id="displayStoredSession"></span>
+    <br>
+
+    <br>
+    <br>
+    <span><b>taskID value:</b></span>
+    <input type="text" id="taskIDInput">
+    <button id="retrieveTaskButton">Retrieve Task</button>
+    <span id="taskRowDisplay"></span>
+    <br><br>
+    <span id="targetTaskDisplay"></span>
+    <br>
+    <!-- <button id="getInfoTestButton">test getting info</button>
+    <span id="infoDisplay"></span> -->
+
+    <!-- Display types of task sub-panel -->
+    <h2>below is iFrame</h2>
+
+    <!-- Empty container element for dynamically inserting the sharedDiv -->
+    <div id="makeOfferContainer"></div>
+
+    <script>
+        // Create an iframe element
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none'; // Hide the iframe
+
+        // Set the source of the iframe to makeOffer.html
+        iframe.src = 'makeOffer.html';
+
+        // Wait for the iframe to load
+        iframe.addEventListener('load', function () {
+            // Access the content of makeOfferPanel from makeOffer.html of the iframe
+            const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+            const makeOfferPanel = iframeContent.getElementById('makeOfferPanel');
+
+            // Insert the makeOfferPanel into the container element
+            const makeOfferContainer = document.getElementById('makeOfferContainer');
+            makeOfferContainer.appendChild(makeOfferPanel);
+
+            // Execute the JavaScript code inside makeOffer.html
+            iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+        });
+
+        // Append the iframe to the document body
+        document.body.appendChild(iframe);
+    </script>
+
+    <script>
+        // var retrievedData;
+        // // test getting info from the task separately
+        // getInfoTestButton.addEventListener('click', () => {
+        //     var infoDisplay = document.getElementById('infoDisplay');
+        //     infoDisplay.textContent = retrievedData.specialReq;
+
+        // });
+
+        /// route to  get the target task /get-target-task/${taskID}
+        const retrieveTaskButton = document.getElementById('retrieveTaskButton');
+        const taskIDInput = document.getElementById('taskIDInput');
+        var taskRowDisplay = document.getElementById('taskRowDisplay');
+
+        retrieveTaskButton.addEventListener('click', async () => {
+            const taskID = taskIDInput.value;
+
+            try {
+                const response = await fetch(`/getTask/get-target-task?taskID=${taskID}`);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // taskRowDisplay.textContent = JSON.stringify(data);
+                    var targetTaskDisplay = document.getElementById("targetTaskDisplay");
+                    // targetTaskDisplay.textContent = JSON.stringify(data);
+                    retrievedData = data[0];
+                    let taskID = data[0].taskID;
+                    let formattedTaskID = taskID.toString().padStart(5, '0');
+
+                    // store the data in localStorage
+                    var targetTaskCreatedBy = data[0].createdBy;
+                    localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                    var targetTaskID = taskID;
+                    localStorage.setItem('targetTaskID', targetTaskID);
+                    console.log(localStorage.getItem('targetTaskCreatedBy'));
+                    console.log(localStorage.getItem('targetTaskID'));
+
+                    let startDateStr = data[0].startDate;
+                    let startDate = new Date(startDateStr);
+                    let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+
+                    let endDateStr = data[0].endDate;
+                    let endDate = new Date(endDateStr);
+                    let formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                    // display
+                    targetTaskDisplay.innerHTML = "<b>Summary:</b> #" + formattedTaskID +
+                        "<br><b>Request:</b> " + data[0].taskName +
+                        "<br><b>Budget:</b> " + data[0].budget + "&nbsp;&nbsp;&nbsp; <b>Category:</b> " + data[0].category +
+                        "<br><b>Date:</b> start: " + formattedStartDate + "&nbsp;&nbsp;&nbsp; end: " + formattedEndDate +
+                        "<br><b>Location:</b> " + data[0].location +
+                        "<br><b>Requirement:</b> " + data[0].specialReq +
+                        "<br><b>Description:</b> " + data[0].details;
+                } else {
+                    console.log('Error:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        // const retrieveTaskButton = document.getElementById('retrieveTaskButton');
+        // retrieveTaskButton.addEventListener('click', async () => {
+        //     console.log("clicked");
+        //     const response = await fetch('/getTask/get-target-task');
+        //     const data = await response.json();
+        //     console.log(data);
+        //     // const jsonStr = JSON.stringify(data);
+        //     var displayGet = document.getElementById("LatestTaskTidy");
+        //     let taskID = data[0].taskID;
+        //     let formattedTaskID = taskID.toString().padStart(5, '0');
+
+        //     let startDateStr = data[0].startDate;
+        //     let startDate = new Date(startDateStr);
+        //     let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+
+        //     let endDateStr = data[0].endDate;
+        //     let endDate = new Date(endDateStr);
+        //     let formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+        //     // display
+        //     displayGet.innerHTML = "Summary: #" + formattedTaskID +
+        //         "<br>Request: " + data[0].taskName +
+        //         "<br>Budget: " + data[0].budget + "&nbsp;&nbsp;&nbsp; Category: " + data[0].category +
+        //         "<br>Date: start: " + formattedStartDate + "&nbsp;&nbsp;&nbsp; end: " + formattedEndDate +
+        //         "<br>Location: " + data[0].location +
+        //         "<br>Requirement: " + data[0].specialReq +
+        //         "<br>Description: " + data[0].details;
+        // });
+
+        /////////// display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+    </script>
+</body>
+
+</html>

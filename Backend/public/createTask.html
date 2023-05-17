@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Task</title>
+</head>
+
+<body>
+    <span id="example"></span>
+    <button id="tryTestDB">testing</button>
+    <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
+    <div id="displayGET"></div>
+    <button onclick="window.location.href='registration.html'">Registration page</button>
+    <button onclick="window.location.href='login.html'">Login page</button>
+    <button onclick="window.location.href='upgradeAccount.html'">upgrade account page</button><br>
+    <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
+    <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
+
+    <br><br>
+    <span><u>please login before creating your task.</u></span><br>
+    <br>
+    <form id="addTaskForm" action="/createTask/add-task" method="post">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName"><br>
+
+        <label for="budget">Budget:</label>
+        <input type="text" id="budget" name="budget"><br>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="Electrical">Electrical</option>
+            <option value="Construction">Construction</option>
+            <option value="Gardening">Gardening</option>
+            <option value="Plumber">Plumber</option>
+            <option value="Design">Design</option>
+            <option value="Others">Others</option>
+        </select><br>
+
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate"><br>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate"><br>
+
+        <label for="specialReq">Special Requirements:</label>
+        <input type="text" id="specialReq" name="specialReq"><br>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location"><br>
+        <label for="onlineTask">Is it an online task?</label>
+        <input type="checkbox" id="onlineTask" name="onlineTask" onclick="toggleLocationInput()"><br>
+
+        <label for="details">Details:</label>
+        <textarea id="details" name="details"></textarea><br>
+
+        <button type="submit">Add Task</button>
+    </form>
+    <br>
+    <span id="newTaskStatus"></span><br>
+    <br>
+    <button id="getLatestTask">GET latest Task</button>
+    <br>
+    <div id="latestTask"></div>
+
+
+    <script>
+        var newTaskStatus = document.getElementById("newTaskStatus");
+        // XMLHttpRequest for submit the offer
+        document.getElementById('addTaskForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // define the parameters
+            const createdBy = localStorage.getItem('userID');
+            const taskName = addTaskForm.taskName.value;
+            const budget = addTaskForm.budget.value;
+            const category = addTaskForm.category.value;
+            const startDate = addTaskForm.startDate.value;
+            const endDate = addTaskForm.endDate.value;
+            const specialReq = addTaskForm.specialReq.value;
+            const location = addTaskForm.location.value;
+            // const onlineTask = addTaskForm.onlineTask.value;
+            const details = addTaskForm.details.value;
+    
+            // do the XMLHTTPRequest
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/createTask/add-task');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    newTaskStatus.textContent = "create task successfully";
+                    console.log('create task successfully');
+                    // Perform any additional actions upon successful submission
+                } else {
+                    console.error('Error creating task');
+                    // Handle the error case
+                }
+            };
+
+            var formData = JSON.stringify({ createdBy, taskName, budget, category, startDate, endDate, specialReq, location, details, onlineTask });
+            // const data = JSON.stringify({ email, pw });
+            xhr.send(formData);
+        });
+
+        /////////// display local store session
+        // // Function to update the displayed session information
+        // function updateDisplayedSession() {
+        //     const userName = localStorage.getItem('userName');
+        //     const userID = localStorage.getItem('userID');
+        //     const displayElement = document.getElementById('displayStoredSession');
+        //     displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        // }
+        // // Initial display of stored session information
+        // updateDisplayedSession();
+
+        // to get the latest created task
+        const button_getLatestTask = document.getElementById('getLatestTask');
+        button_getLatestTask.addEventListener('click', async () => {
+            console.log("clicked");
+            const response = await fetch('/createTask/get-latest-task');
+            const data = await response.json();
+            // console.log(data);
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("latestTask");
+            displayGet.innerHTML = jsonStr;
+        });
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = data[0].email +
+                " : <br> the userID for this account is =>" + data[0].userID +
+                " <br> the user first name: " + data[0].sname +
+                " <br> the user last name: " + data[0].lname;
+        });
+
+        // function to handle the online task checkbox
+        function toggleLocationInput() {
+            const locationInput = document.getElementById("location");
+            const onlineTaskCheckbox = document.getElementById("onlineTask");
+
+            // console.log("trigger toggle");
+            if (onlineTaskCheckbox.checked) {
+                locationInput.value = "Online";
+                locationInput.disabled = true;
+            } else {
+                locationInput.value = "";
+                locationInput.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

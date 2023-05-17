@@ -7,8 +7,15 @@
 
 <body>
     <span id="example"></span>
-    <button id="tryTestDB">testing connection to db</button>
+    <button id="tryTestDB">testing</button>
+    <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
     <div id="displayGET"></div>
+    <button onclick="window.location.href='registration.html'">Registration page</button>
+    <button onclick="window.location.href='login.html'">Login page</button>
+    <button onclick="window.location.href='upgradeAccount.html'">upgrade account page</button><br>
+    <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
+    <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
 
     <br><br>
     <span><b>account login</b></span>
@@ -40,6 +47,9 @@
     <br>
     <br>
     <button id="goUpgradePage">to go membership/ profession subscribe page</button>
+    <br>
+    <br>
+    <button id="goCreateTaskPage">to go Create Task page</button>
 
 
     <script>
@@ -65,11 +75,18 @@
             window.location.href = '/login.html';
         });
 
+        /// Redirecting ///////
         // redirect to membership/ profession subscription page
         const goUpgradePageButton = document.getElementById('goUpgradePage');
         goUpgradePageButton.addEventListener('click', () => {
             // Redirect the user to the upgradeAccount.html page
             window.location.href = '/upgradeAccount.html';
+        });
+        // redirect to Create Task page
+        const goCreateTaskPageButton = document.getElementById('goCreateTaskPage');
+        goCreateTaskPageButton.addEventListener('click', () => {
+            // Redirect the user to the upgradeAccount.html page
+            window.location.href = '/createTask.html';
         });
 
         // XMLHttpRequest
@@ -103,18 +120,28 @@
                             if (xhr2.readyState === XMLHttpRequest.DONE) {
                                 if (xhr2.status === 200) {
                                     const sessionData = JSON.parse(xhr2.responseText);
-                                    const userName = sessionData.userName;
-                                    const userID = sessionData.userID;
+                                    // const userName = sessionData.userName;
+                                    // const userID = sessionData.userID;
+                                    console.log(sessionData);
                                     // Store session data in localStorage
-                                    localStorage.setItem('userName', userName);
-                                    localStorage.setItem('userID', userID);
+                                    localStorage.setItem('userName', sessionData.userName);
+                                    localStorage.setItem('userID', sessionData.userID);
+                                    localStorage.setItem('email', sessionData.email);
+                                    localStorage.setItem('member', sessionData.member);
+                                    localStorage.setItem('pro', sessionData.pro);
                                     updateDisplayedSession();
 
                                     // Use the session data as needed
                                     const storedUserName = localStorage.getItem('userName');
                                     const storedUserID = localStorage.getItem('userID');
-                                    console.log(storedUserName);
-                                    console.log(storedUserID);
+                                    const storedEmail = localStorage.getItem('email');
+                                    const storedMember = localStorage.getItem('member');
+                                    const storedPro = localStorage.getItem('pro');
+                                    console.log("name: " + storedUserName);
+                                    console.log("userID: " + storedUserID);
+                                    console.log("email: " + storedEmail);
+                                    console.log("membership: " + storedMember);
+                                    console.log("profession: " + storedPro);
 
                                     // Update the client UI with the session data
                                     document.getElementById('dataFromLocalSession').textContent = "(message from local session) User Name: " + storedUserName + " #ID: " + storedUserID;
