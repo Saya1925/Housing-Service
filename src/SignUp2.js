@@ -6,12 +6,11 @@ const SignUp2 = () => {
   const navigate = useNavigate();
 
   const handleHomePageRegClick = () => {
-    // Navigate to the CreateTask.js component
-    navigate('/HomePageReg');
+    navigate('/HomePageRegistered');
   };
 
   return (
-    <div>
+    <div className="success-container">
       <h1>Account Successfully Registered!</h1>
       <p>A confirmation email was sent to your email.</p><br/>
       <button className="homePageReg-button" onClick={handleHomePageRegClick}>

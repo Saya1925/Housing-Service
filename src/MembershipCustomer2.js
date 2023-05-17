@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './css/Membership.css';
+import HeaderMembership from './HeaderMembership';
 
 const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
   const [cardNumber, setCardNumber] = useState('');
@@ -42,6 +44,7 @@ const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
   };
   return (
     <div>
+    <HeaderMembership />
       <h1>Subscribe Customer Membership</h1>
       <p>for unlimited service request</p>
       <p>please select your membership options:</p><br/><br/>

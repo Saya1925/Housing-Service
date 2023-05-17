@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './css/Professionals.css';
+import HeaderProfessional from './HeaderProfessional';
+
 
 const Professionals2 = ({ handleBack, handleProceed }) => {
   const [cardNumber, setCardNumber] = useState('');
@@ -42,6 +45,7 @@ const Professionals2 = ({ handleBack, handleProceed }) => {
   };
   return (
     <div>
+    <HeaderProfessional />
       <h1>Subscribe Customer Membership</h1>
       <p>for unlimited service request</p>
       <p>please select your membership options:</p><br/><br/>
@@ -103,8 +107,8 @@ const Professionals2 = ({ handleBack, handleProceed }) => {
           />
         </div>
         <div>
-          <button className="back-button" onClick={handleBack}>Back</button>
-          <button className="proceed-button" type="submit">Proceed</button>
+          <button className="p-back-button" onClick={handleBack}>Back</button>
+          <button className="p-proceed-button" type="submit">Proceed</button>
         </div>
       </form>
     </div>

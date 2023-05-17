@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/Professionals.css';
 import styles from './css/Professionals.css';
+import HeaderProfessional from './HeaderProfessional';
 
 const Professionals = () => {
 
@@ -45,24 +46,25 @@ const Professionals = () => {
   };
 
   return (
-    <div>
+    <div className="professional-container">
+    <HeaderProfessional />
       <h1>Become Our Professional</h1>
       <p className="description">to offer your services and get paid</p>
       <p className="description">please select your membership options:</p><br/><br/>
       <div>
 
-{/*$18 or $25*/}
+    {/*1st table*/}
       <table className="table-feeChoice">
         <tbody>
           <tr>
-            <td>
-              <label htmlFor="option-18" className="label-fee">
-                <span>$18</span></label>
+            <td className="column-width">
+              <label className="label-fee">
+                $18</label>
                 <p className="additional-text">pay annually ($216)</p>
             </td>
-            <td>
-              <label htmlFor="option-25" className="label-fee">
-                <span>$25</span></label>
+            <td className="column-width">
+              <label className="label-fee">
+                $25</label>
                 <p className="additional-text">pay monthly</p>
             </td>
           </tr>
@@ -94,10 +96,11 @@ const Professionals = () => {
       </table>        
       </div>
 
+    {/*2nd table*/}
       <table className="table-style">
         <tbody>
           <tr className="price-details">
-            <td>price details</td>
+            <td colSpan="2">price details</td>
           </tr>
           <tr>
             <td className="row-label">fee</td>
@@ -107,8 +110,8 @@ const Professionals = () => {
             <td className="row-label">GTS.</td>
             <td className="row-label">${calculateGTS()}</td>
           </tr>
-          <tr>
-            <td className="row-empty"> </td>
+          <tr >
+            <td colSpan="2" className="row-empty"> </td>
           </tr>
           <tr className="total-label">
             <td className="row-label">TOTAL</td>
@@ -117,7 +120,7 @@ const Professionals = () => {
         </tbody>
       </table>
 
-      <button className="next-button" onClick={handleNextClick}>Next</button>
+      <button className="p-next-button" onClick={handleNextClick}>Next</button>
     </div>
   );
 };

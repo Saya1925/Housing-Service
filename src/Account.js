@@ -1,16 +1,26 @@
 import React from 'react';
 import './css/Account.css';
 import HeaderRegistered from './HeaderRegistered';
+import HeaderMembership from './HeaderMembership';
+import HeaderProfessional from './HeaderProfessional';
 
-const Account = () => {
-  const handleSignUp = () => {
-    // Handle sign-up logic here
-  };
+{/*Depending on user type, header changes */}
+const Account = ({ userType }) => {
+    const renderHeader = () => {
+      if (userType === 'registered') {
+        return <HeaderRegistered />;
+      } else if (userType === 'membership') {
+        return <HeaderMembership />;
+      } else if (userType === 'professional') {
+        return <HeaderProfessional />;   
+      } else {
+        return null;
+      }
+    };
 
   return (
     <div>
-      <HeaderRegistered />
-
+      {renderHeader()}
       <div className="content">
         <h2>Profile</h2>
 
@@ -56,8 +66,6 @@ const Account = () => {
             <td className="p-right-column">{/*Retrieve data from DB*/}</td>
             </tr>
         </table>
-        
-
 
       </div>
     </div>

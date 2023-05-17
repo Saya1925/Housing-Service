@@ -22,7 +22,6 @@ import Professionals3 from "./Professionals3";
 import Account from "./Account";
 
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   

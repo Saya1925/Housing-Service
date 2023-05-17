@@ -37,7 +37,7 @@ const HeaderRegistered = ({ isLoggedIn, setIsLoggedIn, userName }) => {
 
   
   const profileButtons = [
-    { label: 'Profile', path: '/Profile' },
+    { label: 'Profile', path: '/Account' },
     { label: 'My Tasks', path: '' },
     { label: 'My Offers', path: '' },
     { label: 'Subscribe Membership', path: '/MembershipCustomer' },

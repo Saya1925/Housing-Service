@@ -2,13 +2,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   margin: 0;
 }
 
-.container {
+.membership-container {
   text-align: center;
   flex: 1;
+  justify-content: center;
 }
 
 h1 {
@@ -20,6 +20,56 @@ h1 {
   color: #555555;
 }
 
+/*1st table*/
+.table-feeChoice {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  margin-bottom: 30px;
+  border: none;
+}
+
+column-width{
+  width: 250px;
+}
+
+.table-feeChoice td {
+  border: none;
+}
+
+.table-feeChoice .label-fee,
+.table-feeChoice .additional-text {
+  border: none;
+}
+
+
+.label-fee {
+  font-size: 40px; /* Adjust the font size as desired */
+  font-weight: bold;
+  color: inherit;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.additional-text {
+  font-size: 20px; /* Adjust the font size as desired */
+  color:   #555555; /* Adjust the color as needed */
+  text-align: center;
+}
+
+.radio-container {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+  }  
+
+  .inputWithMargin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+  }
+  
+/*2nd table*/
+
 .table-style {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 20px;
@@ -29,42 +79,6 @@ h1 {
   border-collapse: collapse;
 }
 
-/*1st table*/
-.table-feeChoice {
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-  border-color: darkgrey;
-  margin-bottom: 30px;
-}
-
-.label-fee-coral {
-  color: coral;
-}
-
-.label-fee {
-  font-size: 40px; /* Adjust the font size as desired */
-  font-weight: bold;
-  color: inherit;
-  margin-left: 100px;
-}
-
-.additional-text {
-  font-size: 20px; /* Adjust the font size as desired */
-  color:   #555555; /* Adjust the color as needed */
-  text-align: left;
-}
-
-.radio-container {
-    margin-bottom: 10px;
-  }  
-
-  .inputWithMargin {
-    margin-top: 10px;
-    margin-left: 130px;
-    margin-bottom: 10px;
-  }
-  
-/*2nd table*/
   .table-style price-details {
     height: 30px;
   }
@@ -87,7 +101,6 @@ h1 {
 .next-button {
   background-color: coral;
   margin-top: 20px;
-  margin-left: 200px;
   margin-bottom: 0px;
   color: #fff;
   padding: 12px 20px;
@@ -111,7 +124,7 @@ h1 {
 .back-button {
   background-color: white;
   margin-top: 40px;
-
+  margin-right: 20px;
   margin-bottom: 0px;
   color: coral;
   padding: 12px 20px;
@@ -126,7 +139,6 @@ h1 {
 .proceed-button {
   background-color: coral;
   margin-top: 40px;
-  margin-left: 10px;
   margin-bottom: 0px;
   color: #fff;
   padding: 12px 20px;
@@ -150,7 +162,6 @@ h1 {
 .create-task-button {
     background-color: coral;
     margin-top: 40px;
-    margin-left: 10px;
     margin-bottom: 0px;
     color: #fff;
     padding: 12px 20px;

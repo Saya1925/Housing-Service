@@ -114,7 +114,7 @@ const SignUp = () => {
           </tbody>
         </table>
         <button className={`clear-button`} type="clear">Clear All</button>
-        <button className={`submit-button`} type="submit">Register</button>
+        <button className={`register-button`} type="submit">Register</button>
       </form>
     </div>
   );
