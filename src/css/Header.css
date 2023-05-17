@@ -1,23 +1,11 @@
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-}
-
-.buttons-container {
-  display: flex;
-  align-items: center;
-  margin-left: 20px; /* Add margin-left to give some space between logo and buttons */
+  flex-direction: row;
+  flex-grow: 1;
 }
 
 .nav-link {
-  margin-left: 30px;
+  margin-left: 20px;
   font-size: 20px;
   font-family:  'Montserrat';
 }
@@ -31,10 +19,87 @@
     text-align: center;
     margin-bottom: 10px;
   }
-
-  .buttons-container {
-    text-align: center;
-    margin-left: 0; /* Reset margin-left for mobile view */
-  }
 }
 
+
+.logIn-button {
+  background-color: white;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  color: coral;
+  padding: 12px 20px;
+  border: coral solid;
+  border-width: 1px;
+  border-radius: 5px; 
+  font-size: 18px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.signUp-button {
+  background-color: coral;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px; 
+  font-size: 18px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.login-box{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white; /* replace with the actual color */
+  padding: 16px; /* replace with the actual padding */
+  border-radius: 10px;
+}
+
+.login-button.MuiButton-contained {
+  background-color: white; /* or any color you want */
+  border: 2px solid coral;
+  width: 100px;
+  color: coral; /* or any color you want */
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+.login-button.MuiButton-contained:hover {
+  background-color: white;
+}
+
+/*Profile modal for User, Membership, Professional*/
+.profile-box {
+  display: flex;
+  font-size: 25px;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white; /* replace with the actual color */
+  padding: 20px; /* replace with the actual padding */
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.profile-link {
+  margin-bottom: 8px; /* Add margin below each link */
+  text-decoration: none !important; /* Remove the underline */
+  color: grey;
+}
+
+
+/*Membership*/
+/*Professional*/

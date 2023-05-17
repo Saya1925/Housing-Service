@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
+import HeaderRegistered from "./HeaderRegistered";
+import HeaderMembership from "./HeaderMembership";
+import HeaderProfessional from "./HeaderProfessional";
 import HomePage from "./HomePage";
-import HomePageReg from "./HomePageReg";
+import HomePageRegistered from "./HomePageRegistered";
+import HomePageMembership from "./HomePageMembership";
+import HomePageProfessional from "./HomePageProfessional";
 import CreateTask from "./CreateTask";
 import ViewTask from "./ViewTask";
 import SignUp from "./SignUp";
@@ -22,9 +27,15 @@ function App() {
 
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/HomePageRegistered" element={<HomePageRegistered />} />
+        <Route path="/HomePageMembership" element={<HomePageMembership />} />
+        <Route path="/HomePageProfessional" element={<HomePageProfessional />} />
+        <Route path="/Header" element={<Header />} />
+        <Route path="/HeaderRegistered" element={<HeaderRegistered />} />
+        <Route path="/HeaderMembership" element={<HeaderMembership />} />
+        <Route path="/HeaderProfessional" element={<HeaderProfessional />} />
         <Route path="/MembershipCustomer" element={<MembershipCustomer />} />
         <Route path="/MembershipCustomer2" element={<MembershipCustomer2 />} />
         <Route path="/MembershipCustomer3" element={<MembershipCustomer3 />} />
@@ -35,7 +46,6 @@ function App() {
         <Route path="/ViewTask" element={<ViewTask />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/SignUp2" element={<SignUp2 />} />
-        <Route path="/HomePageReg" element={<HomePageReg />} />
         <Route path="/ServicePublised" element={<ServicePublised />} />  
       </Routes>
      

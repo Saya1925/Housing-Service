@@ -17,11 +17,10 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleClose = () => setOpen(false);
 
   const handleLogin = () => {
-    // Perform the login process here
     console.log(email, password);
     // If the login is successful, update the isLoggedIn state
     setIsLoggedIn(true);
-    handleClose();
+    handleClose();  // Close the login modal
   };
 
   const commonButtons = [
@@ -36,7 +35,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   ];
 
   const loggedOutButtons = [
-    { label: 'LOG IN', path: '/LogIn', onClick: handleOpen },
+    { label: 'LOG IN', path: '', onClick: handleOpen },
   ];
 
   const buttons = isLoggedIn
@@ -48,6 +47,9 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
       <nav className="nav">
         <div className="logo-container">
           <img src={logo} alt="Logo" />
+          {isLoggedIn && (
+            <button className="hamburger-menu">☰</button>
+          )}
         </div>
         <div className="nav-links">
           {buttons.map((button, index) => (
@@ -64,39 +66,33 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           ))}
         </div>
       </nav>
+
+      {/* Login Modal Code */}
       <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
+        <Box className="login-box">
+        <TextField
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
           }}
-        >
-          <div className="login-title">Log In</div>
-          <TextField
-            label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <Button onClick={handleLogin} variant="contained" sx={{ mt: 2 }}>
+        />
+        
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+          <Button className="login-button" onClick={handleLogin} variant="contained" sx={{ mt: 2 }}>
             Log In
           </Button>
         </Box>
