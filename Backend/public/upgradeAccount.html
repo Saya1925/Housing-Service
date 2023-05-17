@@ -87,6 +87,7 @@
                     membershipStutas.textContent = message;
                     console.log(membershipFee);
                     console.log(message);
+                    localStorage.setItem('member', 1);
                 } else {
                     console.log('Error:', response.status);
                 }
@@ -118,7 +119,7 @@
                     professionStutas.textContent = message;
                     console.log(professionFee);
                     console.log(message);
-
+                    localStorage.setItem('pro', 1);
                 } else {
                     console.log('Error:', response.status);
                 }

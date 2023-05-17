@@ -121,6 +121,12 @@
     <button id="displayLastTasks">Display latest 10 Tasks</button>
     <div id="displayTasks"></div>
 
+    <br />
+    <span><b>Go to the profile page</b></span>
+    <br />
+    <button id="displayProfile">Display profile information</button>
+    <div id="displayPro"></div>
+
 
     <script>
         // to test the connectivity to DB
@@ -243,6 +249,14 @@
         displayButton.addEventListener('click', () => {
             // Redirect the user to the upgradeAccount.html page
             window.location.href = '/tasksList.html';
+        });
+
+
+        // redirect to display tasks page
+        const displayProfile = document.getElementById('displayProfile');
+        displayProfile.addEventListener('click', () => {
+            // Redirect the user to the upgradeAccount.html page
+            window.location.href = '/profile.html';
         });
 
         
