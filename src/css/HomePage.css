@@ -1,10 +1,3 @@
-.content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-left: 20px;
-}
-  
 h2 {
   text-align: left;
   color:dimgrey;
@@ -14,6 +7,13 @@ h2 {
   font-family: 'Montserrat';
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+  
 p {
   text-align: left;
   color: grey;
@@ -22,7 +22,7 @@ p {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-{/*Button for Visitor*/}
+/*Button for Visitor*/
 .signup-button {
   background-color: coral;
   margin-top: 40px;
@@ -36,7 +36,7 @@ p {
   width: 200px;
 }
 
-{/*Button for User, Membership, Professional*/}
+/*Button for User, Membership, Professional*/
 .browse-button {
   background-color: #26E0FA;
   margin-top: 40px;

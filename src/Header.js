@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from './images/logo.jpg';
+import logoHeader from './images/logoHeader.jpg';
 import './css/Header.css';
 import Modal from '@mui/material/Modal';
 import './css/Modal.css';
@@ -46,7 +46,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     <header className="header">
       <nav className="nav">
         <div className="logo-container">
-          <img src={logo} alt="Logo" />
+          <img src={logoHeader} alt="logoHeader" />
           {isLoggedIn && (
             <button className="hamburger-menu">☰</button>
           )}
