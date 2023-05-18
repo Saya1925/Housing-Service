@@ -3,8 +3,8 @@
 
 <head>
     <title>Task Display (Right Panel)</title>
-    <link rel="stylesheet" href="style_offerTemplateA.css">
-    <link rel="stylesheet" href="style_offerTemplateB.css">
+    <!-- <link rel="stylesheet" href="style_offerTemplateA.css">
+    <link rel="stylesheet" href="style_offerTemplateB.css"> -->
 </head>
 
 <body>
@@ -43,6 +43,7 @@
     <div id="makeOfferContainer"></div>
 
     <script>
+
         // Check the value of localStorage.getItem('pro')
         const proValue = localStorage.getItem('pro');
 
@@ -85,15 +86,67 @@
 
     <script>
         // Create an iframe element
-        const offerList_iframe = document.createElement('iframe');
+        var offerList_iframe = document.createElement('iframe');
         offerList_iframe.style.display = 'none'; // Hide the iframe
 
+
+        // Listen for changes in the localStorage
+        // this do not work under same window, but when other windows updaed, here will trigger!!
+        window.addEventListener('storage', () => {
+            if (event.key === 'targetTaskID') {
+                chooseOfferListTemplate();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            chooseOfferListTemplate();
+        });
+
+
+
+        ////// to dertermine which template of offerList should be used
+        function chooseOfferListTemplate() {
+            // console.log("user: " + localStorage.getItem("userID"));
+            // console.log("createdBY: " + localStorage.getItem("targetTaskCreatedBy"));
+            if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
+                console.log("choose CSS B");
+
+                function loadCSS(file) {
+                    var link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = file;
+                    document.head.appendChild(link);
+                }
+                // Load CSS based on your requirements
+                loadCSS("style_offerTemplateB.css");
+
+                // // Set the source of the iframe to makeOffer.html
+                // offerList_iframe.src = 'offerListB.html';
+            } else {
+                console.log("choose CSS A");
+
+                function loadCSS(file) {
+                    456
+                    var link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = file;
+                    document.head.appendChild(link);
+                }
+                // Load CSS based on your requirements
+                loadCSS("style_offerTemplateA.css");
+
+                // // Set the source of the iframe to makeOffer.html
+                // offerList_iframe.src = 'offerListA.html';
+            };
+
+        };
         // Set the source of the iframe to makeOffer.html
         offerList_iframe.src = 'offerListA.html';
 
+
         // Wait for the iframe to load
         offerList_iframe.addEventListener('load', function () {
-            // Access the content of makeOfferPanel from makeOffer.html of the iframe
+            // Access the content of offerListPanel from offerlistA/B.html of the iframe
             const offerList_iframeContent = offerList_iframe.contentDocument || offerList_iframe.contentWindow.document;
             const offerListPanel = offerList_iframeContent.getElementById('offerListPanel');
 
@@ -103,7 +156,7 @@
             // Access the offerContainer element within the iframe
             const offerContainer = iframeWindow.document.getElementById('offerContainer');
 
-            // Insert the makeOfferPanel into the container element
+            // Insert the offerListPanel into the container element
             const offerListContainer = document.getElementById('offerListContainer');
             offerListContainer.appendChild(offerListPanel);
 
@@ -154,6 +207,8 @@
                     localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
                     var targetTaskID = taskID;
                     localStorage.setItem('targetTaskID', targetTaskID);
+                    // also trigger template choosing
+                    chooseOfferListTemplate()
                     console.log(localStorage);
                     console.log("current user is pro or not: " + localStorage.getItem('pro'));
                     // console.log(localStorage.getItem('targetTaskID'));
