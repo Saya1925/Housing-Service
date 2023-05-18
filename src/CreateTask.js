@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './css/CreateTask.css';
 
-
 const RequestServicePage = () => {
-  const [number, setNumber] = useState('');
   const [need, setNeed] = useState('');
   const [budget, setBudget] = useState('');
   const [category, setCategory] = useState('');
@@ -41,7 +39,6 @@ const RequestServicePage = () => {
     event.preventDefault();
     setIsListView(true);
     const order = {
-      number: orders.length + 1, // Set order number as the length of orders array + 1
       need,
       budget,
       category,
@@ -73,7 +70,6 @@ const RequestServicePage = () => {
   };
 
   const resetFormInputs = () => {
-    setNumber('');
     setNeed('');
     setBudget('');
     setCategory('');
@@ -108,12 +104,11 @@ const RequestServicePage = () => {
     }
   };
 
-
   return (
     <>
       {!isNextClicked && !isListView && (
         <div className="form-container">
-          <h1 className="form-title">Request Service</h1>
+          <h1 className="form-title">Create a Service Request</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-field">
               <label className="form-label">What do you need done?</label>
@@ -239,7 +234,7 @@ const RequestServicePage = () => {
                 onClick={() => handleOrderSelect(order)}
               >
                 <p>Order: {"#" + (index + 1)}</p>
-                <p>Request: {order.need}</p>
+                <p><strong><span className="request-title">{order.need}</span></strong></p>
                 <p>{order.location}</p>
                 <p>{order.category}</p>
                 <p>{order.location}</p>
@@ -250,15 +245,21 @@ const RequestServicePage = () => {
 
           {selectedOrder && (
             <div className="selected-order-details">
-              <h2>Summary</h2>
-              <p>Order: {"#" + selectedOrder.number}</p>
-              <p>Request: {selectedOrder.need}</p>
-              <p>Budget: {selectedOrder.budget}</p>
-              <p>Category: {selectedOrder.category}</p>
-              <p>Date: {selectedOrder.startDate} {selectedOrder.endDate}</p>
-              <p>Location: {selectedOrder.location}</p>
-              <p>Requirement: {selectedOrder.requirement}</p>
-              <p>Description: {selectedOrder.description}</p>
+              <div className="summary-container">
+                <h2>Summary</h2>
+                <p><strong>Order</strong> {"#" + selectedOrder.number}</p>
+                <p><strong>Request</strong> {selectedOrder.need}</p>
+                <p><strong>Budget</strong> {selectedOrder.budget}</p>
+                <p><strong>Category</strong> {selectedOrder.category}</p>
+                <p><strong>Date start:</strong> {selectedOrder.startDate} <strong>end:</strong> {selectedOrder.endDate}</p>
+                <p><strong>Location</strong> {selectedOrder.location}</p>
+                <p><strong>Requirement</strong> {selectedOrder.requirement}</p>
+                <p><strong>Description</strong> {selectedOrder.description}</p>
+              </div>
+              <hr />
+              <div className="offer-container">
+                <p>no any offer yet...</p>
+              </div>
             </div>
           )}
         </div>
