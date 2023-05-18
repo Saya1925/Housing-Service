@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './css/SignUp.css';
 
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -17,9 +18,37 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+  
+    // Log formData to the console for debugging
     console.log(formData);
+  
+    // Send a POST request to the /add-user endpoint
+    fetch('http://localhost:3001/Backend/account/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sname: formData.firstName,
+        lname: formData.lastName,
+        email: formData.email,
+        phoneNum: formData.phone,
+        pw: formData.password,
+        membership: 'Basic', // replace with actual membership level
+        professional: 'No', // replace with actual professional status
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        // Here you can handle the response. You might want to navigate to another page,
+        // show a success message, etc.
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
+  
 
   return (
     <div className="signup-container">
