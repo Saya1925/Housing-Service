@@ -17,7 +17,13 @@ router.post('/customerTransaction', async (req, res) => {
                     VALUES ('${userID}', '${taskID}', '${userName}', '${cardNum}', '${cardHolder}', '${billAddress}', '${serviceFee}', '${platformCharge}', '${totalFee}')`;
 
         const sqlUpdateOffer = `UPDATE offerList SET success = 1 WHERE offerOrder = '${offerID}'`;
-        const sqlUpdateTask = `UPDATE taskList SET status = 'onGoing' WHERE taskID = '${taskID}'`;
+        const sqlUpdateTask = `UPDATE taskList 
+                            SET status = 'onGoing', doneBy = (
+                            SELECT offeredBy 
+                            FROM offerList 
+                            WHERE offerOrder = '${offerID}'
+                            )
+                            WHERE taskID = '${taskID}'`;
 
         const [result] = await db.query(sqlInsert)
         // await db.query(sqlInsert);
