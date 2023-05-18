@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task Selecting Panel</title>
+</head>
+
+<body>
+    <span id="sharedDiv">
+        <span><u>here are the localStorage session data:</u></span><br>
+        <span id="displayStoredSession"></span>
+    </span>
+    <br><br><br>
+
+    <button id="byLatestButton">by Latest</button><br>
+    <br>
+    <div id="tablesContainer"></div>
+
+    <br>
+    <br>
+    <!-- <span id="raw_offerListDisplay"></span> -->
+
+    <!-- 
+    <div id="offerListPanel">
+        <div id="offerContainer" class="offer-container">
+            <table class="offerContainer">
+                <tr>
+                    <td>
+                    <td style="width: 145px; vertical-align: top; text-align: right; padding: 10px;">
+                        <span id="userName">placeholder</span><br>
+                        <span id="rating">placeholder</span>
+                    </td>
+                    <td style="width: 455px; vertical-align: top; padding: 10px; background-color: #FFFFFF;">
+                        <span id="message">placeholder</span>
+                    </td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div> -->
+
+    <script>
+        const byLatestButton = document.getElementById('byLatestButton');
+        const tablesContainer = document.getElementById('tablesContainer');
+
+        byLatestButton.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/getTask/byLatest');
+                const tasks = await response.json();
+
+                // Clear previous tables
+                tablesContainer.innerHTML = '';
+
+                // Create a table for each task
+                tasks.forEach((task) => {
+                    const table = document.createElement('table');
+                    const row = table.insertRow();
+                    const cell = row.insertCell();
+                    cell.textContent = task.taskName;
+
+                    // Add click event listener to each table
+                    table.addEventListener('click', () => {
+                        localStorage.setItem('targetTaskID', task.taskID);
+                        console.log(localStorage.getItem("targetTaskID"));
+                        // Perform any other actions upon table click if needed
+                    });
+
+                    // Add the table to the tables container
+                    tablesContainer.appendChild(table);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+
+        
+
+    </script>
+
+
+    <script>
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+    // // Wait for the sharedDiv to be inserted into the container
+    // document.addEventListener('DOMContentLoaded', updateDisplayedSession);
+    </script>
+</body>
+
+</html>
