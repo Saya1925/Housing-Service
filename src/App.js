@@ -9,7 +9,6 @@ import HomePageRegistered from "./HomePageRegistered";
 import HomePageMembership from "./HomePageMembership";
 import HomePageProfessional from "./HomePageProfessional";
 import CreateTask from "./CreateTask";
-import ViewTask from "./ViewTask";
 import SignUp from "./SignUp";
 import SignUp2 from "./SignUp2";
 import MembershipCustomer from "./MembershipCustomer";
@@ -21,6 +20,10 @@ import Professionals2 from "./Professionals2";
 import Professionals3 from "./Professionals3";
 import Account from "./Account";
 import logoHeader from './images/logoHeader.jpg';
+import RegisteredService from "./RegisteredService";
+import MembershipServices from "./MembershipServices";
+import ProfessionalServices from "./ProfessionalServices";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,11 +47,13 @@ function App() {
         <Route path="/Professionals2" element={<Professionals2 />} />
         <Route path="/Professionals3" element={<Professionals3 />} />
         <Route path="/CreateTask" element={<CreateTask />} />
-        <Route path="/ViewTask" element={<ViewTask />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/SignUp2" element={<SignUp2 />} />
         <Route path="/ServicePublised" element={<ServicePublised />} />  
         <Route path="/Account" element={<Account />} />
+        <Route path="/RegisteredService" element={<RegisteredService />} />
+        <Route path="/MembershipServices" element={<MembershipServices />} />  
+        <Route path="/ProfessionalServices" element={<ProfessionalServices />} />
       </Routes>
      
     </div>

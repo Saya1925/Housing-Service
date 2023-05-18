@@ -12,12 +12,13 @@
     <button id="tryTestDB">testing</button>
     <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
     <div id="displayGET"></div>
-    <button onclick="window.location.href='registration.html'">Registration page</button>
+    <button onclick="window.location.href='registration.html'">Registration Panel</button>
     <button onclick="window.location.href='login.html'">Login page</button>
-    <button onclick="window.location.href='upgradeAccount.html'">upgrade account page</button><br>
-    <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
-    <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
-    <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
+    <button onclick="window.location.href='upgradeAccount.html'">Upgrade Account Page</button><br>
+    <button onclick="window.location.href='createTask.html'">Create Task Panel</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer</button>
+    <button onclick="window.location.href='taskDisplay.html'">Task Display Panel</button>
+    <button onclick="window.location.href='taskPayment.html'">Pay the Offer</button>
     <br>
     <br>
     <span><u>here are the localStorage session data:</u></span><br>
@@ -187,54 +188,80 @@
         const taskIDInput = document.getElementById('taskIDInput');
         var taskRowDisplay = document.getElementById('taskRowDisplay');
 
+        // other 3 condition to refresh the targetTaskDisplay
         retrieveTaskButton.addEventListener('click', async () => {
-            const taskID = taskIDInput.value;
+            if (taskIDInput.value){
+                localStorage.setItem("targetTaskID", taskIDInput.value)
+            } 
+            retrieveTask();
+        });
+
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'targetTaskID') {
+                retrieveTask();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            retrieveTask();
+        });
+
+        function retrieveTask() {
+            // const taskID = taskIDInput.value;
+            const taskID = localStorage.getItem("targetTaskID");
 
             try {
-                const response = await fetch(`/getTask/get-target-task?taskID=${taskID}`);
+                fetch(`/getTask/get-target-task?taskID=${taskID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                    .then(data => {
+                        var targetTaskDisplay = document.getElementById("targetTaskDisplay");
+                        retrievedData = data[0];
+                        let taskID = data[0].taskID;
+                        let formattedTaskID = taskID.toString().padStart(5, '0');
+                        let startDateStr = data[0].startDate;
+                        let startDate = new Date(startDateStr);
+                        let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                        let endDateStr = data[0].endDate;
+                        let endDate = new Date(endDateStr);
+                        let formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                        // display
+                        targetTaskDisplay.innerHTML = "<b>Summary:</b> #" + formattedTaskID +
+                            "<br><b>Request:</b> " + data[0].taskName +
+                            "<br><b>Budget:</b> " + data[0].budget + "&nbsp;&nbsp;&nbsp; <b>Category:</b> " + data[0].category +
+                            "<br><b>Date:</b> start: " + formattedStartDate + "&nbsp;&nbsp;&nbsp; end: " + formattedEndDate +
+                            "<br><b>Location:</b> " + data[0].location +
+                            "<br><b>Requirement:</b> " + data[0].specialReq +
+                            "<br><b>Description:</b> " + data[0].details;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    // taskRowDisplay.textContent = JSON.stringify(data);
-                    var targetTaskDisplay = document.getElementById("targetTaskDisplay");
-                    // targetTaskDisplay.textContent = JSON.stringify(data);
-                    retrievedData = data[0];
-                    let taskID = data[0].taskID;
-                    let formattedTaskID = taskID.toString().padStart(5, '0');
+                        // Store the data in localStorage
+                        var targetTaskCreatedBy = data[0].createdBy;
+                        localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                        // var targetTaskID = taskID;
+                        // localStorage.setItem('targetTaskID', targetTaskID);
 
-                    // store the data in localStorage
-                    var targetTaskCreatedBy = data[0].createdBy;
-                    localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
-                    var targetTaskID = taskID;
-                    localStorage.setItem('targetTaskID', targetTaskID);
-                    // also trigger template choosing
-                    chooseOfferListTemplate()
-                    console.log(localStorage);
-                    console.log("current user is pro or not: " + localStorage.getItem('pro'));
-                    // console.log(localStorage.getItem('targetTaskID'));
+                        // Also trigger template choosing
+                        chooseOfferListTemplate();
 
-                    let startDateStr = data[0].startDate;
-                    let startDate = new Date(startDateStr);
-                    let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
-
-                    let endDateStr = data[0].endDate;
-                    let endDate = new Date(endDateStr);
-                    let formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
-                    // display
-                    targetTaskDisplay.innerHTML = "<b>Summary:</b> #" + formattedTaskID +
-                        "<br><b>Request:</b> " + data[0].taskName +
-                        "<br><b>Budget:</b> " + data[0].budget + "&nbsp;&nbsp;&nbsp; <b>Category:</b> " + data[0].category +
-                        "<br><b>Date:</b> start: " + formattedStartDate + "&nbsp;&nbsp;&nbsp; end: " + formattedEndDate +
-                        "<br><b>Location:</b> " + data[0].location +
-                        "<br><b>Requirement:</b> " + data[0].specialReq +
-                        "<br><b>Description:</b> " + data[0].details;
-                } else {
-                    console.log('Error:', response.status);
-                }
+                        console.log(localStorage);
+                        console.log("current user is pro or not: " + localStorage.getItem('pro'));
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             } catch (error) {
                 console.error(error);
             }
-        });
+
+        }
+
+
+
 
         // const retrieveTaskButton = document.getElementById('retrieveTaskButton');
         // retrieveTaskButton.addEventListener('click', async () => {
