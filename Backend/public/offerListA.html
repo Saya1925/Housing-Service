@@ -185,29 +185,41 @@
                         // Clear existing content in offerContainer
                         offerContainer.innerHTML = "";
 
-                        for (let i = 0; i < data.length; i++) {
-                            const offerBlock = document.createElement('div');
-                            offerBlock.classList.add('offer');
+                        // handle no offer case
+                        if (data.length === 0) {
+                            // console.log("no offer");
+                            const noOfferText = document.createElement('span');
+                            noOfferText.classList.add('noOffer');
+                            noOfferText.innerHTML = "This task has no any offers yet.";
+                            offerContainer.appendChild(noOfferText);
+                        } else {
+                            // console.log("has offer");
 
-                            const userInfo = document.createElement('div');
-                            userInfo.classList.add('user-info');
+                            // hand the display of offer
+                            for (let i = 0; i < data.length; i++) {
+                                const offerBlock = document.createElement('div');
+                                offerBlock.classList.add('offer');
 
-                            const userName = document.createElement('span');
-                            userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                            userInfo.appendChild(userName);
+                                const userInfo = document.createElement('div');
+                                userInfo.classList.add('user-info');
 
-                            const rating = document.createElement('span');
-                            rating.textContent = data[i].rating;
-                            userInfo.appendChild(rating);
+                                const userName = document.createElement('span');
+                                userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
+                                userInfo.appendChild(userName);
 
-                            offerBlock.appendChild(userInfo);
+                                const rating = document.createElement('span');
+                                rating.textContent = data[i].rating;
+                                userInfo.appendChild(rating);
 
-                            const message = document.createElement('div');
-                            message.classList.add('message');
-                            message.textContent = data[i].message;
-                            offerBlock.appendChild(message);
+                                offerBlock.appendChild(userInfo);
 
-                            offerContainer.appendChild(offerBlock);
+                                const message = document.createElement('div');
+                                message.classList.add('message');
+                                message.textContent = data[i].message;
+                                offerBlock.appendChild(message);
+
+                                offerContainer.appendChild(offerBlock);
+                            }
                         }
                     })
                     .catch(error => {
