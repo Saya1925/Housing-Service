@@ -1,25 +1,17 @@
 .offerContainer {
-    width: 600px;
-    height: 96px;
+    /* width: 600px; */
+    /* height: 96px; */
     background-color: #F2F2F2;
 }
 
 .offer-container {
     display: flex;
     flex-direction: column;
-    width: 600px;
-}
-
-.offer {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #F2f2f2;
-    border-radius: 8px;
+    
 }
 .noOffer {
     display: flex;
+    width: 600px;
     align-items: flex-start;
     margin-bottom: 10px;
     padding: 10px;
@@ -29,11 +21,31 @@
     justify-content: center; /* Add justify-content property with a value of center */
 }
 
+.offer {
+    display: flex;
+    width: 600px;
+    /* height: 96px; */
+    align-items: flex-start;
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #F2f2f2;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.offer > div {
+    margin-bottom: 8px; /* Adjust the desired distance between the inner divs */
+  }
+
 .offer .user-info {
-    width: 145px;
+    width: 120px;
+    height: 64px;
     text-align: right;
-    padding-right: 10px;
+    padding-right: 8px;
+    padding-left: 8px;
     padding-top: 8px;
+    padding-bottom: 8px;
+    
 }
 
 .offer .user-info b {
@@ -41,23 +53,34 @@
 }
 
 .offer .message {
-    width: 314px;
-    height: 60px;
-    padding-left: 10px;
+    width: 310px;
+    height: 64px;
+    padding-right: 8px;
+    padding-left: 8px;
     padding-top: 8px;
+    padding-bottom: 8px;
     white-space: pre-wrap;
     background-color: #FFFFFF;
     border-radius: 8px;
 }
 
 .offer .quotation {
-    width: 136px;
-    height: 60px;
-    padding-left: 10px;
+    width: 122px;
+    height: 64px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     padding-top: 2px;
     text-align: center;
     white-space: pre-wrap;
     background-color: #FFFFFF;
     border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
     border-color: #F99746;
+}
+.offer .quotation h3{
+    all: initial;
+    font-size: 24px;
 }

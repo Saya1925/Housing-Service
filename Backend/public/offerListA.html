@@ -195,8 +195,10 @@
                         } else {
                             // console.log("has offer");
                             const targetTaskCreatedBy = data[0].createdBy;
-            localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                            localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
 
+
+                            // choose which template to use !!! A or B
                             if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
                                 console.log("choose Template B");
                                 function loadCSS(file) {
@@ -232,7 +234,7 @@
 
                                     const quotation = document.createElement('div');
                                     quotation.classList.add('quotation');
-                                    quotation.innerHTML = "quotation<br>" + data[i].quotation + "<br>";
+                                    quotation.innerHTML = "quotation<br><h>" + data[i].quotation + "<h3><br>";
                                     const button = document.createElement('button');
                                     button.textContent = 'Select';
                                     quotation.appendChild(button);
