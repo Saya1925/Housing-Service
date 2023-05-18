@@ -234,9 +234,25 @@
 
                                     const quotation = document.createElement('div');
                                     quotation.classList.add('quotation');
-                                    quotation.innerHTML = "quotation<br><h>" + data[i].quotation + "<h3><br>";
+                                    quotation.innerHTML = "quotation<br><h3>" + data[i].quotation + "<h3><br>";
+
                                     const button = document.createElement('button');
                                     button.textContent = 'Select';
+                                    // Add event listener to the button
+                                    // Use a closure to capture the value of i for each button
+                                    (function (index) {
+                                        button.addEventListener('click', function () {
+                                            // Store the corresponding offerOrder value in localStorage
+                                            localStorage.setItem("selectedOfferID", data[index].offerOrder);
+                                            console.log("Selected offer ID: " + data[index].offerOrder);
+                                            localStorage.setItem("selectedQuotation", data[index].quotation);
+                                            console.log("Selected Quotation: " + data[index].quotation);
+                                            // Redirect to taskPayment.html
+                                            setTimeout(function () {
+                                                window.top.location.href = "taskPayment.html";
+                                            }, 0);
+                                        });
+                                    })(i);
                                     quotation.appendChild(button);
 
                                     offerBlock.appendChild(quotation);
