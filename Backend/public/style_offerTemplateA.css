@@ -1,0 +1,51 @@
+.offerContainer {
+    width: 600px;
+    height: 96px;
+    background-color: #F2F2F2;
+}
+
+.offer-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.offer {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #F2f2f2;
+    border-radius: 8px;
+}
+.noOffer {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #F2f2f2;
+    border-radius: 8px;
+    align-items: center; /* Change align-items property to center */
+    justify-content: center; /* Add justify-content property with a value of center */
+}
+
+.offer .user-info {
+    width: 145px;
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 8px;
+}
+
+.offer .user-info b {
+    font-weight: bold;
+}
+
+.offer .message {
+    width: 455px;
+    height: 50px;
+    padding-left: 10px;
+    padding-top: 8px;
+    white-space: pre-wrap;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
