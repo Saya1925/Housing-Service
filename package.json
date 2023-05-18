@@ -6,7 +6,6 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.12.3",
-    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "jest-environment-jsdom": "^27.0.6",
@@ -45,11 +44,11 @@
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.4",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "dotenv": "^16.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "jest-static-stubs": "^0.0.1",
-    "jsdom-global": "^3.0.2"
+    "jest-static-stubs": "^0.0.1"
   }
 }

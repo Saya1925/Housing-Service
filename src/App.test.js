@@ -2,8 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
-import 'jsdom-global/register'
 import 'identity-obj-proxy';
+import '@testing-library/jest-dom';
+
 
 test('renders the homepage', () => {
   render(
