@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import logoHeader from './images/logoHeader.jpg';
-/*import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';*/
 import { Modal, Box, TextField, Button } from '@mui/material';
 import './css/Header.css';
 

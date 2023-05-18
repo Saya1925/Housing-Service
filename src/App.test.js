@@ -6,7 +6,10 @@ import 'identity-obj-proxy';
 import '@testing-library/jest-dom';
 
 
-test('renders the homepage', () => {
+//	checks if the homepage content is rendered correctly. 
+//You can modify the test to check for specific content or elements present on the homepage.
+
+  test('renders the homepage', () => {
   render(
     <MemoryRouter>
       <App />
