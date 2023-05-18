@@ -5,29 +5,89 @@
     <title>Profile page</title>
     <style>
         .white-box1 {
-           width: 200px;
-           height: 200px;
-           background-color: white;
-           border: 1px solid black; 
+            width: 1000px;
+            height: 200px;
+            background-color: white;
+            border: 1px solid black; 
+            display: block;
+            position: relative;
+            left: 20%;
         }
 
         .white-box2 {
-           width: 200px;
-           height: 200px;
-           background-color: white;
-           border: 1px solid black; 
+            width: 1000px;
+            height: 200px;
+            background-color: white;
+            border: 1px solid black; 
+            display: block;
+            position: relative;
+            left: 20%;
         }
 
         .white-box3 {
-           width: 200px;
-           height: 200px;
-           background-color: white;
-           border: 1px solid black; 
+            width: 1000px;
+            height: 200px;
+            background-color: white;
+            border: 1px solid black; 
+            display: block;
+            position: relative;
+            left: 20%;
+        }
+
+        .background-1 {
+            background-image: url(./background2.png);
+            background-repeat: no-repeat;
+            background-size: 80% 100%;
+            background-position: center center;
+        }
+
+        body {
+            background-image: url(./background1.jpg);
+            background-position: center;
+            background-attachment:fixed ;
+            background-size: 100% 100%;
+        }
+
+        .span1 {
+            display: block;
+            position: relative;
+            left: 20%;
+        }
+
+        .span2 {
+            display: block;
+            position: relative;
+            left: 20%;
+        }
+
+        .span3 {
+            display: block;
+            position: relative;
+            left: 20%;
+        }
+
+        .button1 {
+            display: block;
+            position: relative;
+            left: 20%;
+        }
+
+        .button2 {
+            display: block;
+            position: relative;
+            left: 20%;
+        }
+
+        .button3 {
+            display: block;
+            position: relative;
+            left: 20%;
         }
     </style>
 </head>
 
 <body>
+
     <span id="example"></span>
     <button id="tryTestDB">testing</button>
     <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
@@ -39,25 +99,27 @@
     <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
     <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
 
-    <br /><br />
+<br /><br />
 
-    <span><b>Profile</b></span>
-    <br />
-    <div class="white-box1" id="userInfo"></div>
-    <button id="testOnly">Try to display information</button>
+    <div class="background-1">  
 
-    <br /><br />
-    <span><b>Membership</b></span>
-    <div class="white-box2" id="userMem"></div>
-    <button id="testMem">Test get Membership information</button>
+        <span class="span1"><b>Profile</b></span>
+        <br />
+        <div class="white-box1" id="userInfo"></div>
+        <button class="button1" id="testOnly">Try to display information</button>
 
-    
-    <br /><br />
-    <span><b>Professional</b></span>
-    <div class="white-box3" id="userPro"></div>
-    <button id="testPro">Test get Professional information</button>
+        <br /><br />
+        <span class="span2"><b>Membership</b></span>
+        <div class="white-box2" id="userMem"></div>
+        <button class="button2" id="testMem">Test get Membership information</button>
 
-
+            
+        <br /><br />
+        <span class="span3"><b>Professional</b></span>
+        <div class="white-box3" id="userPro"></div>
+        <button class="button3" id="testPro">Test get Professional information</button>
+    </div>
+       
     <script>
 
 
