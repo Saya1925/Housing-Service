@@ -32,7 +32,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<HomePage />} />
         <Route path="/HomePageRegistered" element={<HomePageRegistered />} />
         <Route path="/HomePageMembership" element={<HomePageMembership />} />
         <Route path="/HomePageProfessional" element={<HomePageProfessional />} />

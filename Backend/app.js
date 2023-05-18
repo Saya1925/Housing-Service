@@ -54,6 +54,11 @@ const offerRoutes = require('./offer.js');
 // register the create task routes
 app.use('/offer', offerRoutes);
 
+// calling transaction.js
+const transactionRoutes = require('./transaction.js');
+// register the create task routes
+app.use('/transaction', transactionRoutes);
+
 
 /**********
  * set up the running of the backend application..
