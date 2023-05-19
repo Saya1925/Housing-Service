@@ -15,7 +15,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .order-summary-field {
@@ -29,18 +28,8 @@
 .order-summary {
     border: 1px solid #ccc;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     cursor: pointer;
-}
-
-.order-summary.selected {
-    background-color: #e6f7ff;
-}
-
-.selected-order-details {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-top: 20px;
 }
 
 .summary-container {
@@ -62,38 +51,62 @@
     font-size: 14px;
 }
 
-.input-container {
+.offer-container {
+    padding: 20px;
+}
+
+.rate-comment-container {
     display: flex;
-    gap: 20px;
+    align-items: center;
 }
 
-.input-column {
-    flex: 1;
+.rate {
+    margin-right: 5px;
 }
 
-.message-input textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.comment {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 5px;
     font-size: 14px;
-    resize: vertical;
-    width: 250px;
-    height: 80px;
 }
 
-.quotation-input input {
-    padding: 8px;
+.comment ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment li {
     border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    width: 90%;
-    padding: 6px;
+    padding: 5px;
 }
 
-.submit-offer button {
-    background-color: #68CEDC;
+.comment li:first-child {
+    border-top: none;
+}
+
+.comment li:last-child {
+    border-bottom: none;
+}
+
+.comment li:not(:first-child):not(:last-child) {
+    border-top: none;
+    border-bottom: none;
+}
+
+.quotation-info p {
+    margin-bottom: 5px;
+}
+
+.quotation-info input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.select-button {
+    background-color: #F99746;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -105,22 +118,6 @@
     transition: background-color 0.3s ease;
 }
 
-.submit-offer {
-    margin-top: 10px;
-}
-
-.submit-offer button:hover {
-    background-color: #68cedc;
-}
-
-.quotation-container {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.quotation-note {
-    font-size: 14px;
-    color: #999;
-    margin-left: 10px;
+.select-button:hover {
+    background-color: #57b0c4;
 }

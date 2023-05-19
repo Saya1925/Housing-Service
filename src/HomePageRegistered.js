@@ -10,7 +10,7 @@ const HomePageRegistered = () => {
   const navigate = useNavigate();
 
   const browseServices = () => {
-    navigate('/RegisteredService');
+    navigate('/RegisteredServices');
   };
 
   return (
