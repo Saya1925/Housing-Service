@@ -116,46 +116,47 @@ const ProfessionalServices = () => {
                     </div>
 
                     {selectedOrder && (
-                        <div className="selected-order-details">
-                            <div className="summary-container">
-                                <h2>Summary</h2>
-                                <p><strong>Order</strong> {"#" + selectedOrder.number}</p>
-                                <p><strong>Request</strong> {selectedOrder.need}</p>
-                                <p><strong>Budget</strong> {selectedOrder.budget}</p>
-                                <p><strong>Category</strong> {selectedOrder.category}</p>
-                                <p><strong>Date start:</strong> {selectedOrder.startDate} <strong>end:</strong> {selectedOrder.endDate}</p>
-                                <p><strong>Location</strong> {selectedOrder.location}</p>
-                                <p><strong>Requirement</strong> {selectedOrder.requirement}</p>
-                                <p><strong>Description</strong> {selectedOrder.description}</p>
-                            </div>
+                        <div className="summary-container">
+                            <h2>Summary</h2>
+                            <p><strong>Order</strong> {"#" + selectedOrder.number}</p>
+                            <p><strong>Request</strong> {selectedOrder.need}</p>
+                            <p><strong>Budget</strong> {selectedOrder.budget}</p>
+                            <p><strong>Category</strong> {selectedOrder.category}</p>
+                            <p><strong>Date start:</strong> {selectedOrder.startDate} <strong>end:</strong> {selectedOrder.endDate}</p>
+                            <p><strong>Location</strong> {selectedOrder.location}</p>
+                            <p><strong>Requirement</strong> {selectedOrder.requirement}</p>
+                            <p><strong>Description</strong> {selectedOrder.description}</p>
                             <hr />
-                            <div className="offer-container">
-                                <div className="message-input">
-                                    <textarea
-                                        placeholder="Message"
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                    />
-                                </div>
-                                
-                                <div className="quotation-container">
-                                    <div className="quotation-input">
-                                        <input
-                                            type="text"
-                                            placeholder="Quotation"
-                                            value={quotation}
-                                            onChange={(e) => setQuotation(e.target.value)}
+                            <div className="input-container">
+                                <div className="input-column">
+                                    <div className="message-input">
+                                        <textarea
+                                            placeholder="Message"
+                                            value={message}
+                                            onChange={(e) => setMessage(e.target.value)}
                                         />
                                     </div>
-                                    <div className="quotation-note">Only visible to customer</div>
                                 </div>
-
-                                <div className="submit-offer">
-                                    <button onClick={handleOfferSubmit}>Submit Offer</button>
+                                <div className="input-column">
+                                    <div className="quotation-container">
+                                        <div className="quotation-input">
+                                            <input
+                                                type="text"
+                                                placeholder="Quotation"
+                                                value={quotation}
+                                                onChange={(e) => setQuotation(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="quotation-note">Only visible to the customer</div>
+                                    <div className="submit-offer">
+                                        <button onClick={handleOfferSubmit}>Submit Offer</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </div>    
                         </div>
                     )}
+
                 </div>
             )}
         </>

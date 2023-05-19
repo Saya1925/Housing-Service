@@ -37,7 +37,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const location = useLocation();
   
   return (
-    <header className="header">
+    <header className="header" isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
       <nav className="nav">
         <div className="logo-container">
           <img src={logoHeader} alt="logoHeader" />
