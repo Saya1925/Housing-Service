@@ -3,6 +3,7 @@
 
 <head>
     <title>Create nNew Account Page</title>
+    <link rel="stylesheet" href="style_servicePage.css">
 </head>
 
 <body>
@@ -37,7 +38,24 @@
     <span id="displayStoredSession"></span><br>
     <!-- header -->
 
-    
+    <!-- start from creating table structure -->
+    <div id="serviceDisplay">
+        <table>
+            <tr>
+                <td>
+                    here for task selection panel
+                    <!-- below is the iframe for taskSelectPanel -->
+                    <div id="selectPanelContainer"></div>
+                </td>
+                <td></td>
+                <td>
+                    here for target task display panel
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
     <script>
         /////////// display local store session
         // Function to update the displayed session information
@@ -52,8 +70,8 @@
         // Initial display of stored session information
         updateDisplayedSession();
 
-         // sign out logic
-         const signOutButton = document.getElementById('signout');
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
         signOutButton.addEventListener('click', () => {
             // Clear the stored session data in localStorage
             localStorage.removeItem('userName');
