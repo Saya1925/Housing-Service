@@ -132,7 +132,9 @@
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     targetTaskCreatedBy = response.createdBy;
+                    targetTaskStatus = response.status;
                     localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                    localStorage.setItem('targetTaskStatus', targetTaskStatus);
                     document.getElementById('createdByDisplay').textContent = "createdBy(userID): " + targetTaskCreatedBy;
                 } else {
                     console.error('Error fetching createdBy');
