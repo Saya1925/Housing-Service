@@ -1,3 +1,7 @@
+html {
+    font-family: 'Montserrat', sans-serif;
+  }
+
 .selectPanel-wrapper {
     width: 300px;
     height: 530px;
@@ -12,10 +16,14 @@
   .selectPanel-container table {
     width: 292px;
     height: 112px;
-    border: 1px solid #999999;
+    border: 1px solid #F2F2F2;
     border-radius: 8px;
     margin: 4px;
   }
+
+  /* .selectPanel-container table.clicked {
+    border: 2px solid #999999;
+  } */
 
   .selectPanel-container table:hover {
     background-color: #f9964610; /* Change the background color on hover */
@@ -34,7 +42,7 @@
   
   .selectPanel-container table td.task-name {
     font-weight: 600;
-    font-size: 24px;
+    font-size: 20px;
     vertical-align: top;
   }
   
