@@ -76,6 +76,30 @@
 
 
     <script>
+        // to get the selected task's status
+        function getTargetTaskStatus() {
+            const taskID = localStorage.getItem("targetTaskID");
+
+            // Make a GET request to the server endpoint
+            fetch(`/getTask/get-target-task?taskID=${taskID}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Access the status from the retrieved task object
+                    // const status = task.length > 0 ? task[0].status : null;
+
+                    // Use the status as needed
+                    // console.log(data[0].status);
+                    localStorage.setItem('targetTaskStatus', data[0].status);
+                    localStorage.setItem('targetTaskDoneBy', data[0].doneBy)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
+
+
         console.log("current target taskID: " + localStorage.getItem("targetTaskID"));
         var offerContainer = document.getElementById("offerContainer");
 
@@ -112,13 +136,66 @@
 
                         if (localStorage.getItem("targetTaskStatus") === "onGoing") {
                             console.log("status: onGoing");
-                            
+
+                            // pro = current user >>> finish task button
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
+                                const onGoingText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                onGoingText.innerHTML = "This is on-going panel for <b>Professioanl</b>";
+                                offerContainer.appendChild(onGoingText);
+                            } else {
+                                const inProgressText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                inProgressText.innerHTML = "This task is in progress..by XX";
+                                offerContainer.appendChild(inProgressText);
+                            }
+
+                            // createdBy = current user >>> review panel for rate and comment
                         } else if (localStorage.getItem("targetTaskStatus") === "taskDone") {
                             console.log("status: taskDone");
+                            if (localStorage.getItem("targetTaskCreatedBy") === localStorage.getItem("userID")) {
+                                const reviewText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                reviewText.innerHTML = "This is review panel for rate and comment";
+                                offerContainer.appendChild(reviewText);
+                            } else {
+                                const pendingText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                pendingText.innerHTML = "This is task is pending for review";
+                                offerContainer.appendChild(pendingText);
+                            }
+
+                            // pro = current user >>> request transaction button ,,, waiting for report button
                         } else if (localStorage.getItem("targetTaskStatus") === "taskReviewed") {
                             console.log("status: taskReviewed");
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
+                                const congradText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                congradText.innerHTML = "Congradulations! now you can request transaction";
+                                offerContainer.appendChild(congradText);
+                            } else {
+                                const finishText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                finishText.innerHTML = "This task is finished";
+                                offerContainer.appendChild(finishText);
+                            }
+
+                            // report for pro and cus
                         } else if (localStorage.getItem("targetTaskStatus") === "taskComplete") {
                             console.log("status: taskComplete");
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
+                                const reportProText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                reportProText.innerHTML = "have you report here (for professional)";
+                                offerContainer.appendChild(reportProText);
+                            } else if (localStorage.getItem("targetTaskCreatedBy") === localStorage.getItem("userID")) {
+                                const reportCusText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                reportCusText.innerHTML = "have you report here (for customer)";
+                                offerContainer.appendChild(reportCusText);
+                            }
+
+                            // normal offer list
                         } else {
                             console.log("status: awaiting");
                             // handle no offers case
@@ -243,26 +320,7 @@
         }
 
 
-        // to ge the selected task's status
-        function getTargetTaskStatus() {
-            const taskID = localStorage.getItem("targetTaskID");
-
-            // Make a GET request to the server endpoint
-            fetch(`/getTask/get-target-task?taskID=${taskID}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Access the status from the retrieved task object
-                    // const status = task.length > 0 ? task[0].status : null;
-
-                    // Use the status as needed
-                    // console.log(data[0].status);
-                    localStorage.setItem('targetTaskStatus', data[0].status);
-                    localStorage.setItem('targetTaskDoneBy', data[0].doneBy)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
+    
 
 
         // use button the change the localStorage targetTaskID
