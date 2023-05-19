@@ -58,12 +58,8 @@
     <span id="dataFromRes"></span><br>
     <span id="dataFromLocalSession"></span><br>
 
-    <br>
-    <span><u>auto getting the local session data:</u></span><br>
-    <span id="displayStoredSession"></span>
-    <br>
-    <br>
-    <button id="signout">sign out</button>
+    <br><br>
+    <button id="signout2">sign out</button>
     <br>
     <br>
     <button id="goUpgradePage">to go membership/ profession subscribe page</button>
@@ -85,10 +81,22 @@
         }
         // Initial display of stored session information
         updateDisplayedSession();
-        
+
         // sign out logic
         const signOutButton = document.getElementById('signout');
         signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('member');
+            localStorage.removeItem('pro');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/login.html';
+        });
+        // only for this page:
+        const signOutButton2 = document.getElementById('signout2');
+        signOutButton2.addEventListener('click', () => {
             // Clear the stored session data in localStorage
             localStorage.removeItem('userName');
             localStorage.removeItem('userID');
