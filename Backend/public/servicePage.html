@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create nNew Account Page</title>
+</head>
+
+<body>
+    <!-- header -->
+    <span id="example"></span>
+    <button id="tryTestDB">Test Connection</button>
+    <button onclick="window.location.href='appTrial.html'">combined drafting page</button><br>
+    <div id="displayGET"></div>
+    <br>
+    <b>Manage User Account</b><br>
+    <button onclick="window.location.href='registration.html'">Registration Panel</button>
+    <button onclick="window.location.href='login.html'">Login Panel</button>
+    <button onclick="window.location.href='upgradeAccount.html'">Manage Memberships</button>
+    <button id="signout">sign out</button><br>
+    <br>
+    <b>Manage Service Requests</b><br>
+    <button onclick="window.location.href='createTask.html'">Create Service Requests</button>
+    <button onclick="window.location.href='taskDisplay.html'">Service Display Panel</button>
+    <button onclick="window.location.href='taskSelectPanel.html'">Task Selection Panel</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer Panel</button>
+    <button onclick="window.location.href='offerListA.html'">View Offers</button><br>
+    <br>
+    <b>Manage Payment Transactions</b><br>
+    <button onclick="window.location.href='taskPayment.html'">Payment from Customer</button>
+    <button onclick="window.location.href=''">Payment to Professional(not ready)</button><br>
+    <br>
+    <b>other components</b><br>
+    <button onclick="window.location.href=''">Review and Rating(not ready)</button>
+    <button onclick="window.location.href=''">Report Generation(not ready)</button><br>
+    <br>
+    <span><u>(for reference) Session data in the localStorage:</u></span><br>
+    <span id="displayStoredSession"></span><br>
+    <!-- header -->
+
+    
+    <script>
+        /////////// display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const member = localStorage.getItem('member');
+            const professional = localStorage.getItem('pro');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+
+         // sign out logic
+         const signOutButton = document.getElementById('signout');
+        signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('member');
+            localStorage.removeItem('pro');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/login.html';
+        });
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = "<b>connection: OK</b> || Retrieved Sample Data: email = " + data[0].email;
+        });
+
+    </script>
+
+</body>
+
+</html>
