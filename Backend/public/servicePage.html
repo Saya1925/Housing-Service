@@ -26,6 +26,7 @@
     <button onclick="window.location.href='taskSelectPanel.html'">Task Selection Panel</button>
     <button onclick="window.location.href='makeOffer.html'">Make Offer Panel</button>
     <button onclick="window.location.href='offerListA.html'">View Offers</button><br>
+    <button onclick="window.location.href='servicePage.html'">Service Page Basic Integration</button><br>
     <br>
     <b>Manage Payment Transactions</b><br>
     <button onclick="window.location.href='taskPayment.html'">Payment from Customer</button>
@@ -38,6 +39,8 @@
     <span><u>(for reference) Session data in the localStorage:</u></span><br>
     <span id="displayStoredSession"></span><br>
     <!-- header -->
+
+
 
     <!-- start from creating table structure -->
     <!-- <div id="serviceDisplay"> -->
@@ -52,17 +55,22 @@
         <div class="col3">
             <!-- here for target task display -->
             <span id="targetTaskDisplay"></span><br>
+
             <hr>
+
             <!-- Display the offer panel for professionals -->
             <!-- below is iFrame (make offer panel) only shows to professional account -->
             <!-- Empty container element for dynamically inserting the sharedDiv -->
-            <div id="makeOfferContainer"></div>
+            <div id="makeOfferContainer"></div><br>
+
             <!-- Display the offerList panel -->
             <!-- below is iFrame for offerListContainer -->
             <!-- Empty container element for dynamically inserting the sharedDiv -->
             <div id="offerListContainer"></div>
         </div>
     </div>
+
+
 
 
 
@@ -149,6 +157,9 @@
 
 
 
+
+
+
     <!-- script for handling make offer iframe for professioanl users -->
 
     <script>
@@ -183,6 +194,9 @@
             document.body.appendChild(offer_iframe);
         }
     </script>
+
+
+
 
 
 
@@ -281,6 +295,9 @@
 
 
 
+
+
+
     <!-- for importing taskSelectPanel -->
     <script>
         // Create an iframe element
@@ -309,6 +326,13 @@
         document.body.appendChild(taskSelectPanel_iframe);
     </script>
 
+
+
+
+
+
+
+<!-- some basic functional elements -->
 
     <script>
         /////////// display local store session
