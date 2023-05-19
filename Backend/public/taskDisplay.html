@@ -45,7 +45,7 @@
     <span><b>taskID value:</b></span>
     <input type="text" id="taskIDInput">
     <button id="retrieveTaskButton">Retrieve Task</button>
-    <span id="taskRowDisplay"></span>
+    <!-- <span id="taskRowDisplay"></span> -->
     <br><br>
     <span id="targetTaskDisplay"></span>
     <br>
@@ -201,7 +201,7 @@
         /// route to  get the target task /get-target-task/${taskID}
         const retrieveTaskButton = document.getElementById('retrieveTaskButton');
         const taskIDInput = document.getElementById('taskIDInput');
-        var taskRowDisplay = document.getElementById('taskRowDisplay');
+        // var taskRowDisplay = document.getElementById('taskRowDisplay');
 
         // other 3 condition to refresh the targetTaskDisplay
         retrieveTaskButton.addEventListener('click', async () => {

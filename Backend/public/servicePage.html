@@ -4,6 +4,7 @@
 <head>
     <title>Create nNew Account Page</title>
     <link rel="stylesheet" href="style_servicePage.css">
+    <link rel="stylesheet" href="style_selectPanel.css">
 </head>
 
 <body>
@@ -39,21 +40,274 @@
     <!-- header -->
 
     <!-- start from creating table structure -->
-    <div id="serviceDisplay">
-        <table>
-            <tr>
-                <td>
-                    here for task selection panel
-                    <!-- below is the iframe for taskSelectPanel -->
-                    <div id="selectPanelContainer"></div>
-                </td>
-                <td></td>
-                <td>
-                    here for target task display panel
-                </td>
-            </tr>
-        </table>
+    <!-- <div id="serviceDisplay"> -->
+    <div class="serviceContainer">
+        <div class="col1">
+            <!-- below is the iframe for taskSelectPanel -->
+            <div id="selectPanelContainer"></div>
+        </div>
+        <div class="col2">
+            <!-- here for the gap -->
+        </div>
+        <div class="col3">
+            <!-- here for target task display -->
+            <span id="targetTaskDisplay"></span><br>
+            <hr>
+            <!-- Display the offer panel for professionals -->
+            <!-- below is iFrame (make offer panel) only shows to professional account -->
+            <!-- Empty container element for dynamically inserting the sharedDiv -->
+            <div id="makeOfferContainer"></div>
+            <!-- Display the offerList panel -->
+            <!-- below is iFrame for offerListContainer -->
+            <!-- Empty container element for dynamically inserting the sharedDiv -->
+            <div id="offerListContainer"></div>
+        </div>
     </div>
+
+
+
+
+
+    <!-- for displaying the target task -->
+
+    <script>
+        // other 3 condition to refresh the targetTaskDisplay
+        // retrieveTaskButton.addEventListener('click', async () => {
+        //     if (taskIDInput.value){
+        //         localStorage.setItem("targetTaskID", taskIDInput.value)
+        //     } 
+        //     retrieveTask();
+        // });
+
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'targetTaskID') {
+                retrieveTask();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            retrieveTask();
+        });
+
+        function retrieveTask() {
+            // const taskID = taskIDInput.value;
+            const taskID = localStorage.getItem("targetTaskID");
+
+            try {
+                fetch(`/getTask/get-target-task?taskID=${taskID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                    .then(data => {
+                        var targetTaskDisplay = document.getElementById("targetTaskDisplay");
+                        retrievedData = data[0];
+                        let taskID = data[0].taskID;
+                        let formattedTaskID = taskID.toString().padStart(5, '0');
+                        let startDateStr = data[0].startDate;
+                        let startDate = new Date(startDateStr);
+                        let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                        let endDateStr = data[0].endDate;
+                        let endDate = new Date(endDateStr);
+                        let formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                        // display
+                        targetTaskDisplay.innerHTML = "<b>Summary:</b> #" + formattedTaskID +
+                            "<br><b>Request:</b> " + data[0].taskName +
+                            "<br><b>Budget:</b> " + data[0].budget + "&nbsp;&nbsp;&nbsp; <b>Category:</b> " + data[0].category +
+                            "<br><b>Date:</b> start: " + formattedStartDate + "&nbsp;&nbsp;&nbsp; end: " + formattedEndDate +
+                            "<br><b>Location:</b> " + data[0].location +
+                            "<br><b>Requirement:</b> " + data[0].specialReq +
+                            "<br><b>Description:</b> " + data[0].details;
+
+                        // Store the data in localStorage
+                        var targetTaskCreatedBy = data[0].createdBy;
+                        localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                        // var targetTaskID = taskID;
+                        // localStorage.setItem('targetTaskID', targetTaskID);
+
+                        // Also trigger template choosing
+                        chooseOfferListTemplate();
+
+                        console.log(localStorage);
+                        console.log("current user is pro or not: " + localStorage.getItem('pro'));
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+    </script>
+
+
+
+
+
+
+    <!-- script for handling make offer iframe for professioanl users -->
+
+    <script>
+
+        // Check the value of localStorage.getItem('pro')
+        const proValue = localStorage.getItem('pro');
+
+        if (proValue === '1') {
+            // Create an iframe element
+            const offer_iframe = document.createElement('iframe');
+            offer_iframe.style.display = 'none'; // Hide the iframe
+
+            // Set the source of the iframe to makeOffer.html
+            offer_iframe.src = 'makeOffer.html';
+
+            // Wait for the iframe to load
+            offer_iframe.addEventListener('load', function () {
+                // Access the content of makeOfferPanel from makeOffer.html of the iframe
+                const offer_iframeContent = offer_iframe.contentDocument || offer_iframe.contentWindow.document;
+                const makeOfferPanel = offer_iframeContent.getElementById('makeOfferPanel');
+
+                // Insert the makeOfferPanel into the container element
+                const makeOfferContainer = document.getElementById('makeOfferContainer');
+                makeOfferContainer.appendChild(makeOfferPanel);
+
+                // Execute the JavaScript code inside makeOffer.html
+                // offer_iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+            });
+
+
+            // Append the iframe to the document body
+            document.body.appendChild(offer_iframe);
+        }
+    </script>
+
+
+
+
+
+
+    <!-- script for handling the offer list for the target task iframe -->
+
+    <script>
+        // Create an iframe element
+        var offerList_iframe = document.createElement('iframe');
+        offerList_iframe.style.display = 'none'; // Hide the iframe
+
+
+        // Listen for changes in the localStorage
+        // this do not work under same window, but when other windows updaed, here will trigger!!
+        window.addEventListener('storage', () => {
+            if (event.key === 'targetTaskID') {
+                chooseOfferListTemplate();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            chooseOfferListTemplate();
+        });
+
+
+        ////// to dertermine which template of offerList should be used
+        function chooseOfferListTemplate() {
+            // console.log("user: " + localStorage.getItem("userID"));
+            // console.log("createdBY: " + localStorage.getItem("targetTaskCreatedBy"));
+            if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
+                console.log("choose CSS B");
+
+                function loadCSS(file) {
+                    var link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = file;
+                    document.head.appendChild(link);
+                }
+                // Load CSS based on your requirements
+                loadCSS("style_offerTemplateB.css");
+
+                // // Set the source of the iframe to makeOffer.html
+                // offerList_iframe.src = 'offerListB.html';
+            } else {
+                console.log("choose CSS A");
+
+                function loadCSS(file) {
+                    456
+                    var link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = file;
+                    document.head.appendChild(link);
+                }
+                // Load CSS based on your requirements
+                loadCSS("style_offerTemplateA.css");
+
+                // // Set the source of the iframe to makeOffer.html
+                // offerList_iframe.src = 'offerListA.html';
+            };
+
+        };
+        // Set the source of the iframe to makeOffer.html
+        offerList_iframe.src = 'offerListA.html';
+
+
+        // Wait for the iframe to load
+        offerList_iframe.addEventListener('load', function () {
+            // Access the content of offerListPanel from offerlistA/B.html of the iframe
+            const offerList_iframeContent = offerList_iframe.contentDocument || offerList_iframe.contentWindow.document;
+            const offerListPanel = offerList_iframeContent.getElementById('offerListPanel');
+
+            // Access the window object of the iframe's document
+            const iframeWindow = offerList_iframe.contentWindow;
+
+            // Access the offerContainer element within the iframe
+            const offerContainer = iframeWindow.document.getElementById('offerContainer');
+
+            // Insert the offerListPanel into the container element
+            const offerListContainer = document.getElementById('offerListContainer');
+            offerListContainer.appendChild(offerListPanel);
+
+            // Execute the JavaScript code inside makeOffer.html
+            // offerList_iframe.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+        });
+
+
+        // Append the iframe to the document body
+        document.body.appendChild(offerList_iframe);
+
+    </script>
+
+
+
+
+
+
+    <!-- for importing taskSelectPanel -->
+    <script>
+        // Create an iframe element
+        const taskSelectPanel_iframe = document.createElement('iframe');
+        taskSelectPanel_iframe.style.display = 'none'; // Hide the iframe
+
+        // Set the source of the iframe to taskSelectPanel.html
+        taskSelectPanel_iframe.src = 'taskSelectPanel.html';
+
+        // Wait for the iframe to load
+        taskSelectPanel_iframe.addEventListener('load', function () {
+            // Access the content of taskSelectPanel from makeOffer.html of the iframe
+            const taskSelectPanel_iframeContent = taskSelectPanel_iframe.contentDocument || taskSelectPanel_iframe.contentWindow.document;
+            const taskSelectPanel = taskSelectPanel_iframeContent.getElementById('selectPanel');
+
+            // Insert the taskSelectPanel into the container element
+            const selectPanelContainer = document.getElementById('selectPanelContainer');
+            selectPanelContainer.appendChild(taskSelectPanel);
+
+            // Execute the JavaScript code inside makeOffer.html
+            // offer_iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
+        });
+
+
+        // Append the iframe to the document body
+        document.body.appendChild(taskSelectPanel_iframe);
+    </script>
 
 
     <script>
