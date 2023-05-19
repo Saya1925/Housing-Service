@@ -3,7 +3,6 @@ import './css/CreateTask.css';
 
 
 const RequestServicePage = () => {
-  const [number, setNumber] = useState('');
   const [need, setNeed] = useState('');
   const [budget, setBudget] = useState('');
   const [category, setCategory] = useState('');
@@ -41,7 +40,6 @@ const RequestServicePage = () => {
     event.preventDefault();
     setIsListView(true);
     const order = {
-      number: orders.length + 1, // Set order number as the length of orders array + 1
       need,
       budget,
       category,
@@ -73,7 +71,6 @@ const RequestServicePage = () => {
   };
 
   const resetFormInputs = () => {
-    setNumber('');
     setNeed('');
     setBudget('');
     setCategory('');
@@ -108,40 +105,44 @@ const RequestServicePage = () => {
     }
   };
 
-
   return (
     <>
       {!isNextClicked && !isListView && (
         <div className="form-container">
-          <h1 className="form-title">Request Service</h1>
+          <h1 className="form-title">Create a Service Request</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-field">
               <label className="form-label">What do you need done?</label>
               <input type="text" className="form-input" value={need} onChange={(e) => setNeed(e.target.value)} />
             </div>
-            <div className="form-field">
-              <label className="form-label">Budget:</label>
-              <input type="text" className="form-input" value={budget} onChange={(e) => setBudget(e.target.value)} />
+            <div className="flex-container">
+              <div className="form-field">
+                <label className="form-label">Budget:</label>
+                <input type="text" className="form-input" value={budget} onChange={(e) => setBudget(e.target.value)} />
+              </div>
+              <div className="form-field">
+                <label className="form-label">Category:</label>
+                <select className="form-input" value={category} onChange={(e) => setCategory(e.target.value)}>
+                  <option value="">select</option>
+                  <option value="Electrical">Electrical</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Gardening">Gardening</option>
+                  <option value="Plumber">Plumber</option>
+                  <option value="Design">Design</option>
+                </select>
+              </div>
             </div>
             <div className="form-field">
-              <label className="form-label">Category:</label>
-              <select className="form-input" value={category} onChange={(e) => setCategory(e.target.value)}>
-                <option value="">select</option>
-                <option value="Electrical">Electrical</option>
-                <option value="Construction">Construction</option>
-                <option value="Gardening">Gardening</option>
-                <option value="Plumber">Plumber</option>
-                <option value="Design">Design</option>
-              </select>
-            </div>
-
-            <div className="form-field">
-              <label className="form-label">Start Date:</label>
-              <input type="date" className="form-input" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-            </div>
-            <div className="form-field">
-              <label className="form-label">End Date:</label>
-              <input type="date" className="form-input" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+              <div className="date-fields-container">
+                <div className="date-field">
+                  <label className="form-label">Start Date:</label>
+                  <input type="date" className="form-input" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                </div>
+                <div className="date-field">
+                  <label className="form-label">End Date:</label>
+                  <input type="date" className="form-input" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                </div>
+              </div>
             </div>
             <div className="form-field">
               <label className="form-label">Special Requirement (optional):</label>
@@ -155,12 +156,10 @@ const RequestServicePage = () => {
               <label className="form-label">It is an online task:</label>
               <input type="checkbox" className="form-checkbox" checked={onlineTask} onChange={(e) => setOnlineTask(e.target.checked)} />
             </div>
-            {onlineTask && (
-              <div className="form-field">
-                <label className="form-label">Details (optional):</label>
-                <input type="text" className="form-input" value={details} onChange={(e) => setDetails(e.target.value)} />
-              </div>
-            )}
+            <div className="form-field">
+              <label className="form-label">Details (optional):</label>
+              <input type="text" className="form-input" value={details} onChange={(e) => setDetails(e.target.value)} />
+            </div>
             <div className="form-actions">
               <button type="submit" className="form-submit-btn">
                 Next
@@ -171,7 +170,6 @@ const RequestServicePage = () => {
       )}
       {isNextClicked && !isListView && (
         <div>
-          {/* Render the next component here */}
           <div className="confirm-task-container">
             <h1 className="confirm-task-title">Create a Service Request</h1>
             <p className="confirm-task-subtitle">Please confirm your request details:</p>
@@ -204,12 +202,10 @@ const RequestServicePage = () => {
                 <div className="confirm-task-label">Location:</div>
                 <div className="confirm-task-value">{location}</div>
               </div>
-              {onlineTask && (
-                <div className="confirm-task-detail">
-                  <div className="confirm-task-label">Details:</div>
-                  <div className="confirm-task-value">{details}</div>
-                </div>
-              )}
+              <div className="confirm-task-detail">
+                 <div className="confirm-task-label">Details:</div>
+                <div className="confirm-task-value">{details}</div>
+              </div>
             </div>
             <div className="form-actions" style={{ display: 'flex', justifyContent: 'space-between' }}>
               <button className="form-back-btn" onClick={() => setIsNextClicked(false)}>Back</button>
@@ -221,7 +217,6 @@ const RequestServicePage = () => {
 
       {isListView && (
         <div className="orders-container">
-
           <div className="order-summary-container">
             <div className="order-summary-header">
               <div className="order-summary-field" onClick={() => handleSort('number')}>
@@ -230,7 +225,6 @@ const RequestServicePage = () => {
               <div className="order-summary-field" onClick={() => handleSort('startDate')}>
                 {sortField === 'startDate' && <span className="sort-arrow">{sortOrder === 'asc' ? '▲' : '▼'}</span>}
               </div>
-              {/* Add more fields for sorting */}
             </div>
             {sortOrders(orders).map((order, index) => (
               <div
@@ -239,7 +233,7 @@ const RequestServicePage = () => {
                 onClick={() => handleOrderSelect(order)}
               >
                 <p>Order: {"#" + (index + 1)}</p>
-                <p>Request: {order.need}</p>
+                <p><strong><span className="request-title">{order.need}</span></strong></p>
                 <p>{order.location}</p>
                 <p>{order.category}</p>
                 <p>{order.location}</p>
@@ -249,17 +243,19 @@ const RequestServicePage = () => {
           </div>
 
           {selectedOrder && (
-            <div className="selected-order-details">
-              <h2>Summary</h2>
-              <p>Order: {"#" + selectedOrder.number}</p>
-              <p>Request: {selectedOrder.need}</p>
-              <p>Budget: {selectedOrder.budget}</p>
-              <p>Category: {selectedOrder.category}</p>
-              <p>Date: {selectedOrder.startDate} {selectedOrder.endDate}</p>
-              <p>Location: {selectedOrder.location}</p>
-              <p>Requirement: {selectedOrder.requirement}</p>
-              <p>Description: {selectedOrder.description}</p>
-            </div>
+              <div className="summary-container">
+                <h2>Summary</h2>
+                <p><strong>Order</strong> {"#" + selectedOrder.number}</p>
+                <p><strong>Request</strong> {selectedOrder.need}</p>
+                <p><strong>Budget</strong> {selectedOrder.budget}</p>
+                <p><strong>Category</strong> {selectedOrder.category}</p>
+                <p><strong>Date start:</strong> {selectedOrder.startDate} <strong>end:</strong> {selectedOrder.endDate}</p>
+                <p><strong>Location</strong> {selectedOrder.location}</p>
+                <p><strong>Requirement</strong> {selectedOrder.requirement}</p>
+                <p><strong>Description</strong> {selectedOrder.description}</p>
+                <hr />
+                <p>no any offer yet...</p>
+              </div>
           )}
         </div>
       )}

@@ -10,7 +10,7 @@ const HomePageProfessional = () => {
   const navigate = useNavigate();
 
   const browseServices = () => {
-    navigate('/MakeOffer');
+    navigate('/ProfessionalServices');
   };
 
   return (

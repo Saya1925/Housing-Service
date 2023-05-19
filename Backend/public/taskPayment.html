@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customer Pay to Platform</title>
+</head>
+
+<body>
+    <!-- header -->
+    <span id="example"></span>
+    <button id="tryTestDB">Test Connection</button>
+    <button onclick="window.location.href='appTrial.html'">combined drafting page</button><br>
+    <div id="displayGET"></div>
+    <br>
+    <b>Manage User Account</b><br>
+    <button onclick="window.location.href='registration.html'">Registration Panel</button>
+    <button onclick="window.location.href='login.html'">Login Panel</button>
+    <button onclick="window.location.href='upgradeAccount.html'">Manage Memberships</button>
+    <button id="signout">sign out</button><br>
+    <br>
+    <b>Manage Service Requests</b><br>
+    <button onclick="window.location.href='createTask.html'">Create Service Requests</button>
+    <button onclick="window.location.href='taskDisplay.html'">Service Display Panel</button>
+    <button onclick="window.location.href='taskSelectPanel.html'">Task Selection Panel</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer Panel</button>
+    <button onclick="window.location.href='offerListA.html'">View Offers</button><br>
+    <button onclick="window.location.href='servicePage.html'">Service Page Basic Integration</button><br>
+    <br>
+    <b>Manage Payment Transactions</b><br>
+    <button onclick="window.location.href='taskPayment.html'">Payment from Customer</button>
+    <button onclick="window.location.href=''">Payment to Professional(not ready)</button><br>
+    <br>
+    <b>other components</b><br>
+    <button onclick="window.location.href=''">Review and Rating(not ready)</button>
+    <button onclick="window.location.href=''">Report Generation(not ready)</button><br>
+    <br>
+    <span><u>(for reference) Session data in the localStorage:</u></span><br>
+    <span id="displayStoredSession"></span><br>
+    <!-- header -->
+
+    <br><br>
+
+    <table
+        style="border-collapse: collapse; width: 632px; border-width: 1px; border-style: solid; border-color: #f2f2f2; ">
+        <tr>
+            <td vertical-align: top;>
+                <p>please enter your payment details:</p>
+                <label for="cardNum">Card Number:</label><br>
+                <input type="text" id="cardNum" name="cardNum" placeholder="Enter your card number" required
+                    size="40px"><br><br>
+                <label for="cardHolder">Cardholder Name:</label><br>
+                <input type="text" id="cardHolder" name="cardHolder" placeholder="Enter cardholder name" required
+                    size="40px"><br><br>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td style="padding-right: 12px;">
+                            <label for="expDate">Expiration Date:</label><br>
+                            <input type="text" id="expDate" name="expDate" placeholder="MM/YY" required
+                                size="18px"><br><br>
+                        </td>
+                        <td>
+                            <label for="cvcNum">CVC Number:</label><br>
+                            <input type="text" id="cvcNum" name="cvcNum" placeholder="Enter CVC number" required
+                                size="18px"><br><br>
+                        </td>
+                    </tr>
+                </table>
+                <label for="billAddress">Billing Address:</label><br>
+                <input id="billAddress" name="billAddress" placeholder="Enter billing address" required
+                    size="40px"></input>
+            </td>
+            <td
+                style="vertical-align: top; text-align: center; width: 200px; height: 192px;border-style: solid; border-width: 1px; border-color: #f2f2f2;">
+                <p>price details:</p>
+                <table style="text-align: center; width: 200px;">
+                    <tr>
+                        <td>service fee</td>
+                    </tr>
+                    <tr>
+                        <td><span id="serviceFee">$270</span></td>
+                    </tr>
+                    <tr>
+                        <td>platform charge</td>
+                    </tr>
+                    <tr>
+                        <td><span id="platformCharge">$0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Total <span id="totalFee">$$</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br><br>
+
+    <button onclick="goBack()">Back</button>
+    <button id="proceedButton">Proceed</button><br>
+    <span id="transactionStatus"></span>
+
+    <script>
+        console.log("selected offer to pay: " + localStorage.getItem("selectedOfferID"));
+        console.log(localStorage);
+
+        // compute price details
+        var fee = parseInt(localStorage.getItem("selectedQuotation"));
+        var serviceFee = document.getElementById("serviceFee");
+        serviceFee.innerHTML = "$" + fee;
+        // console.log("q: " + fee);
+        if (localStorage.getItem("member") == 0) {
+            var charge = fee * 0.02;
+            // console.log(charge);
+        } else {
+            var charge = 0;
+        }
+        var platformCharge = document.getElementById("platformCharge");
+        platformCharge.innerHTML = "$" + charge;
+        var totalFee = document.getElementById("totalFee");
+        var total = fee + charge;
+        totalFee.innerHTML = "$" + total;
+
+
+
+        ///// Route to customerTranscation in transaction.js
+        const proceedButton = document.getElementById('proceedButton');
+        const transactionStatus = document.getElementById('transactionStatus');
+
+        // Add event listener to the button
+        proceedButton.addEventListener('click', function () {
+            // Create XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Set up the request
+            xhr.open('POST', '/transaction/customerTransaction', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Set up the request payload
+            const payload = {
+                userID: localStorage.getItem("userID"),
+                taskID: localStorage.getItem("targetTaskID"),
+                userName: localStorage.getItem("userName"),
+                cardNum: document.getElementById("cardNum").value,
+                cardHolder: document.getElementById("cardHolder").value,
+                billAddress: document.getElementById("billAddress").value,
+                serviceFee: fee,
+                platformCharge: charge,
+                totalFee: total,
+                offerID: localStorage.getItem("selectedOfferID")
+            };
+
+            // Convert payload to JSON string
+            const jsonPayload = JSON.stringify(payload);
+
+            // Handle response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = xhr.responseText;
+                        console.log(response);
+                        transactionStatus.textContent = response; // Set the response message in the span element
+                    } else {
+                        console.error(xhr.status);
+                        transactionStatus.textContent = 'Error occurred during the transaction'; // Display error message
+                    }
+                }
+            };
+
+            // Send the request
+            xhr.send(jsonPayload);
+        });
+
+
+
+
+
+
+        function proceed() {
+            // Perform any necessary validation or processing of the input fields
+            var cardNum = document.getElementById("cardNum").value;
+            var cardHolder = document.getElementById("cardHolder").value;
+            var expDate = document.getElementById("expDate").value;
+            var cvcNum = document.getElementById("cvcNum").value;
+            var billAddress = document.getElementById("billAddress").value;
+        }
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+    <script>
+        /////////// display local store session
+        // Function to update the displayed session information
+        function updateDisplayedSession() {
+            const userName = localStorage.getItem('userName');
+            const userID = localStorage.getItem('userID');
+            const member = localStorage.getItem('member');
+            const professional = localStorage.getItem('pro');
+            const displayElement = document.getElementById('displayStoredSession');
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
+        }
+        // Initial display of stored session information
+        updateDisplayedSession();
+
+         // sign out logic
+         const signOutButton = document.getElementById('signout');
+        signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('member');
+            localStorage.removeItem('pro');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/login.html';
+        });
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = "<b>connection: OK</b> || Retrieved Sample Data: email = " + data[0].email;
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import logoHeader from './images/logoHeader.jpg';
-import Modal from '@mui/material/Modal';
+/*import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button';*/
+import { Modal, Box, TextField, Button } from '@mui/material';
 import './css/Header.css';
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -12,9 +13,13 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  //event listener1
   const handleOpen = () => setOpen(true);
+
+  //event listener2
   const handleClose = () => setOpen(false);
 
+  //event listener3
   const handleLogin = () => {
     console.log(email, password);
     // If the login is successful, update the isLoggedIn state
@@ -28,9 +33,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     { label: 'ABOUT US', path: '' },
     { label: 'LOGIN', onClick: handleOpen },
   ];
+
+  const location = useLocation();
   
   return (
-    <header className="header">
+    <header className="header" isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
       <nav className="nav">
         <div className="logo-container">
           <img src={logoHeader} alt="logoHeader" />
@@ -39,18 +46,20 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           )}
         </div>
         <div className="nav-links">
-          {buttons.map((button, index) => (
+        {buttons.map((button, index) => {
+          const isActive = button.path === location.pathname;
+
+          return (
             <NavLink
               key={index}
               to={button.path}
-              exact
-              activeClassName="active"
-              className="nav-link"
+              className={isActive ? 'nav-link active' : 'nav-link'}
               onClick={button.onClick}
             >
               {button.label}
             </NavLink>
-          ))}
+          );
+        })}
         </div>
       </nav>
 

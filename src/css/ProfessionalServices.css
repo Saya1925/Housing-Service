@@ -1,0 +1,126 @@
+.orders-container {
+    max-width: 900px;
+}
+
+.order-summary-container {
+    width: 300px;
+    height: 600px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order-summary-field {
+    cursor: pointer;
+}
+
+.sort-arrow {
+    margin-left: 5px;
+}
+
+.order-summary {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.order-summary.selected {
+    background-color: #e6f7ff;
+}
+
+.selected-order-details {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.summary-container {
+    width: 600px;
+    height: 600px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.summary-container h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.summary-container p {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input-container {
+    display: flex;
+    gap: 20px;
+}
+
+.input-column {
+    flex: 1;
+}
+
+.message-input textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    resize: vertical;
+    width: 250px;
+    height: 80px;
+}
+
+.quotation-input input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    width: 90%;
+    padding: 6px;
+}
+
+.submit-offer button {
+    background-color: #68CEDC;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-offer {
+    margin-top: 10px;
+}
+
+.submit-offer button:hover {
+    background-color: #68cedc;
+}
+
+.quotation-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quotation-note {
+    font-size: 14px;
+    color: #999;
+    margin-left: 10px;
+}

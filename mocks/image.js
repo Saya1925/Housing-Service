@@ -1,1 +1,1 @@
-module.exports = {};
+module.exports = 'dummy-image-path';
