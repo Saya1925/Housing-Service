@@ -3,12 +3,13 @@
 
 <head>
     <title>Profile page</title>
+    <link rel="icon" href="logo.png" type="image/x-icon">
     <style>
         .white-box1 {
             width: 1000px;
             height: 200px;
-            background-color: white;
-            border: 1px solid black; 
+            background-color: #FFFFFF;
+            border: 1px solid #F2F2F2; 
             display: block;
             position: relative;
             left: 20%;
@@ -17,8 +18,8 @@
         .white-box2 {
             width: 1000px;
             height: 200px;
-            background-color: white;
-            border: 1px solid black; 
+            background-color: #FFFFFF;
+            border: 1px solid #F2F2F2; 
             display: block;
             position: relative;
             left: 20%;
@@ -27,8 +28,8 @@
         .white-box3 {
             width: 1000px;
             height: 200px;
-            background-color: white;
-            border: 1px solid black; 
+            background-color: #FFFFFF;
+            border: 1px solid #F2F2F2; 
             display: block;
             position: relative;
             left: 20%;
@@ -52,18 +53,24 @@
             display: block;
             position: relative;
             left: 20%;
+            color: #444444;
+            font-size: 24px;
         }
 
         .span2 {
             display: block;
             position: relative;
             left: 20%;
+            color: #444444;
+            font-size: 24px;
         }
 
         .span3 {
             display: block;
             position: relative;
             left: 20%;
+            color: #444444;
+            font-size: 24px;
         }
 
         .button1 {
@@ -83,28 +90,48 @@
             position: relative;
             left: 20%;
         }
+
+        .button4 {
+            border: 0;
+            background-color:transparent;
+            color: #999999;
+            left: 1500px;
+            font-size: 24px;
+        }
+
+        .button5 {
+            border: 0;
+            background-color:transparent;
+            color: #999999;
+            left: 1500px;
+            font-size: 24px;
+        }
+
+        .button6 {
+            border: 0;
+            background-color:#F99746;
+            color: #FFFFFF;
+            left: 1500px;
+            font-size: 24px;
+        }
     </style>
 </head>
 
 <body>
+    <div style="padding-left: 400px;">
+        <img src="./logo.png" alt="Sorry, something goes wrong!"  height="200" width="300">
+    </div>
+    <div style="padding-left: 1500px;">
+        <button class="button4" onclick="window.location.href='appTrial.html'">HOME</button>
+        <button class="button5" onclick="window.location.href='tasksList.html'">SERVICE</button>
+        <button class="button6" onclick="window.location.href='createTask.html'">Request Service</button>
+    </div>
 
-    <span id="example"></span>
-    <button id="tryTestDB">testing</button>
-    <button onclick="window.location.href='appTrial.html'">appTrial page</button><br>
-    <div id="displayGET"></div>
-    <button onclick="window.location.href='registration.html'">Registration page</button>
-    <button onclick="window.location.href='login.html'">Login page</button>
-    <button onclick="window.location.href='upgradeAccount.html'">upgrade account page</button><br>
-    <button onclick="window.location.href='createTask.html'">Create Taskk page</button>
-    <button onclick="window.location.href='makeOffer.html'">Make Offer page</button>
-    <button onclick="window.location.href='taskDisplay.html'">Task Display page</button>
-
-<br /><br />
+    <br /><br />
 
     <div class="background-1">  
 
         <span class="span1"><b>Profile</b></span>
-        <br />
         <div class="white-box1" id="userInfo"></div>
         <button class="button1" id="testOnly">Try to display information</button>
 
@@ -122,23 +149,6 @@
        
     <script>
 
-
-        // to test the connectivity to DB
-        const button_testDB = document.getElementById('tryTestDB');
-        button_testDB.addEventListener('click', async () => {
-            // console.log("clicked");
-            const response = await fetch('/account/test-db');
-            const data = await response.json();
-            // console.log(data);
-
-            const jsonStr = JSON.stringify(data);
-            var displayGet = document.getElementById("displayGET");
-            displayGet.innerHTML = data[0].email +
-                " : <br> the userID for this account is =>" + data[0].userID +
-                " <br> the user first name: " + data[0].sname +
-                " <br> the user last name: " + data[0].lname;
-        });
-
         // to display the user's profile information
         const button_getTest = document.getElementById('testOnly');
         button_getTest.addEventListener('click', async () => {
@@ -149,7 +159,7 @@
             const jsonStr = JSON.stringify(data);
             var displayGet = document.getElementById("userInfo");
             displayGet.innerHTML = "Name: " + data[0].sname + " " + data[0].lname +
-            "<br> Email: " + data[0].email + 
+            "<br> Email: "  + data[0].email + 
             "<br> Phone: " + data[0].phoneNum + 
             "<br> UserID: " + data[0].userID; 
         });
@@ -165,7 +175,7 @@
             const jsonStr = JSON.stringify(data);
             var displayGet = document.getElementById("userMem");
             displayGet.innerHTML = "Fee:      " + data[0].membershipFee + 
-            "Start Date:    " + data[0].membershipDate;
+            "<br>Start Date:    " + data[0].membershipDate;
 
         });
 
@@ -180,7 +190,7 @@
             const jsonStr = JSON.stringify(data);
             var displayGet = document.getElementById("userPro");
             displayGet.innerHTML = "Fee:      " + data[0].professionalFee + 
-            "Start Date:    " + data[0].professionalDate;
+            "<br>Start Date:    " + data[0].professionalDate;
 
         });
 
