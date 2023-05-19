@@ -1,0 +1,55 @@
+/* html {
+    font-family: 'Montserrat', sans-serif;
+  } */
+
+.selectPanel-wrapper {
+    width: 300px;
+    height: 530px;
+    overflow: auto;
+  }
+  
+  .selectPanel-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .selectPanel-container table {
+    width: 292px;
+    height: 112px;
+    border: 1px solid #F2F2F2;
+    border-radius: 8px;
+    margin: 4px;
+  }
+
+  /* .selectPanel-container table.clicked {
+    border: 2px solid #999999;
+  } */
+
+  .selectPanel-container table:hover {
+    background-color: #f9964610; /* Change the background color on hover */
+    cursor: pointer; /* Change the cursor to a pointer on hover */
+    border: 1px solid transparent; /* Set initial border with a transparent color */
+    border-width: 1px; /* Change the border weight on hover */
+    border-color: #F99746; /* Change the border color on hover */
+    box-sizing: border-box; /* Expand the border outward */
+  }
+  
+  .selectPanel-container table td {
+    padding: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .selectPanel-container table td.task-name {
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: top;
+  }
+  
+  .selectPanel-container table td.start-date,
+  .selectPanel-container table td.location,
+  .selectPanel-container table td.budget,
+  .selectPanel-container table td.task-id {
+    vertical-align: top;
+  }
+  

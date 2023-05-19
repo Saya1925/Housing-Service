@@ -3,6 +3,7 @@
 
 <head>
     <title>Create nNew Account Page</title>
+    <link rel="stylesheet" href="style_servicePage.css">
 </head>
 
 <body>
@@ -37,34 +38,23 @@
     <span id="displayStoredSession"></span><br>
     <!-- header -->
 
-    <br><br>
-    <span><b>for Vistor: new account registration</b></span>
-    <br><br>
+    <!-- start from creating table structure -->
+    <div id="serviceDisplay">
+        <table>
+            <tr>
+                <td>
+                    here for task selection panel
+                    <!-- below is the iframe for taskSelectPanel -->
+                    <div id="selectPanelContainer"></div>
+                </td>
+                <td></td>
+                <td>
+                    here for target task display panel
+                </td>
+            </tr>
+        </table>
+    </div>
 
-    <form action="/account/add-user" method="post">
-        <label for="sname">First Name:</label>
-        <input type="text" id="sname" name="sname"><br>
-
-        <label for="lname">Last Name:</label>
-        <input type="text" id="lname" name="lname"><br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br>
-
-        <label for="phoneNum">Phone Number:</label>
-        <input type="text" id="phoneNum" name="phoneNum"><br>
-
-        <label for="pw">Password:</label>
-        <input type="password" id="pw" name="pw"><br>
-
-        <button type="submit">Register</button>
-    </form>
-    <div id="newAddedUser"></div>
-
-    <br><br>
-
-    <button id="getLatestUser">GET latest user</button>
-    <div id="latestUser"></div>
 
     <script>
         /////////// display local store session
@@ -80,8 +70,8 @@
         // Initial display of stored session information
         updateDisplayedSession();
 
-         // sign out logic
-         const signOutButton = document.getElementById('signout');
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
         signOutButton.addEventListener('click', () => {
             // Clear the stored session data in localStorage
             localStorage.removeItem('userName');
@@ -104,18 +94,6 @@
             const jsonStr = JSON.stringify(data);
             var displayGet = document.getElementById("displayGET");
             displayGet.innerHTML = "<b>connection: OK</b> || Retrieved Sample Data: email = " + data[0].email;
-        });
-
-        // to get the latest registered user info
-        const button_getLatestUser = document.getElementById('getLatestUser');
-        button_getLatestUser.addEventListener('click', async () => {
-            console.log("clicked");
-            const response = await fetch('/account/get-latest-user');
-            const data = await response.json();
-            // console.log(data);
-            const jsonStr = JSON.stringify(data);
-            var displayGet = document.getElementById("latestUser");
-            displayGet.innerHTML = jsonStr;
         });
 
     </script>

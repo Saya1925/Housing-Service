@@ -7,6 +7,22 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+
+// Route to retrieve tasks for selecting panel - General, by latest
+router.get('/byLatest', async(req, res) => {
+    try {
+        const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 15';
+        const [rows, fields] = await db.query(sql);
+        res.send(rows);
+        console.log(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error connecting to database');
+    }
+});
+
+
+
 // Route to retrieve the taget Task by required taskID
 router.get('/get-target-task', async (req, res) => {
     try {
