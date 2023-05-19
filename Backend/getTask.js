@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 // Route to retrieve tasks for selecting panel - General, by latest
 router.get('/byLatest', async(req, res) => {
     try {
-        const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 15';
+        const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 20';
         const [rows, fields] = await db.query(sql);
         res.send(rows);
         console.log(rows);

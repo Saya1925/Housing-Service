@@ -110,119 +110,130 @@
                         // if else targetTaskStatus == awaiting>{..below code..
 
 
-
-                        // handle no offer case
-                        if (data.length === 0) {
-                            // console.log("no offer");
-                            const noOfferText = document.createElement('span');
-                            noOfferText.classList.add('noOffer');
-                            noOfferText.innerHTML = "This task has no any offers yet.";
-                            offerContainer.appendChild(noOfferText);
+                        if (localStorage.getItem("targetTaskStatus") === "onGoing") {
+                            console.log("status: onGoing");
+                            
+                        } else if (localStorage.getItem("targetTaskStatus") === "taskDone") {
+                            console.log("status: taskDone");
+                        } else if (localStorage.getItem("targetTaskStatus") === "taskReviewed") {
+                            console.log("status: taskReviewed");
+                        } else if (localStorage.getItem("targetTaskStatus") === "taskComplete") {
+                            console.log("status: taskComplete");
                         } else {
-                            // console.log("has offer");
-                            const targetTaskCreatedBy = data[0].createdBy;
-                            localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
-                            // localStorage.setItem('targetTaskStatus', data[0].status);
-
-                            // choose which template to use !!! A or B
-                            if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
-                                console.log("choose Template B");
-                                function loadCSS(file) {
-                                    var link = document.createElement("link");
-                                    link.rel = "stylesheet";
-                                    link.href = file;
-                                    document.head.appendChild(link);
-                                }
-                                // Load CSS based on your requirements
-                                loadCSS("style_offerTemplateB.css");
-
-                                // hand the display of offer in template B - no quotation
-                                for (let i = 0; i < data.length; i++) {
-                                    const offerBlock = document.createElement('div');
-                                    offerBlock.classList.add('offer');
-
-                                    const userInfo = document.createElement('div');
-                                    userInfo.classList.add('user-info');
-
-                                    const userName = document.createElement('span');
-                                    userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                                    userInfo.appendChild(userName);
-
-                                    const rating = document.createElement('span');
-                                    rating.textContent = "rating: " + data[i].rating;
-                                    userInfo.appendChild(rating); 6
-                                    offerBlock.appendChild(userInfo);
-
-                                    const message = document.createElement('div');
-                                    message.classList.add('message');
-                                    message.textContent = data[i].message;
-                                    offerBlock.appendChild(message);
-
-                                    const quotation = document.createElement('div');
-                                    quotation.classList.add('quotation');
-                                    quotation.innerHTML = "quotation<br><h3>" + data[i].quotation + "<h3><br>";
-
-                                    const button = document.createElement('button');
-                                    button.textContent = 'Select';
-                                    // Add event listener to the button
-                                    // Use a closure to capture the value of i for each button
-                                    (function (index) {
-                                        button.addEventListener('click', function () {
-                                            // Store the corresponding offerOrder value in localStorage
-                                            localStorage.setItem("selectedOfferID", data[index].offerOrder);
-                                            console.log("Selected offer ID: " + data[index].offerOrder);
-                                            localStorage.setItem("selectedQuotation", data[index].quotation);
-                                            console.log("Selected Quotation: " + data[index].quotation);
-                                            // Redirect to taskPayment.html
-                                            setTimeout(function () {
-                                                window.top.location.href = "taskPayment.html";
-                                            }, 0);
-                                        });
-                                    })(i);
-                                    quotation.appendChild(button);
-
-                                    offerBlock.appendChild(quotation);
-
-                                    offerContainer.appendChild(offerBlock);
-                                }
+                            console.log("status: awaiting");
+                            // handle no offers case
+                            if (data.length === 0) {
+                                // console.log("no offer");
+                                const noOfferText = document.createElement('span');
+                                noOfferText.classList.add('noOffer');
+                                noOfferText.innerHTML = "This task has no any offers yet.";
+                                offerContainer.appendChild(noOfferText);
                             } else {
-                                console.log("choose Template A");
-                                function loadCSS(file) {
-                                    var link = document.createElement("link");
-                                    link.rel = "stylesheet";
-                                    link.href = file;
-                                    document.head.appendChild(link);
-                                }
-                                // Load CSS based on your requirements
-                                loadCSS("style_offerTemplateA.css");
+                                // console.log("has offer");
+                                const targetTaskCreatedBy = data[0].createdBy;
+                                localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                                // localStorage.setItem('targetTaskStatus', data[0].status);
 
-                                // hand the display of offer in template A - no quotation
-                                for (let i = 0; i < data.length; i++) {
-                                    const offerBlock = document.createElement('div');
-                                    offerBlock.classList.add('offer');
+                                // choose which template to use !!! A or B
+                                if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
+                                    console.log("choose Template B");
+                                    function loadCSS(file) {
+                                        var link = document.createElement("link");
+                                        link.rel = "stylesheet";
+                                        link.href = file;
+                                        document.head.appendChild(link);
+                                    }
+                                    // Load CSS based on your requirements
+                                    loadCSS("style_offerTemplateB.css");
 
-                                    const userInfo = document.createElement('div');
-                                    userInfo.classList.add('user-info');
+                                    // hand the display of offer in template B - no quotation
+                                    for (let i = 0; i < data.length; i++) {
+                                        const offerBlock = document.createElement('div');
+                                        offerBlock.classList.add('offer');
 
-                                    const userName = document.createElement('span');
-                                    userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                                    userInfo.appendChild(userName);
+                                        const userInfo = document.createElement('div');
+                                        userInfo.classList.add('user-info');
 
-                                    const rating = document.createElement('span');
-                                    rating.textContent = "rating: " + data[i].rating;
-                                    userInfo.appendChild(rating);
+                                        const userName = document.createElement('span');
+                                        userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
+                                        userInfo.appendChild(userName);
 
-                                    offerBlock.appendChild(userInfo);
+                                        const rating = document.createElement('span');
+                                        rating.textContent = "rating: " + data[i].rating;
+                                        userInfo.appendChild(rating); 6
+                                        offerBlock.appendChild(userInfo);
 
-                                    const message = document.createElement('div');
-                                    message.classList.add('message');
-                                    message.textContent = data[i].message;
-                                    offerBlock.appendChild(message);
+                                        const message = document.createElement('div');
+                                        message.classList.add('message');
+                                        message.textContent = data[i].message;
+                                        offerBlock.appendChild(message);
 
-                                    offerContainer.appendChild(offerBlock);
-                                }
-                            };
+                                        const quotation = document.createElement('div');
+                                        quotation.classList.add('quotation');
+                                        quotation.innerHTML = "quotation<br><h3>" + data[i].quotation + "<h3><br>";
 
+                                        const button = document.createElement('button');
+                                        button.textContent = 'Select';
+                                        // Add event listener to the button
+                                        // Use a closure to capture the value of i for each button
+                                        (function (index) {
+                                            button.addEventListener('click', function () {
+                                                // Store the corresponding offerOrder value in localStorage
+                                                localStorage.setItem("selectedOfferID", data[index].offerOrder);
+                                                console.log("Selected offer ID: " + data[index].offerOrder);
+                                                localStorage.setItem("selectedQuotation", data[index].quotation);
+                                                console.log("Selected Quotation: " + data[index].quotation);
+                                                // Redirect to taskPayment.html
+                                                setTimeout(function () {
+                                                    window.top.location.href = "taskPayment.html";
+                                                }, 0);
+                                            });
+                                        })(i);
+                                        quotation.appendChild(button);
+
+                                        offerBlock.appendChild(quotation);
+
+                                        offerContainer.appendChild(offerBlock);
+                                    }
+                                } else {
+                                    console.log("choose Template A");
+                                    function loadCSS(file) {
+                                        var link = document.createElement("link");
+                                        link.rel = "stylesheet";
+                                        link.href = file;
+                                        document.head.appendChild(link);
+                                    }
+                                    // Load CSS based on your requirements
+                                    loadCSS("style_offerTemplateA.css");
+
+                                    // hand the display of offer in template A - no quotation
+                                    for (let i = 0; i < data.length; i++) {
+                                        const offerBlock = document.createElement('div');
+                                        offerBlock.classList.add('offer');
+
+                                        const userInfo = document.createElement('div');
+                                        userInfo.classList.add('user-info');
+
+                                        const userName = document.createElement('span');
+                                        userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
+                                        userInfo.appendChild(userName);
+
+                                        const rating = document.createElement('span');
+                                        rating.textContent = "rating: " + data[i].rating;
+                                        userInfo.appendChild(rating);
+
+                                        offerBlock.appendChild(userInfo);
+
+                                        const message = document.createElement('div');
+                                        message.classList.add('message');
+                                        message.textContent = data[i].message;
+                                        offerBlock.appendChild(message);
+
+                                        offerContainer.appendChild(offerBlock);
+                                    }
+                                };
+
+                            }
                         }
                     })
                     .catch(error => {
@@ -246,6 +257,7 @@
                     // Use the status as needed
                     // console.log(data[0].status);
                     localStorage.setItem('targetTaskStatus', data[0].status);
+                    localStorage.setItem('targetTaskDoneBy', data[0].doneBy)
                 })
                 .catch(error => {
                     console.error(error);

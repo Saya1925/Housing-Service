@@ -134,7 +134,10 @@
                         // Add click event listener to each table
                         table.addEventListener('click', () => {
                             localStorage.setItem('targetTaskID', task.taskID);
-                            console.log(localStorage.getItem('targetTaskID'));
+                            // console.log(localStorage.getItem('targetTaskID'));
+                            // console.log(task.doneBy); 
+                            localStorage.setItem('targetTaskStatus', task.status);
+                            localStorage.setItem('targetTaskDoneBy', task.doneBy)
                             // Perform any other actions upon table click if needed
                         });
 

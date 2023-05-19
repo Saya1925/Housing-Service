@@ -37,7 +37,8 @@ router.get('/fetch-created-by', async (req, res) => {
         if (rows.length > 0) {
             const createdBy = rows[0].createdBy;
             const status = rows[0].status;
-            res.send({ createdBy, status });
+            const doneBy = rows[0].doneBy;
+            res.send({ createdBy, status, doneBy });
             console.log("this task status: " + status);
         } else {
             res.status(404).send('Task not found');

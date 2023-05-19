@@ -135,6 +135,10 @@
                     targetTaskStatus = response.status;
                     localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
                     localStorage.setItem('targetTaskStatus', targetTaskStatus);
+                    // console.log("doneby: "+response.doneBy);
+                    // console.log("status: "+response.status);
+                    // console.log("createdBy: "+response.createdBy)
+                    localStorage.setItem('targetTaskDoneBy', response.doneBy);
                     document.getElementById('createdByDisplay').textContent = "createdBy(userID): " + targetTaskCreatedBy;
                 } else {
                     console.error('Error fetching createdBy');
