@@ -48,7 +48,10 @@
     <!-- area to be integrated -->
     <br><br>
     <div id="selectPanel">
-        <button id="byLatestButton">by Latest</button><br>
+        <button id="byLatestButton">Latest Tasks</button>&nbsp
+        <button id="myRequests">My Requests</button>&nbsp
+        <button id="myMissions">My Missions</button>
+        <br>
         <br>
         <div class="selectPanel-wrapper">
             <div id="selectPanelContainer" class="selectPanel-container"></div>
@@ -57,101 +60,235 @@
     <br>
     <br>
 
-    <!-- <span id="raw_offerListDisplay"></span> -->
-
-    <!-- 
-    <div id="offerListPanel">
-        <div id="offerContainer" class="offer-container">
-            <table class="offerContainer">
-                <tr>
-                    <td>
-                    <td style="width: 145px; vertical-align: top; text-align: right; padding: 10px;">
-                        <span id="userName">placeholder</span><br>
-                        <span id="rating">placeholder</span>
-                    </td>
-                    <td style="width: 455px; vertical-align: top; padding: 10px; background-color: #FFFFFF;">
-                        <span id="message">placeholder</span>
-                    </td>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div> -->
-
     <script>
         const byLatestButton = document.getElementById('byLatestButton');
+        const myRequests = document.getElementById("myRequests");
+        const myMissions = document.getElementById("myMissions");
         const selectPanelContainer = document.getElementById('selectPanelContainer');
+        var selection = 1;
 
         byLatestButton.addEventListener('click', async () => {
+            selection = 1;
+            loadSelectPanel();
+        });
+        myRequests.addEventListener('click', async () => {
+            selection = 2;
             loadSelectPanel();
         });
         document.addEventListener('DOMContentLoaded', () => {
             loadSelectPanel();
         });
 
+
+
         function loadSelectPanel() {
-            fetch('/getTask/byLatest')
-                .then(response => response.json())
-                .then(tasks => {
-                    // Clear previous tables
-                    selectPanelContainer.innerHTML = '';
-                    selectPanelContainer.classList.add('selectPanel-container');
+            console.log("selection: " + selection);
+            if (selection == 1) {
+                fetch('/getTask/byLatest')
+                    .then(response => response.json())
+                    .then(tasks => {
+                        // Clear previous tables
+                        selectPanelContainer.innerHTML = '';
+                        selectPanelContainer.classList.add('selectPanel-container');
+                        localStorage.setItem('targetTaskID', tasks[0].taskID);
+                        // console.log(tasks[0].taskID);
 
-                    // Create a table for each task
-                    tasks.forEach(task => {
-                        const table = document.createElement('table');
-                        const row1 = table.insertRow();
-                        const row2 = table.insertRow();
-                        const row3 = table.insertRow();
-                        const row4 = table.insertRow();
+                        // Create a table for each task
+                        tasks.forEach(task => {
+                            const table = document.createElement('table');
+                            const row1 = table.insertRow();
+                            const row2 = table.insertRow();
+                            const row3 = table.insertRow();
+                            const row4 = table.insertRow();
 
-                        // Row 1: Task Name (bold, font size 24px)
-                        const cell1 = row1.insertCell();
-                        cell1.textContent = task.taskName;
-                        cell1.classList.add('task-name');
+                            // Row 1: Task Name (bold, font size 24px)
+                            const cell1 = row1.insertCell();
+                            cell1.textContent = task.taskName;
+                            cell1.classList.add('task-name');
 
-                        // Row 2: Start Date
-                        const cell2 = row2.insertCell();
-                        let startDateStr = task.startDate;
-                        let startDate = new Date(startDateStr);
-                        let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
-                        cell2.textContent = formattedStartDate;
-                        cell2.classList.add('start-date');
+                            // Row 2: Start Date
+                            const cell2 = row2.insertCell();
+                            let startDateStr = task.startDate;
+                            let startDate = new Date(startDateStr);
+                            let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                            cell2.textContent = formattedStartDate;
+                            cell2.classList.add('start-date');
 
-                        // Row 3: Location
-                        const cell3 = row3.insertCell();
-                        cell3.textContent = task.location;
-                        cell3.classList.add('location');
+                            // Row 3: Location
+                            const cell3 = row3.insertCell();
+                            cell3.textContent = task.location;
+                            cell3.classList.add('location');
 
-                        // Row 4: Budget and Task ID (split into two columns)
-                        const cell4_1 = row4.insertCell();
-                        const cell4_2 = row4.insertCell();
-                        cell4_1.textContent = "$" + task.budget;
-                        cell4_1.classList.add('budget');
-                        cell4_2.textContent = "#000" + task.taskID;
-                        cell4_2.classList.add('task-id');
+                            // Row 4: Budget and Task ID (split into two columns)
+                            const cell4_1 = row4.insertCell();
+                            const cell4_2 = row4.insertCell();
+                            cell4_1.textContent = "$" + task.budget;
+                            cell4_1.classList.add('budget');
+                            cell4_2.textContent = "#000" + task.taskID;
+                            cell4_2.classList.add('task-id');
 
-                        // Add click event listener to each table
-                        table.addEventListener('click', () => {
-                            localStorage.setItem('targetTaskID', task.taskID);
-                            // console.log(localStorage.getItem('targetTaskID'));
-                            // console.log(task.doneBy); 
-                            localStorage.setItem('targetTaskStatus', task.status);
-                            localStorage.setItem('targetTaskDoneBy', task.doneBy);
-                            retrieveTargetTaskCustomer();
-                            retrieveTargetTaskProfessional();
-                            retrieveTargetTaskQuotation();
-                            // Perform any other actions upon table click if needed
+                            // Add click event listener to each table
+                            table.addEventListener('click', () => {
+                                localStorage.setItem('targetTaskID', task.taskID);
+                                // console.log(localStorage.getItem('targetTaskID'));
+                                // console.log(task.doneBy); 
+                                localStorage.setItem('targetTaskStatus', task.status);
+                                localStorage.setItem('targetTaskDoneBy', task.doneBy);
+                                retrieveTargetTaskCustomer();
+                                retrieveTargetTaskProfessional();
+                                retrieveTargetTaskQuotation();
+                                // Perform any other actions upon table click if needed
+                            });
+
+                            // Add the table to the tables container
+                            selectPanelContainer.appendChild(table);
                         });
-
-                        // Add the table to the tables container
-                        selectPanelContainer.appendChild(table);
+                    })
+                    .catch(error => {
+                        console.error(error);
                     });
-                })
-                .catch(error => {
+            } else if (selection == 2) {
+                console.log("change to my request");
+                const userID = localStorage.getItem("userID");
+
+                try {
+                    fetch(`/getTask/myRequest?userID=${userID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                        .then(tasks => {
+                            // Clear previous tables
+                            selectPanelContainer.innerHTML = '';
+                            selectPanelContainer.classList.add('selectPanel-container');
+                            localStorage.setItem('targetTaskID', tasks[0].taskID);
+                            // console.log(tasks[0].taskID);
+
+                            // Create a table for each task
+                            tasks.forEach(task => {
+                                const table = document.createElement('table');
+                                const row1 = table.insertRow();
+                                const row2 = table.insertRow();
+                                const row3 = table.insertRow();
+                                const row4 = table.insertRow();
+
+                                // Row 1: Task Name (bold, font size 24px)
+                                const cell1 = row1.insertCell();
+                                cell1.textContent = task.taskName;
+                                cell1.classList.add('task-name');
+
+                                // Row 2: Start Date
+                                const cell2 = row2.insertCell();
+                                let startDateStr = task.startDate;
+                                let startDate = new Date(startDateStr);
+                                let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                                cell2.textContent = formattedStartDate;
+                                cell2.classList.add('start-date');
+
+                                // Row 3: Location
+                                const cell3 = row3.insertCell();
+                                cell3.textContent = task.location;
+                                cell3.classList.add('location');
+
+                                // Row 4: Budget and Task ID (split into two columns)
+                                const cell4_1 = row4.insertCell();
+                                const cell4_2 = row4.insertCell();
+                                cell4_1.textContent = "$" + task.budget;
+                                cell4_1.classList.add('budget');
+                                cell4_2.textContent = "#000" + task.taskID;
+                                cell4_2.classList.add('task-id');
+
+                                // Add click event listener to each table
+                                table.addEventListener('click', () => {
+                                    localStorage.setItem('targetTaskID', task.taskID);
+                                    // console.log(localStorage.getItem('targetTaskID'));
+                                    // console.log(task.doneBy); 
+                                    localStorage.setItem('targetTaskStatus', task.status);
+                                    localStorage.setItem('targetTaskDoneBy', task.doneBy);
+                                    retrieveTargetTaskCustomer();
+                                    retrieveTargetTaskProfessional();
+                                    retrieveTargetTaskQuotation();
+                                    // Perform any other actions upon table click if needed
+                                });
+
+                                // Add the table to the tables container
+                                selectPanelContainer.appendChild(table);
+                            });
+                        })
+                } catch (error) {
                     console.error(error);
-                });
+                }
+
+            } else if (selection == 3) {
+                fetch('/getTask/myMission')
+                    .then(response => response.json())
+                    .then(tasks => {
+                        // Clear previous tables
+                        selectPanelContainer.innerHTML = '';
+                        selectPanelContainer.classList.add('selectPanel-container');
+                        localStorage.setItem('targetTaskID', tasks[0].taskID);
+                        // console.log(tasks[0].taskID);
+
+                        // Create a table for each task
+                        tasks.forEach(task => {
+                            const table = document.createElement('table');
+                            const row1 = table.insertRow();
+                            const row2 = table.insertRow();
+                            const row3 = table.insertRow();
+                            const row4 = table.insertRow();
+
+                            // Row 1: Task Name (bold, font size 24px)
+                            const cell1 = row1.insertCell();
+                            cell1.textContent = task.taskName;
+                            cell1.classList.add('task-name');
+
+                            // Row 2: Start Date
+                            const cell2 = row2.insertCell();
+                            let startDateStr = task.startDate;
+                            let startDate = new Date(startDateStr);
+                            let formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+                            cell2.textContent = formattedStartDate;
+                            cell2.classList.add('start-date');
+
+                            // Row 3: Location
+                            const cell3 = row3.insertCell();
+                            cell3.textContent = task.location;
+                            cell3.classList.add('location');
+
+                            // Row 4: Budget and Task ID (split into two columns)
+                            const cell4_1 = row4.insertCell();
+                            const cell4_2 = row4.insertCell();
+                            cell4_1.textContent = "$" + task.budget;
+                            cell4_1.classList.add('budget');
+                            cell4_2.textContent = "#000" + task.taskID;
+                            cell4_2.classList.add('task-id');
+
+                            // Add click event listener to each table
+                            table.addEventListener('click', () => {
+                                localStorage.setItem('targetTaskID', task.taskID);
+                                // console.log(localStorage.getItem('targetTaskID'));
+                                // console.log(task.doneBy); 
+                                localStorage.setItem('targetTaskStatus', task.status);
+                                localStorage.setItem('targetTaskDoneBy', task.doneBy);
+                                retrieveTargetTaskCustomer();
+                                retrieveTargetTaskProfessional();
+                                retrieveTargetTaskQuotation();
+                                // Perform any other actions upon table click if needed
+                            });
+
+                            // Add the table to the tables container
+                            selectPanelContainer.appendChild(table);
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
         }
+
     </script>
 
     <script> //for implement localStorage data

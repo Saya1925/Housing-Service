@@ -38,7 +38,7 @@ router.get('/get-latest-task', async (req, res) => {
         const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 1';
         const [rows, fields] = await db.query(sql);
         res.send(rows);
-        console.log(rows);
+        // console.log(rows);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error connecting to database');
