@@ -49,4 +49,32 @@ router.get('/fetch-created-by', async (req, res) => {
     }
 });
 
+// Route to retrieve the customer (targetTaskCreatedBy) or professional (targetTaskDoneBy)
+router.get('/get-user', async (req, res) => {
+    try {
+      const { userID } = req.query;
+      const sql = `SELECT * FROM user WHERE userID = ?`;
+      const [rows, fields] = await db.query(sql, [userID]);
+      res.send(rows);
+      // console.log("now using: " + userID);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to the database');
+    }
+  });
+
+  // Route to retrieve the customer (targetTaskCreatedBy) or professional (targetTaskDoneBy)
+router.get('/get-target-offer', async (req, res) => {
+    try {
+      const { taskID } = req.query;
+      const sql = `SELECT * FROM offerList WHERE taskID = ? AND success = 1`;
+      const [rows, fields] = await db.query(sql, [taskID]);
+      res.send(rows);
+      // console.log("now using: " + userID);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to the database');
+    }
+  });
+
 module.exports = router;

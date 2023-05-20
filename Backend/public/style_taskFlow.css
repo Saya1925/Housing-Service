@@ -60,6 +60,12 @@
     border: none;
   }
 
+  .actionButton:hover {
+    background-color: #75E4F3;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px 0px #8d8d8d3f;
+  }
+
   .pendingButton {
     position:static;
     width: 280px;

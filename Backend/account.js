@@ -10,57 +10,57 @@ router.use(bodyParser.json());
 
 // use session
 router.use(
-    session({
-      secret: 'your-secret-key',
-      resave: false,
-      saveUninitialized: false
-    })
-  );
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false
+  })
+);
 
 
 // Route to test the database connection
 router.get('/test-db', async (req, res) => {
-    try {
-        const [rows, fields] = await db.query('SELECT * FROM user');
-        res.send(rows);
-        console.log(rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error connecting to database');
-    }
+  try {
+    const [rows, fields] = await db.query('SELECT * FROM user');
+    res.send(rows);
+    console.log(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error connecting to database');
+  }
 });
 
 // Route to retrieve the latest added User
 router.get('/get-latest-user', async (req, res) => {
-    try {
-        const sql = 'SELECT * FROM user ORDER BY userID DESC LIMIT 1';
-        const [rows, fields] = await db.query(sql);
-        res.send(rows);
-        console.log(rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error connecting to database');
-    }
+  try {
+    const sql = 'SELECT * FROM user ORDER BY userID DESC LIMIT 1';
+    const [rows, fields] = await db.query(sql);
+    res.send(rows);
+    console.log(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error connecting to database');
+  }
 });
 
 
 // Route to create a new User on DB
 router.post('/add-user', async (req, res) => {
-    try {
-        const { sname, lname, email, phoneNum, pw, membership, professional } = req.body;
+  try {
+    const { sname, lname, email, phoneNum, pw, membership, professional } = req.body;
 
-        const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
+    const sql = `INSERT INTO user (sname, lname, email, phoneNum, pw, membership, professional)
                     VALUES ('${sname}', '${lname}', '${email}', '${phoneNum}', '${pw}', '${membership}', '${professional}')`;
 
-        const [result] = await db.query(sql);
+    const [result] = await db.query(sql);
 
-        res.send('Registration successful');
-        console.log(`New user with ID ${result.insertId} has been added`);
-        // res.send(`New user with ID ${result.insertId} has been added`);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Registration failed');
-    }
+    res.send('Registration successful');
+    console.log(`New user with ID ${result.insertId} has been added`);
+    // res.send(`New user with ID ${result.insertId} has been added`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Registration failed');
+  }
 });
 
 // Login System
@@ -92,75 +92,68 @@ router.post('/login', async (req, res) => {
 });
 **/
 router.post('/login', async (req, res) => {
-    const { email, pw } = req.body;
-  
-    try {
-      const sql = `SELECT * FROM user WHERE email='${email}' AND pw='${pw}'`;
-      const [result] = await db.query(sql);
-      console.log("using: " + email + " ; " + pw);
-  
-      if (result.length > 0) {
-        // User exists, login successful
-        req.session.userName = result[0].sname + " " + result[0].lname;
-        req.session.userID = result[0].userID;
-        req.session.email = result[0].email;
-        req.session.member = result[0].membership;
-        req.session.memberFee = result[0].membershipFee;
-        req.session.memberDate = result[0].membershipDate;
-        req.session.pro = result[0].professional;
-        req.session.proFee = result[0].professionalFee;
-        req.session.proDate = result[0].professionalDate;
-        res.send({ message: 'Login successful', userID: result[0].userID, userName: result[0].sname +" " +result[0].lname });
-        console.log(req.session);
-        console.log(result);
-      } else {
-        // User doesn't exist or wrong password
-        res.send({ message: 'Invalid email or password' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error connecting to database');
-    }
-  });
+  const { email, pw } = req.body;
 
-  // define session
-  router.get('/session', (req, res) => {
-    const sessionData = {
-      email: req.session.email,
-      userID: req.session.userID,
-      userName: req.session.userName,
-      member: req.session.member,
-      memberFee: req.session.memberFee,
-      memberDate: req.session.memberDate,
-      pro: req.session.pro,
-      proFee: req.session.proFee,
-      proDate: req.session.proDate
-    };
-    res.json(sessionData);
-  });
+  try {
+    const sql = `SELECT * FROM user WHERE email='${email}' AND pw='${pw}'`;
+    const [result] = await db.query(sql);
+    console.log("using: " + email + " ; " + pw);
 
-  // check professional value
-  router.post('/checkProfessional', async (req, res) => {
-  const { userID } = req.body;
-  
-    try {
-      const sql = `SELECT profession FROM user WHERE userID='${userID}'`;
-      const [result] = await db.query(sql);
-      console.log("check userID's professional value: " + userID);
-  
-      if (result.length > 0) {
-        // return the value
-        res.send({ professional: result[0].professional });
-        console.log(result);
-      } else {
-        // User doesn't exist or wrong password
-        res.send({ message: 'Cannot find the row' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error connecting to database');
+    if (result.length > 0) {
+      // User exists, login successful
+      req.session.userName = result[0].sname + " " + result[0].lname;
+      req.session.userID = result[0].userID;
+      req.session.email = result[0].email;
+      req.session.member = result[0].membership;
+      req.session.memberFee = result[0].membershipFee;
+      req.session.memberDate = result[0].membershipDate;
+      req.session.pro = result[0].professional;
+      req.session.proFee = result[0].professionalFee;
+      req.session.proDate = result[0].professionalDate;
+      res.send({ message: 'Login successful', userID: result[0].userID, userName: result[0].sname + " " + result[0].lname });
+      console.log(req.session);
+      console.log(result);
+    } else {
+      // User doesn't exist or wrong password
+      res.send({ message: 'Invalid email or password' });
     }
-  });
-  
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error connecting to database');
+  }
+});
+
+// define session
+router.get('/session', (req, res) => {
+  const sessionData = {
+    email: req.session.email,
+    userID: req.session.userID,
+    userName: req.session.userName,
+    member: req.session.member,
+    memberFee: req.session.memberFee,
+    memberDate: req.session.memberDate,
+    pro: req.session.pro,
+    proFee: req.session.proFee,
+    proDate: req.session.proDate
+  };
+  res.json(sessionData);
+});
+
+
+// Route to retrieve the customer (targetTaskCreatedBy) or professional (targetTaskDoneBy)
+router.get('/get-user', async (req, res) => {
+  try {
+    const { userID } = req.query;
+    const sql = `SELECT * FROM user WHERE userID = ?`;
+    const [rows, fields] = await db.query(sql, [userID]);
+    res.send(rows);
+    // console.log("now using: " + userID);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error connecting to the database');
+  }
+});
+
+
 
 module.exports = router;

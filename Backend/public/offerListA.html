@@ -29,7 +29,7 @@
     <br>
     <b>Manage Payment Transactions</b><br>
     <button onclick="window.location.href='taskPayment.html'">Payment from Customer</button>
-    <button onclick="window.location.href=''">Payment to Professional(not ready)</button><br>
+    <button onclick="window.location.href='taskPaymentPro.html'">Payment to Professional</button><br>
     <br>
     <b>other components</b><br>
     <button onclick="window.location.href=''">Review and Rating(not ready)</button>
@@ -137,12 +137,73 @@
                         // ::: status = onGoing ::: pro = current user >>> finish task button
                         if (localStorage.getItem("targetTaskStatus") === "onGoing") {
                             console.log("status: onGoing");
-                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
-                                const onGoingText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                onGoingText.innerHTML = "This is on-going panel for <b>Professioanl</b>";
-                                offerContainer.appendChild(onGoingText);
-                            } else {
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) { //display for professioanl
+                                // const onGoingText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // onGoingText.innerHTML = "This is on-going panel for <b>Professioanl</b>";
+                                // offerContainer.appendChild(onGoingText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This is an on-going task..</b>";
+
+                                        const displayParagraph1 = document.createElement('div');
+                                        displayParagraph1.classList.add('taskFlow_paragraph');
+                                        displayParagraph1.innerHTML = "Please contact your client for further information and arrangement.";
+
+                                        const displayParagraph2 = document.createElement('div');
+                                        displayParagraph2.classList.add('taskFlow_paragraphSubtle');
+                                        displayParagraph2.innerHTML = "if you finished the task, please click the  finish Task button.";
+
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButton');
+                                        actionButton.innerText = "Finish Task";
+
+                                        // use the button the update the task status from onGoing to taskDone
+                                        actionButton.addEventListener('click', () => {
+                                            localStorage.setItem("targetTaskStatus", "taskDone");
+                                            const xhr = new XMLHttpRequest();
+                                            xhr.open('POST', '/getTask/toTaskDone');
+                                            xhr.setRequestHeader('Content-Type', 'application/json');
+                                            xhr.onload = function () {
+                                                if (xhr.status === 200) {
+                                                    console.log("Task finished");
+                                                    // Update any other UI elements or perform additional actions if needed
+                                                } else {
+                                                    console.error('Error updating task status');
+                                                }
+                                            };
+                                            xhr.onerror = function () {
+                                                console.error('Error updating task status');
+                                            };
+                                            const taskID = localStorage.getItem("targetTaskID");
+                                            const requestBody = JSON.stringify({ taskID }); // Replace `yourTaskID` with the actual task ID
+                                            xhr.send(requestBody);
+                                            window.location.reload();
+                                            window.top.location.reload();
+                                        });
+
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph1).appendChild(displayParagraph2).appendChild(actionButton);;
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+
+                            } else { //display for customer
                                 // const inProgressText = document.createElement('span');
                                 // // style >>>>>>> noOfferText.classList.add('noOffer');
                                 // inProgressText.innerHTML = "This task is in progress..<br>Please contact your professional";
@@ -157,7 +218,7 @@
                                         // CSS file is loaded, create and style the noOfferText element
                                         const diaplayBlock = document.createElement('div');
                                         diaplayBlock.classList.add('diaplayBlock');
-                                        
+
                                         const displayTitle = document.createElement('div');
                                         displayTitle.classList.add('taskFlow_title');
                                         displayTitle.innerHTML = "<b>This task is in progress..</b>";
@@ -199,7 +260,7 @@
                                         // CSS file is loaded, create and style the noOfferText element
                                         const diaplayBlock = document.createElement('div');
                                         diaplayBlock.classList.add('diaplayBlock');
-                                        
+
                                         const displayTitle = document.createElement('div');
                                         displayTitle.classList.add('taskFlow_title');
                                         displayTitle.innerHTML = "<b>This is an on-going task..</b>";
@@ -208,11 +269,15 @@
                                         displayParagraph.classList.add('taskFlow_paragraph');
                                         displayParagraph.innerHTML = "Please contact your client for further information and arrangement.";
 
-                                        const actionButton =document.createElement('button');
+                                        const displayParagraph2 = document.createElement('div');
+                                        displayParagraph2.classList.add('taskFlow_paragraph');
+                                        displayParagraph2.innerHTML = "Your work is under reviewing by the your client..this step may takes time";
+
+                                        const actionButton = document.createElement('button');
                                         actionButton.classList.add('pendingButton');
                                         actionButton.innerText = "Pending for Confirmation";
 
-                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(actionButton);;
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(displayParagraph2).appendChild(actionButton);;
                                         offerContainer.appendChild(diaplayBlock);
                                         // console.log("CSS file loaded:", file);
                                     };
@@ -226,10 +291,54 @@
                         } else if (localStorage.getItem("targetTaskStatus") === "taskReviewed") {
                             console.log("status: taskReviewed");
                             if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
-                                const congradText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                congradText.innerHTML = "Congradulations! now you can request transaction";
-                                offerContainer.appendChild(congradText);
+                                // const congradText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // congradText.innerHTML = "Congradulations! now you can request transaction";
+                                // offerContainer.appendChild(congradText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>Congradulations!</b>";
+
+                                        const displayParagraph1 = document.createElement('div');
+                                        displayParagraph1.classList.add('taskFlow_paragraph');
+                                        displayParagraph1.innerHTML = "Now you can request transaction";
+
+                                        // const displayParagraph2 = document.createElement('div');
+                                        // displayParagraph2.classList.add('taskFlow_paragraphSubtle');
+                                        // displayParagraph2.innerHTML = "if you finished the task, please click the  finish Task button.";
+
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButton');
+                                        actionButton.innerText = "Request Transaction";
+
+                                        // use the button go to the transaction request page
+                                        actionButton.addEventListener('click', () => {
+                                            setTimeout(function () {
+                                                window.top.location.href = "taskPaymentPro.html";
+                                            }, 0);
+                                        });
+
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph1).appendChild(actionButton);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+
                             } else {
                                 // const finishText = document.createElement('span');
                                 // // style >>>>>>> noOfferText.classList.add('noOffer');
@@ -245,7 +354,7 @@
                                         // CSS file is loaded, create and style the noOfferText element
                                         const diaplayBlock = document.createElement('div');
                                         diaplayBlock.classList.add('diaplayBlock');
-                                        
+
                                         const displayTitle = document.createElement('div');
                                         displayTitle.classList.add('taskFlow_title');
                                         displayTitle.innerHTML = "<b>This task is finished.</b>";

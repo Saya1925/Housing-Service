@@ -30,36 +30,64 @@ router.get('/get-target-task', async (req, res) => {
         const sql = 'SELECT * FROM taskList WHERE taskID = ?';
         const [rows, fields] = await db.query(sql, [taskID]);
         res.send(rows);
-        console.log(rows);
+        // console.log(rows);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error connecting to the database');
     }
 });
 
+
+// // Route to retrieve the quotation by targetTaskID where success is 1
+// router.get('/get-target-offer', async (req, res) => {
+//   try {
+//       const { taskID } = req.query;
+//       const sql = 'SELECT * FROM offerList WHERE taskID = ? AND success = 1';
+//       const [rows, fields] = await db.query(sql, [taskID]);
+//       res.send(rows);
+//       // console.log(rows);
+//   } catch (error) {
+//       console.error(error);
+//       res.status(500).send('Error connecting to the database');
+//   }
+// });
+
+
+
 // Route to retrieve the offerList with targetTaskID
 router.get('/getOfferList', async (req, res) => {
     try {
         const { taskID } = req.query;
         const sql = `
-            SELECT offerList.*, taskList.status, userConcat.userName, ROUND(ratingCalc.rating, 1) AS rating
-            FROM offerList
-            LEFT JOIN (
-                SELECT offerList.offeredBy, CONCAT(user.sname, ' ', user.lname) AS userName
-                FROM offerList
-                JOIN user ON offerList.offeredBy = user.userID
-                WHERE offerList.taskID = ?
-                GROUP BY offerList.offeredBy
-            ) AS userConcat ON offerList.offeredBy = userConcat.offeredBy
-            LEFT JOIN (
-                SELECT offerList.offeredBy, AVG(taskList.rating) AS rating
-                FROM offerList
-                JOIN taskList ON offerList.offeredBy = taskList.doneBy
-                WHERE taskList.status = 'taskComplete' AND offerList.taskID = ?
-                GROUP BY offerList.offeredBy
-            ) AS ratingCalc ON offerList.offeredBy = ratingCalc.offeredBy
-            LEFT JOIN taskList ON offerList.taskID = taskList.taskID
-            WHERE offerList.taskID = ? ORDER BY offerOrder DESC;
+        SELECT
+        offerList.*,
+        taskList.status,
+        userConcat.userName,
+        ROUND(ratingCalc.rating, 1) AS rating
+      FROM offerList
+      LEFT JOIN (
+        SELECT
+          offerList.offeredBy,
+          CONCAT(user.sname, ' ', user.lname) AS userName
+        FROM offerList
+        JOIN user ON offerList.offeredBy = user.userID
+        WHERE offerList.taskID = ?
+        GROUP BY offerList.offeredBy
+      ) AS userConcat ON offerList.offeredBy = userConcat.offeredBy
+      LEFT JOIN (
+        SELECT
+          offerList.offeredBy,
+          AVG(taskList.rating) AS rating
+        FROM offerList
+        JOIN taskList ON offerList.offeredBy = taskList.doneBy
+        WHERE offerList.taskID = ?
+          AND taskList.status IN ('taskReviewed', 'taskComplete')
+        GROUP BY offerList.offeredBy
+      ) AS ratingCalc ON offerList.offeredBy = ratingCalc.offeredBy
+      LEFT JOIN taskList ON offerList.taskID = taskList.taskID
+      WHERE offerList.taskID = ?
+      ORDER BY offerOrder DESC;
+      
         `;
         const [rows, fields] = await db.query(sql, [taskID, taskID, taskID]);
         res.send(rows);
@@ -67,6 +95,22 @@ router.get('/getOfferList', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Error connecting to the database');
+    }
+});
+
+// update task from onGoing to taskDone 
+router.post('/toTaskDone', async (req, res) => {
+    try {
+        const { taskID } = req.body;
+        const sqlUpdateTask = `UPDATE taskList SET status = "taskDone" WHERE taskID = '${taskID}'`;
+
+        const [result] = await db.query(sqlUpdateTask);
+
+        console.log(`Status of ${result.taskID} changed to "taskDone"`);
+        res.send('status change successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error changing status');
     }
 });
 
