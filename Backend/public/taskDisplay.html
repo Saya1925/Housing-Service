@@ -64,6 +64,7 @@
         // Check the value of localStorage.getItem('pro')
         const proValue = localStorage.getItem('pro');
 
+
         if (proValue === '1') {
             // Create an iframe element
             const offer_iframe = document.createElement('iframe');
@@ -126,7 +127,7 @@
             // console.log("user: " + localStorage.getItem("userID"));
             // console.log("createdBY: " + localStorage.getItem("targetTaskCreatedBy"));
             if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
-                console.log("choose CSS B");
+                // console.log("choose CSS B");
 
                 function loadCSS(file) {
                     var link = document.createElement("link");
@@ -140,7 +141,7 @@
                 // // Set the source of the iframe to makeOffer.html
                 // offerList_iframe.src = 'offerListB.html';
             } else {
-                console.log("choose CSS A");
+                // console.log("choose CSS A");
 
                 function loadCSS(file) {
                     456

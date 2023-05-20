@@ -114,6 +114,22 @@ router.post('/toTaskDone', async (req, res) => {
     }
 });
 
+// update task from onGoing to taskDone 
+router.post('/totaskReviewed', async (req, res) => {
+  try {
+      const { taskID, rating, comment } = req.body;
+      // const sqlUpdateTask = `UPDATE taskList SET status = "taskReviewed" WHERE taskID = '${taskID}'`;
+      const sqlUpdateTask = `UPDATE taskList SET status = 'taskReviewed', rating = '${rating}', comment = '${comment}' WHERE taskID = '${taskID}'`;
+      const [result] = await db.query(sqlUpdateTask);
+
+      console.log(`Status of ${result.taskID} changed to "taskReviewed"`);
+      res.send('status change successfully');
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Error changing status');
+  }
+});
+
 // // Route to retrieve the task's status
 // router.get('/getStatus', async (req, res) => {
 //     try {
