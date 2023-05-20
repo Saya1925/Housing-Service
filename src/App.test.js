@@ -6,10 +6,11 @@ import 'identity-obj-proxy';
 import '@testing-library/jest-dom';
 
 
-//	checks if the homepage content is rendered correctly. 
-//You can modify the test to check for specific content or elements present on the homepage.
+/* this unit test verifies that the homepage of the React application 
+is rendered correctly by checking if a specific text 
+('Easy House Services') is present in the rendered output*/
 
-  test('renders the homepage', () => {
+test('renders the homepage', () => {
   render(
     <MemoryRouter>
       <App />
