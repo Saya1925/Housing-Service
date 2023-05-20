@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Customer Pay to Platform</title>
+    <title>Payment to Professional</title>
 </head>
 
 <body>
@@ -71,7 +71,7 @@
             </td>
             <td
                 style="vertical-align: top; text-align: center; width: 200px; height: 192px;border-style: solid; border-width: 1px; border-color: #f2f2f2;">
-                <p>price details:</p>
+                <p>payment details:</p>
                 <table style="text-align: center; width: 200px;">
                     <tr>
                         <td>service fee</td>
@@ -80,13 +80,13 @@
                         <td><span id="serviceFee">$270</span></td>
                     </tr>
                     <tr>
-                        <td>platform charge</td>
+                        <td>commission</td>
                     </tr>
                     <tr>
-                        <td><span id="platformCharge">$0</span></td>
+                        <td><span id="platformCommission">$0</span></td>
                     </tr>
                     <tr>
-                        <td>Total <span id="totalFee">$$</span></td>
+                        <td>Total Payment<span id="totalPayment">$$</span></td>
                     </tr>
                 </table>
             </td>
@@ -102,26 +102,22 @@
         console.log("selected offer to pay: " + localStorage.getItem("selectedOfferID"));
         console.log(localStorage);
 
-        // compute price details
-        var fee = parseInt(localStorage.getItem("selectedQuotation"));
+        // compute service fee details
+        var fee = parseInt(localStorage.getItem("targetTaskPrice"));
         var serviceFee = document.getElementById("serviceFee");
         serviceFee.innerHTML = "$" + fee;
-        // console.log("q: " + fee);
-        if (localStorage.getItem("member") == 0) {
-            var charge = fee * 0.02;
-            // console.log(charge);
-        } else {
-            var charge = 0;
-        }
-        var platformCharge = document.getElementById("platformCharge");
-        platformCharge.innerHTML = "$" + charge;
-        var totalFee = document.getElementById("totalFee");
-        var total = fee + charge;
-        totalFee.innerHTML = "$" + total;
+        // compute commission fee
+        var charge = fee * 0.02;
+        var platformCommission = document.getElementById("platformCommission");
+        platformCommission.innerHTML = "$" + charge;
+        // total
+        var totalPayment = document.getElementById("totalPayment");
+        var total = fee - charge;
+        totalPayment.innerHTML = "$" + total;
 
 
 
-        ///// Route to customerTranscation in transaction.js
+        ///// Route to professionalTranscation in transaction.js
         const proceedButton = document.getElementById('proceedButton');
         const transactionStatus = document.getElementById('transactionStatus');
 
@@ -131,7 +127,7 @@
             const xhr = new XMLHttpRequest();
 
             // Set up the request
-            xhr.open('POST', '/transaction/customerTransaction', true);
+            xhr.open('POST', '/transaction/professionalTransaction', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
 
             // Set up the request payload
@@ -143,9 +139,8 @@
                 cardHolder: document.getElementById("cardHolder").value,
                 billAddress: document.getElementById("billAddress").value,
                 serviceFee: fee,
-                platformCharge: charge,
-                totalFee: total,
-                offerID: localStorage.getItem("selectedOfferID")
+                commission: charge,
+                totalPayment: total,
             };
 
             // Convert payload to JSON string

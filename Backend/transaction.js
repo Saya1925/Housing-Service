@@ -39,6 +39,28 @@ router.post('/customerTransaction', async (req, res) => {
 });
 
 // create a professional transcation record
+router.post('/professionalTransaction', async (req, res) => {
+    try {
+        const { userID, taskID, userName, cardNum, cardHolder, billAddress, serviceFee, commission, totalPayment } = req.body;
+
+        const sqlInsert = `INSERT INTO professionalPay (userID, taskID, userName, cardNum, cardHolder, billAddress, serviceFee, commission, totalPayment)
+                    VALUES ('${userID}', '${taskID}', '${userName}', '${cardNum}', '${cardHolder}', '${billAddress}', '${serviceFee}', '${commission}', '${totalPayment}')`;
+        const sqlUpdateTask = `UPDATE taskList 
+                            SET status = 'taskComplete', transaction = '${totalPayment}', commission = '${commission}'
+                            WHERE taskID = '${taskID}'`;
+
+        const [result] = await db.query(sqlInsert)
+        await db.query(sqlUpdateTask);
+
+        console.log(`New transcation record with ID ${result.insertId} has been added`);
+        res.send('Your Payment is successfully set');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding task');
+    }
+});
+
+// create a professional transcation record
 // router.post('/customerTransaction', async (req, res) => {
 //     try {
 //         const { userID, taskID, userName, cardNum, cardHolder, billAddress, serviceFee, platformCharge, totalFee } = req.body;

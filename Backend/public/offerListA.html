@@ -29,7 +29,7 @@
     <br>
     <b>Manage Payment Transactions</b><br>
     <button onclick="window.location.href='taskPayment.html'">Payment from Customer</button>
-    <button onclick="window.location.href=''">Payment to Professional(not ready)</button><br>
+    <button onclick="window.location.href='taskPaymentPro.html'">Payment to Professional</button><br>
     <br>
     <b>other components</b><br>
     <button onclick="window.location.href=''">Review and Rating(not ready)</button>
@@ -90,7 +90,10 @@
                     // Use the status as needed
                     // console.log(data[0].status);
                     localStorage.setItem('targetTaskStatus', data[0].status);
-                    localStorage.setItem('targetTaskDoneBy', data[0].doneBy)
+                    localStorage.setItem('targetTaskDoneBy', data[0].doneBy);
+                    retrieveTargetTaskCustomer();
+                    retrieveTargetTaskProfessional();
+                    retrieveTargetTaskQuotation();
                 })
                 .catch(error => {
                     console.error(error);
@@ -137,16 +140,8 @@
                         // ::: status = onGoing ::: pro = current user >>> finish task button
                         if (localStorage.getItem("targetTaskStatus") === "onGoing") {
                             console.log("status: onGoing");
-                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
-                                const onGoingText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                onGoingText.innerHTML = "This is on-going panel for <b>Professioanl</b>";
-                                offerContainer.appendChild(onGoingText);
-                            } else {
-                                // const inProgressText = document.createElement('span');
-                                // // style >>>>>>> noOfferText.classList.add('noOffer');
-                                // inProgressText.innerHTML = "This task is in progress..<br>Please contact your professional";
-                                // offerContainer.appendChild(inProgressText);
+                            /// for Professional to make the task Done
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) { //display for professioanl
                                 function loadCSS(file) {
                                     var link = document.createElement("link");
                                     link.rel = "stylesheet";
@@ -157,7 +152,70 @@
                                         // CSS file is loaded, create and style the noOfferText element
                                         const diaplayBlock = document.createElement('div');
                                         diaplayBlock.classList.add('diaplayBlock');
-                                        
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This is an on-going task..</b>";
+
+                                        const displayParagraph1 = document.createElement('div');
+                                        displayParagraph1.classList.add('taskFlow_paragraph');
+                                        displayParagraph1.innerHTML = "Please contact your client for further information and arrangement.";
+
+                                        const displayParagraph2 = document.createElement('div');
+                                        displayParagraph2.classList.add('taskFlow_paragraphSubtle');
+                                        displayParagraph2.innerHTML = "if you finished the task, please click the  finish Task button.";
+
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButton');
+                                        actionButton.innerText = "Finish Task";
+
+                                        // use the button the update the task status from onGoing to taskDone
+                                        actionButton.addEventListener('click', () => {
+                                            localStorage.setItem("targetTaskStatus", "taskDone");
+                                            const xhr = new XMLHttpRequest();
+                                            xhr.open('POST', '/getTask/toTaskDone');
+                                            xhr.setRequestHeader('Content-Type', 'application/json');
+                                            xhr.onload = function () {
+                                                if (xhr.status === 200) {
+                                                    console.log("Task finished");
+                                                    // Update any other UI elements or perform additional actions if needed
+                                                } else {
+                                                    console.error('Error updating task status');
+                                                }
+                                            };
+                                            xhr.onerror = function () {
+                                                console.error('Error updating task status');
+                                            };
+                                            const taskID = localStorage.getItem("targetTaskID");
+                                            const requestBody = JSON.stringify({ taskID }); // Replace `yourTaskID` with the actual task ID
+                                            xhr.send(requestBody);
+                                            window.location.reload();
+                                            window.top.location.reload();
+                                        });
+
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph1).appendChild(displayParagraph2).appendChild(actionButton);;
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+
+                                /// for Customer to wait
+                            } else {
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
                                         const displayTitle = document.createElement('div');
                                         displayTitle.classList.add('taskFlow_title');
                                         displayTitle.innerHTML = "<b>This task is in progress..</b>";
@@ -179,16 +237,12 @@
                             // ::: status = taskDone :::  createdBy = current user >>> review panel for rate and comment
                         } else if (localStorage.getItem("targetTaskStatus") === "taskDone") {
                             console.log("status: taskDone");
+                            /// for Customer to review the task
                             if (localStorage.getItem("targetTaskCreatedBy") === localStorage.getItem("userID")) {
-                                const reviewText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                reviewText.innerHTML = "This is review panel for rate and comment";
-                                offerContainer.appendChild(reviewText);
-                            } else {
-                                // const pendingText = document.createElement('span');
+                                // const reviewText = document.createElement('span');
                                 // // style >>>>>>> noOfferText.classList.add('noOffer');
-                                // pendingText.innerHTML = "This is task is pending for review";
-                                // offerContainer.appendChild(pendingText);
+                                // reviewText.innerHTML = "This is review panel for rate and comment";
+                                // offerContainer.appendChild(reviewText);
                                 function loadCSS(file) {
                                     var link = document.createElement("link");
                                     link.rel = "stylesheet";
@@ -199,7 +253,88 @@
                                         // CSS file is loaded, create and style the noOfferText element
                                         const diaplayBlock = document.createElement('div');
                                         diaplayBlock.classList.add('diaplayBlock');
-                                        
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>Please give your rate and comment!</b>";
+
+                                        const displayParagraph1 = document.createElement('div');
+                                        displayParagraph1.classList.add('taskFlow_paragraph');
+                                        displayParagraph1.innerHTML = "Seems the task was finished buy the professional,<br>please leave your review and confirm the settlement.";
+
+                                        // const displayParagraph2 = document.createElement('div');
+                                        // displayParagraph2.classList.add('taskFlow_paragraphSubtle');
+                                        // displayParagraph2.innerHTML = "if you finished the task, please click the  finish Task button.";
+
+                                        const rating = document.createElement('input');
+                                        rating.setAttribute('type', 'number'); // Set the input type to number
+                                        rating.setAttribute('min', '1'); // Set the minimum value to 1
+                                        rating.setAttribute('max', '5');
+                                        rating.setAttribute('id', 'rating');
+                                        rating.style.width = '30px';
+
+                                        const vertSpace = document.createElement('div');
+                                        vertSpace.classList.add('vertSpace');
+
+                                        const comment = document.createElement('input');
+                                        comment.setAttribute('type', 'text');
+                                        comment.setAttribute('id', 'comment');
+                                        comment.style.width = '200px';                                     
+
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButtonCus');
+                                        actionButton.innerText = "Confirm Task was Completed";
+
+                                        // use the button the update the task status from onGoing to taskDone
+                                        actionButton.addEventListener('click', () => {
+                                            localStorage.setItem("targetTaskStatus", "taskReviewed");
+                                            const xhr = new XMLHttpRequest();
+                                            xhr.open('POST', '/getTask/totaskReviewed');
+                                            xhr.setRequestHeader('Content-Type', 'application/json');
+                                            xhr.onload = function () {
+                                                if (xhr.status === 200) {
+                                                    console.log("Task Reviewed");
+                                                    // Update any other UI elements or perform additional actions if needed
+                                                } else {
+                                                    console.error('Error updating task status');
+                                                }
+                                            };
+                                            xhr.onerror = function () {
+                                                console.error('Error updating task status');
+                                            };
+                                            const taskID = localStorage.getItem("targetTaskID");
+                                            const requestBody = JSON.stringify({ taskID }); // Replace `yourTaskID` with the actual task ID
+                                            xhr.send(requestBody);
+                                            window.location.reload();
+                                            window.top.location.reload();
+                                        });
+
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph1);
+                                        diaplayBlock.appendChild(rating).appendChild(vertSpace);
+                                        diaplayBlock.appendChild(comment);
+                                        diaplayBlock.appendChild(actionButton);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+
+                                /// for Professional to wait for review
+                            } else {
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
                                         const displayTitle = document.createElement('div');
                                         displayTitle.classList.add('taskFlow_title');
                                         displayTitle.innerHTML = "<b>This is an on-going task..</b>";
@@ -208,11 +343,15 @@
                                         displayParagraph.classList.add('taskFlow_paragraph');
                                         displayParagraph.innerHTML = "Please contact your client for further information and arrangement.";
 
-                                        const actionButton =document.createElement('button');
+                                        const displayParagraph2 = document.createElement('div');
+                                        displayParagraph2.classList.add('taskFlow_paragraph');
+                                        displayParagraph2.innerHTML = "Your work is under reviewing by the your client..this step may takes time";
+
+                                        const actionButton = document.createElement('button');
                                         actionButton.classList.add('pendingButton');
                                         actionButton.innerText = "Pending for Confirmation";
 
-                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(actionButton);;
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(displayParagraph2).appendChild(actionButton);;
                                         offerContainer.appendChild(diaplayBlock);
                                         // console.log("CSS file loaded:", file);
                                     };
@@ -226,10 +365,54 @@
                         } else if (localStorage.getItem("targetTaskStatus") === "taskReviewed") {
                             console.log("status: taskReviewed");
                             if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
-                                const congradText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                congradText.innerHTML = "Congradulations! now you can request transaction";
-                                offerContainer.appendChild(congradText);
+                                // const congradText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // congradText.innerHTML = "Congradulations! now you can request transaction";
+                                // offerContainer.appendChild(congradText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>Congradulations!</b>";
+
+                                        const displayParagraph1 = document.createElement('div');
+                                        displayParagraph1.classList.add('taskFlow_paragraph');
+                                        displayParagraph1.innerHTML = "Now you can request transaction";
+
+                                        // const displayParagraph2 = document.createElement('div');
+                                        // displayParagraph2.classList.add('taskFlow_paragraphSubtle');
+                                        // displayParagraph2.innerHTML = "if you finished the task, please click the  finish Task button.";
+
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButton');
+                                        actionButton.innerText = "Request Transaction";
+
+                                        // use the button go to the transaction request page
+                                        actionButton.addEventListener('click', () => {
+                                            setTimeout(function () {
+                                                window.top.location.href = "taskPaymentPro.html";
+                                            }, 0);
+                                        });
+
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph1).appendChild(actionButton);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+
                             } else {
                                 // const finishText = document.createElement('span');
                                 // // style >>>>>>> noOfferText.classList.add('noOffer');
@@ -245,7 +428,7 @@
                                         // CSS file is loaded, create and style the noOfferText element
                                         const diaplayBlock = document.createElement('div');
                                         diaplayBlock.classList.add('diaplayBlock');
-                                        
+
                                         const displayTitle = document.createElement('div');
                                         displayTitle.classList.add('taskFlow_title');
                                         displayTitle.innerHTML = "<b>This task is finished.</b>";
@@ -445,7 +628,104 @@
             updateOfferContainer();
         });
     </script>
-
+    <script> //for implement localStorage data
+        ///
+        ///
+        ///
+        // to retrieve the customer info by targetTaskCreatedBy
+        function retrieveTargetTaskCustomer() {
+            const userID = localStorage.getItem("targetTaskCreatedBy");
+            try {
+                fetch(`/account/get-user?userID=${userID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                    .then(data => {
+                        const name = data[0].sname + " " + data[0].lname;
+                        localStorage.setItem("targetTaskCustomerName", name);
+                        localStorage.setItem("targetTaskCustomerPhone", data[0].phoneNum);
+                        localStorage.setItem("targetTaskCustomerEmail", data[0].email);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        // to retrieve the profession info by targetTaskDoneBy
+        function retrieveTargetTaskProfessional() {
+            const userID = localStorage.getItem("targetTaskDoneBy");
+            if (userID) {
+                try {
+                    fetch(`/account/get-user?userID=${userID}`)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Error:', response.status);
+                            }
+                        })
+                        .then(data => {
+                            if (data && data.length > 0) {
+                                const name = data[0].sname + " " + data[0].lname;
+                                localStorage.setItem("targetTaskProfessionalName", name);
+                                localStorage.setItem("targetTaskProfessionalPhone", data[0].phoneNum);
+                                localStorage.setItem("targetTaskProfessionalEmail", data[0].email);
+                            } else {
+                                localStorage.setItem("targetTaskProfessionalName", null);
+                                localStorage.setItem("targetTaskProfessionalPhone", null);
+                                localStorage.setItem("targetTaskProfessionalEmail", null);
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                console.log("targetTaskDoneBy is null");
+            }
+        }
+        // to retrieve the success quotation by targetTaskID
+        function retrieveTargetTaskQuotation() {
+            const taskID = localStorage.getItem("targetTaskID");
+            try {
+                fetch(`/offer/get-target-offer?taskID=${taskID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const targetTaskPrice = data[0].quotation;
+                            // console.log(data[0].quotation);
+                            localStorage.setItem("targetTaskPrice", targetTaskPrice);
+                            // localStorage.setItem("targetTaskCustomerPhone", data[0].phoneNum);
+                            // localStorage.setItem("targetTaskCustomerEmail", data[0].email);
+                        } else {
+                            localStorage.setItem("targetTaskPrice", null);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        ////
+        ///
+        //
+    </script>
 
     <script>
         /////////// display local store session
