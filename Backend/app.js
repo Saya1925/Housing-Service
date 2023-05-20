@@ -2,6 +2,10 @@
 const express = require('express');
 const app = express();
 
+//Allow access from localhost3000
+const cors = require('cors');
+app.use(cors());
+
 // add & use body-parser module for login
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));

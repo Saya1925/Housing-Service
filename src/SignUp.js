@@ -22,18 +22,14 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+ 
 
     // Log formData to the console for debugging
     console.log(formData);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-    
-      // Log formData to the console for debugging
-      console.log(formData);
     
       // Send a POST request to the backend endpoint
-      axios.post('http://localhost:3001/Backend/account/login', {
+      axios.post('http://localhost:3001/account/add-user', {
         sname: formData.firstName,
         lname: formData.lastName,
         email: formData.email,
@@ -154,6 +150,6 @@ const SignUp = () => {
       </div>
     );
   };
-}
+
 
 export default SignUp;
