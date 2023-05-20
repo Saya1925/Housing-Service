@@ -25,26 +25,26 @@ router.get('/byLatest', async (req, res) => {
 // Route to retrieve tasks for selecting panel - My Requests tasks
 router.get('/myRequest', async (req, res) => {
   try {
-    console.log("shoooooooow my Request")
+    // console.log("shoooooooow my Request")
     const { userID } = req.query;
     const sql = 'SELECT * FROM taskList WHERE createdBy = ? ORDER BY taskID DESC LIMIT 10';
     const [rows, fields] = await db.query(sql, [userID]);
     res.send(rows);
-    console.log(rows);
+    // console.log(rows);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error connecting to database');
   }
 });
 
-// Route to retrieve tasks for selecting panel - My Requests tasks
+// Route to retrieve tasks for selecting panel - My mission tasks
 router.get('/myMission', async (req, res) => {
   try {
     const { userID } = req.query;
     const sql = 'SELECT * FROM taskList WHERE doneBy = ? ORDER BY taskID DESC LIMIT 10';
     const [rows, fields] = await db.query(sql, [userID]);
     res.send(rows);
-    console.log(rows);
+    // console.log(rows);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error connecting to database');
