@@ -143,10 +143,37 @@
                                 onGoingText.innerHTML = "This is on-going panel for <b>Professioanl</b>";
                                 offerContainer.appendChild(onGoingText);
                             } else {
-                                const inProgressText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                inProgressText.innerHTML = "This task is in progress..<br>Please contact your";
-                                offerContainer.appendChild(inProgressText);
+                                // const inProgressText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // inProgressText.innerHTML = "This task is in progress..<br>Please contact your professional";
+                                // offerContainer.appendChild(inProgressText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+                                        
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This task is in progress..</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "Please contact your professional";
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
                             }
 
                             // ::: status = taskDone :::  createdBy = current user >>> review panel for rate and comment
@@ -158,10 +185,41 @@
                                 reviewText.innerHTML = "This is review panel for rate and comment";
                                 offerContainer.appendChild(reviewText);
                             } else {
-                                const pendingText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                pendingText.innerHTML = "This is task is pending for review";
-                                offerContainer.appendChild(pendingText);
+                                // const pendingText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // pendingText.innerHTML = "This is task is pending for review";
+                                // offerContainer.appendChild(pendingText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+                                        
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This is an on-going task..</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "Please contact your client for further information and arrangement.";
+
+                                        const actionButton =document.createElement('button');
+                                        actionButton.classList.add('pendingButton');
+                                        actionButton.innerText = "Pending for Confirmation";
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(actionButton);;
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
                             }
 
                             // ::: status = taskReviewed :::  pro = current user >>> request transaction button ,,, waiting for report button
@@ -173,10 +231,37 @@
                                 congradText.innerHTML = "Congradulations! now you can request transaction";
                                 offerContainer.appendChild(congradText);
                             } else {
-                                const finishText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                finishText.innerHTML = "This task is finished";
-                                offerContainer.appendChild(finishText);
+                                // const finishText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // finishText.innerHTML = "This task is finished";
+                                // offerContainer.appendChild(finishText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+                                        
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This task is finished.</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "here is your review:";
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
                             }
 
                             // ::: status = taskComplete :::  report for pro and cus
@@ -213,13 +298,13 @@
                                         noOfferText.innerHTML = "This task has no any offers yet.";
                                         onOfferBlock.appendChild(noOfferText);
                                         offerContainer.appendChild(onOfferBlock);
-                                        console.log("CSS file loaded:", file);
+                                        // console.log("CSS file loaded:", file);
                                     };
                                     document.head.appendChild(link);
                                 }
 
                                 // Load CSS based on your requirements
-                                loadCSS("style_offerNoOffer.css");
+                                loadCSS("style_taskFlow.css");
                             } else {
                                 // console.log("has offer");
                                 const targetTaskCreatedBy = data[0].createdBy;

@@ -1,0 +1,75 @@
+.noOffer {
+    display: flex;
+    width: 600px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #F2f2f2;
+    border-radius: 8px;
+    align-items: center; /* Change align-items property to center */
+    justify-content: center; /* Add justify-content property with a value of center */
+}
+
+.diaplayBlock {
+    display: inline-grid;
+    width: 600px;
+    align-items: center;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskFlow_title {
+    font-size: 24px;
+    text-align: center;
+    color: #444444;
+}
+
+.taskFlow_subTitle {
+    font-size: 16px;
+    text-align: center;
+    color: #444444;
+}
+
+.taskFlow_paragraph {
+    font-size: 16px;
+    text-align: center;
+    color: #808080;
+}
+
+.taskFlow_paragraphSubtle {
+    font-size: 16px;
+    text-align: center;
+    color: #999999;
+}
+
+.actionButton {
+    position:static;
+    width: 280px;
+    height: 40px;
+    left: 682px;
+    top: 669px;
+    background-color: #68CEDC;
+    font-size: 16px;
+    color: white;
+    border-radius: 4px;
+    border: none;
+  }
+
+  .pendingButton {
+    position:static;
+    width: 280px;
+    height: 40px;
+    left: 682px;
+    top: 669px;
+    background-color: #d1d1d1;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    border: none;
+  }
