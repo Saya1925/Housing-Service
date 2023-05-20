@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 // Route to retrieve tasks for selecting panel - General, by latest
 router.get('/byLatest', async(req, res) => {
     try {
-        const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 15';
+        const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 20';
         const [rows, fields] = await db.query(sql);
         res.send(rows);
         console.log(rows);
@@ -42,7 +42,7 @@ router.get('/getOfferList', async (req, res) => {
     try {
         const { taskID } = req.query;
         const sql = `
-            SELECT offerList.*, userConcat.userName, ROUND(ratingCalc.rating, 1) AS rating
+            SELECT offerList.*, taskList.status, userConcat.userName, ROUND(ratingCalc.rating, 1) AS rating
             FROM offerList
             LEFT JOIN (
                 SELECT offerList.offeredBy, CONCAT(user.sname, ' ', user.lname) AS userName
@@ -58,6 +58,7 @@ router.get('/getOfferList', async (req, res) => {
                 WHERE taskList.status = 'taskComplete' AND offerList.taskID = ?
                 GROUP BY offerList.offeredBy
             ) AS ratingCalc ON offerList.offeredBy = ratingCalc.offeredBy
+            LEFT JOIN taskList ON offerList.taskID = taskList.taskID
             WHERE offerList.taskID = ? ORDER BY offerOrder DESC;
         `;
         const [rows, fields] = await db.query(sql, [taskID, taskID, taskID]);
@@ -68,6 +69,22 @@ router.get('/getOfferList', async (req, res) => {
         res.status(500).send('Error connecting to the database');
     }
 });
+
+// // Route to retrieve the task's status
+// router.get('/getStatus', async (req, res) => {
+//     try {
+//         const { taskID } = req.query;
+//         const sql = `
+//             SELECT status from taskList where taskID = ? ;
+//         `;
+//         const [rows, fields] = await db.query(sql, [taskID]);
+//         res.send(rows);
+//         console.log(rows);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error connecting to the database');
+//     }
+// });
 
 
 // // Route to retrieve the offerList with targetTaskID

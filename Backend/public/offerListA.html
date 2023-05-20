@@ -2,11 +2,44 @@
 <html>
 
 <head>
-    <title>OfferList A</title>
+    <title>OfferList</title>
     <!-- <link rel="stylesheet" href="style_offerTemplateA.css"> -->
 </head>
 
 <body>
+    <!-- header -->
+    <span id="example"></span>
+    <button id="tryTestDB">Test Connection</button>
+    <button onclick="window.location.href='appTrial.html'">combined drafting page</button><br>
+    <div id="displayGET"></div>
+    <br>
+    <b>Manage User Account</b><br>
+    <button onclick="window.location.href='registration.html'">Registration Panel</button>
+    <button onclick="window.location.href='login.html'">Login Panel</button>
+    <button onclick="window.location.href='upgradeAccount.html'">Manage Memberships</button>
+    <button id="signout">sign out</button><br>
+    <br>
+    <b>Manage Service Requests</b><br>
+    <button onclick="window.location.href='createTask.html'">Create Service Requests</button>
+    <button onclick="window.location.href='taskDisplay.html'">Service Display Panel</button>
+    <button onclick="window.location.href='taskSelectPanel.html'">Task Selection Panel</button>
+    <button onclick="window.location.href='makeOffer.html'">Make Offer Panel</button>
+    <button onclick="window.location.href='offerListA.html'">View Offers</button><br>
+    <button onclick="window.location.href='servicePage.html'">Service Page Basic Integration</button><br>
+    <br>
+    <b>Manage Payment Transactions</b><br>
+    <button onclick="window.location.href='taskPayment.html'">Payment from Customer</button>
+    <button onclick="window.location.href=''">Payment to Professional(not ready)</button><br>
+    <br>
+    <b>other components</b><br>
+    <button onclick="window.location.href=''">Review and Rating(not ready)</button>
+    <button onclick="window.location.href=''">Report Generation(not ready)</button><br>
+    <br>
+    <span><u>(for reference) Session data in the localStorage:</u></span><br>
+    <span id="displayStoredSession"></span><br>
+    <!-- header -->
+    <br><br>
+
     <span id="sharedDiv">
         <span><u>here are the localStorage session data:</u></span><br>
         <span id="displayStoredSession"></span>
@@ -41,132 +74,39 @@
         </div>
     </div>
 
-    <!-- <script>
-        console.log("current target taskID: " + localStorage.getItem("targetTaskID"));
-        var offerContainer = document.getElementById("offerContainer");
-
-        // use the input to change the localStorage.getitem("pro");
-        const loadOfferListButton = document.getElementById('loadOfferListButton');
-        loadOfferListButton.addEventListener('click', async() => {
-            var changeTargetTaskID = document.getElementById("targetTaskID").value;
-            localStorage.setItem('targetTaskID', changeTargetTaskID);
-            console.log(localStorage.getItem("targetTaskID"));
-            taskID = localStorage.getItem("targetTaskID");
-            try {
-                const response = await fetch(`/getTask/getOfferList?taskID=${taskID}`);
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    console.log(data.length);
-                    // for display the raw JSON
-                    raw_offerListDisplay.textContent = JSON.stringify(data);
-
-                    // Clear existing content in offerContainer
-                    offerContainer.innerHTML = "";
-
-                    // userName.innerHTML = "<b>" + data[0].userName + "</b>";
-                    // rating.textContent = data[0].rating;
-                    // message.textContent = data[0].message;
-
-                    for (let i = 0; i < data.length; i++) {
-                        const offerBlock = document.createElement('div');
-                        offerBlock.classList.add('offer');
-
-                        const userInfo = document.createElement('div');
-                        userInfo.classList.add('user-info');
-
-                        const userName = document.createElement('span');
-                        userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                        userInfo.appendChild(userName);
-
-                        const rating = document.createElement('span');
-                        rating.textContent = data[i].rating;
-                        userInfo.appendChild(rating);
-
-                        offerBlock.appendChild(userInfo);
-
-                        const message = document.createElement('div');
-                        message.classList.add('message');
-                        message.textContent = data[i].message;
-                        offerBlock.appendChild(message);
-
-                        offerContainer.appendChild(offerBlock);
-                    }
-
-                } else {
-                    console.log('Error:', response.status);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        });
-
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // // only work on single page, not work for DIV shared
-            // if (targetTaskID.value === ""){
-            // taskID = localStorage.getItem("targetTaskID");
-            // } else {
-            //     taskID = targetTaskID.value;
-            // }
-
-            // this works for Div shared
-            taskID = localStorage.getItem("targetTaskID");
-            try {
-                const response = await fetch(`/getTask/getOfferList?taskID=${taskID}`);
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    console.log(data.length);
-                    // for display the raw JSON
-                    raw_offerListDisplay.textContent = JSON.stringify(data);
-
-                    // Clear existing content in offerContainer
-                    offerContainer.innerHTML = "";
-
-
-                    for (let i = 0; i < data.length; i++) {
-                        const offerBlock = document.createElement('div');
-                        offerBlock.classList.add('offer');
-
-                        const userInfo = document.createElement('div');
-                        userInfo.classList.add('user-info');
-
-                        const userName = document.createElement('span');
-                        userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                        userInfo.appendChild(userName);
-
-                        const rating = document.createElement('span');
-                        rating.textContent = data[i].rating;
-                        userInfo.appendChild(rating);
-
-                        offerBlock.appendChild(userInfo);
-
-                        const message = document.createElement('div');
-                        message.classList.add('message');
-                        message.textContent = data[i].message;
-                        offerBlock.appendChild(message);
-
-                        offerContainer.appendChild(offerBlock);
-                    }
-
-                } else {
-                    console.log('Error:', response.status);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        });
-    </script> -->
 
     <script>
+        // to get the selected task's status
+        function getTargetTaskStatus() {
+            const taskID = localStorage.getItem("targetTaskID");
+
+            // Make a GET request to the server endpoint
+            fetch(`/getTask/get-target-task?taskID=${taskID}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Access the status from the retrieved task object
+                    // const status = task.length > 0 ? task[0].status : null;
+
+                    // Use the status as needed
+                    // console.log(data[0].status);
+                    localStorage.setItem('targetTaskStatus', data[0].status);
+                    localStorage.setItem('targetTaskDoneBy', data[0].doneBy)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
+
+
         console.log("current target taskID: " + localStorage.getItem("targetTaskID"));
         var offerContainer = document.getElementById("offerContainer");
 
         function updateOfferContainer() {
             const taskID = localStorage.getItem("targetTaskID");
+            getTargetTaskStatus();
+
             if (taskID) {
                 fetch(`/getTask/getOfferList?taskID=${taskID}`)
                     .then(response => {
@@ -177,126 +117,300 @@
                         }
                     })
                     .then(data => {
-                        console.log(data);
-                        console.log(data.length);
+                        // console.log(data);
+                        // console.log(data.length);
                         // // for display the raw JSON
                         // raw_offerListDisplay.textContent = JSON.stringify(data);
 
                         // Clear existing content in offerContainer
                         offerContainer.innerHTML = "";
 
-                        // handle no offer case
-                        if (data.length === 0) {
-                            // console.log("no offer");
-                            const noOfferText = document.createElement('span');
-                            noOfferText.classList.add('noOffer');
-                            noOfferText.innerHTML = "This task has no any offers yet.";
-                            offerContainer.appendChild(noOfferText);
-                        } else {
-                            // console.log("has offer");
-                            const targetTaskCreatedBy = data[0].createdBy;
-                            localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                        // -------> ----------> ------->
+                        // state the if condition baesd on taslist status:4 diff
+                        // if targetTaskStatus == onGoing >> template A: for pro, B:(else) for taskowner; C:other(maybe not need cater)
+                        // if else targetTaskStatus == taskDone >> template A: for taskowner- reviewPage, B:(else) for pro;
+                        // if else targetTaskStatus == taskReviewed >> 
+                        // if else targetTaskStatus == taskComplete >> template A: for pro- requestTran; B: this task is completed 
+                        // if else targetTaskStatus == awaiting>{..below code..
 
 
-                            // choose which template to use !!! A or B
-                            if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
-                                console.log("choose Template B");
-                                function loadCSS(file) {
-                                    var link = document.createElement("link");
-                                    link.rel = "stylesheet";
-                                    link.href = file;
-                                    document.head.appendChild(link);
-                                }
-                                // Load CSS based on your requirements
-                                loadCSS("style_offerTemplateB.css");
-
-                                // hand the display of offer in template B - no quotation
-                                for (let i = 0; i < data.length; i++) {
-                                    const offerBlock = document.createElement('div');
-                                    offerBlock.classList.add('offer');
-
-                                    const userInfo = document.createElement('div');
-                                    userInfo.classList.add('user-info');
-
-                                    const userName = document.createElement('span');
-                                    userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                                    userInfo.appendChild(userName);
-
-                                    const rating = document.createElement('span');
-                                    rating.textContent = "rating: " + data[i].rating;
-                                    userInfo.appendChild(rating); 6
-                                    offerBlock.appendChild(userInfo);
-
-                                    const message = document.createElement('div');
-                                    message.classList.add('message');
-                                    message.textContent = data[i].message;
-                                    offerBlock.appendChild(message);
-
-                                    const quotation = document.createElement('div');
-                                    quotation.classList.add('quotation');
-                                    quotation.innerHTML = "quotation<br><h3>" + data[i].quotation + "<h3><br>";
-
-                                    const button = document.createElement('button');
-                                    button.textContent = 'Select';
-                                    // Add event listener to the button
-                                    // Use a closure to capture the value of i for each button
-                                    (function (index) {
-                                        button.addEventListener('click', function () {
-                                            // Store the corresponding offerOrder value in localStorage
-                                            localStorage.setItem("selectedOfferID", data[index].offerOrder);
-                                            console.log("Selected offer ID: " + data[index].offerOrder);
-                                            localStorage.setItem("selectedQuotation", data[index].quotation);
-                                            console.log("Selected Quotation: " + data[index].quotation);
-                                            // Redirect to taskPayment.html
-                                            setTimeout(function () {
-                                                window.top.location.href = "taskPayment.html";
-                                            }, 0);
-                                        });
-                                    })(i);
-                                    quotation.appendChild(button);
-
-                                    offerBlock.appendChild(quotation);
-
-                                    offerContainer.appendChild(offerBlock);
-                                }
+                        // ::: status = onGoing ::: pro = current user >>> finish task button
+                        if (localStorage.getItem("targetTaskStatus") === "onGoing") {
+                            console.log("status: onGoing");
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
+                                const onGoingText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                onGoingText.innerHTML = "This is on-going panel for <b>Professioanl</b>";
+                                offerContainer.appendChild(onGoingText);
                             } else {
-                                console.log("choose Template A");
+                                // const inProgressText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // inProgressText.innerHTML = "This task is in progress..<br>Please contact your professional";
+                                // offerContainer.appendChild(inProgressText);
                                 function loadCSS(file) {
                                     var link = document.createElement("link");
                                     link.rel = "stylesheet";
                                     link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+                                        
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This task is in progress..</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "Please contact your professional";
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
                                     document.head.appendChild(link);
                                 }
                                 // Load CSS based on your requirements
-                                loadCSS("style_offerTemplateA.css");
+                                loadCSS("style_taskFlow.css");
+                            }
 
-                                // hand the display of offer in template A - no quotation
-                                for (let i = 0; i < data.length; i++) {
-                                    const offerBlock = document.createElement('div');
-                                    offerBlock.classList.add('offer');
+                            // ::: status = taskDone :::  createdBy = current user >>> review panel for rate and comment
+                        } else if (localStorage.getItem("targetTaskStatus") === "taskDone") {
+                            console.log("status: taskDone");
+                            if (localStorage.getItem("targetTaskCreatedBy") === localStorage.getItem("userID")) {
+                                const reviewText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                reviewText.innerHTML = "This is review panel for rate and comment";
+                                offerContainer.appendChild(reviewText);
+                            } else {
+                                // const pendingText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // pendingText.innerHTML = "This is task is pending for review";
+                                // offerContainer.appendChild(pendingText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
 
-                                    const userInfo = document.createElement('div');
-                                    userInfo.classList.add('user-info');
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+                                        
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This is an on-going task..</b>";
 
-                                    const userName = document.createElement('span');
-                                    userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
-                                    userInfo.appendChild(userName);
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "Please contact your client for further information and arrangement.";
 
-                                    const rating = document.createElement('span');
-                                    rating.textContent = "rating: " + data[i].rating;
-                                    userInfo.appendChild(rating);
+                                        const actionButton =document.createElement('button');
+                                        actionButton.classList.add('pendingButton');
+                                        actionButton.innerText = "Pending for Confirmation";
 
-                                    offerBlock.appendChild(userInfo);
-
-                                    const message = document.createElement('div');
-                                    message.classList.add('message');
-                                    message.textContent = data[i].message;
-                                    offerBlock.appendChild(message);
-
-                                    offerContainer.appendChild(offerBlock);
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(actionButton);;
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
                                 }
-                            };
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+                            }
 
+                            // ::: status = taskReviewed :::  pro = current user >>> request transaction button ,,, waiting for report button
+                        } else if (localStorage.getItem("targetTaskStatus") === "taskReviewed") {
+                            console.log("status: taskReviewed");
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
+                                const congradText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                congradText.innerHTML = "Congradulations! now you can request transaction";
+                                offerContainer.appendChild(congradText);
+                            } else {
+                                // const finishText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // finishText.innerHTML = "This task is finished";
+                                // offerContainer.appendChild(finishText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+                                        
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>This task is finished.</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "here is your review:";
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+                            }
+
+                            // ::: status = taskComplete :::  report for pro and cus
+                        } else if (localStorage.getItem("targetTaskStatus") === "taskComplete") {
+                            console.log("status: taskComplete");
+                            if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
+                                const reportProText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                reportProText.innerHTML = "have you report here (for professional)";
+                                offerContainer.appendChild(reportProText);
+                            } else if (localStorage.getItem("targetTaskCreatedBy") === localStorage.getItem("userID")) {
+                                const reportCusText = document.createElement('span');
+                                // style >>>>>>> noOfferText.classList.add('noOffer');
+                                reportCusText.innerHTML = "have you report here (for customer)";
+                                offerContainer.appendChild(reportCusText);
+                            }
+
+                            // ::: status = awaiting :::  normal offer list
+                        } else {
+                            console.log("status: awaiting");
+                            // handle no offers case
+                            if (data.length === 0) {
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const onOfferBlock = document.createElement('div');
+                                        onOfferBlock.classList.add('noOffer');
+                                        const noOfferText = document.createElement('span');
+                                        noOfferText.innerHTML = "This task has no any offers yet.";
+                                        onOfferBlock.appendChild(noOfferText);
+                                        offerContainer.appendChild(onOfferBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+                            } else {
+                                // console.log("has offer");
+                                const targetTaskCreatedBy = data[0].createdBy;
+                                localStorage.setItem('targetTaskCreatedBy', targetTaskCreatedBy);
+                                // localStorage.setItem('targetTaskStatus', data[0].status);
+
+                                // choose which template to use !!! A or B
+                                if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
+                                    // console.log("choose Template B");
+                                    function loadCSS(file) {
+                                        var link = document.createElement("link");
+                                        link.rel = "stylesheet";
+                                        link.href = file;
+                                        document.head.appendChild(link);
+                                    }
+                                    // Load CSS based on your requirements
+                                    loadCSS("style_offerTemplateB.css");
+
+                                    // hand the display of offer in template B - no quotation
+                                    for (let i = 0; i < data.length; i++) {
+                                        const offerBlock = document.createElement('div');
+                                        offerBlock.classList.add('offer');
+
+                                        const userInfo = document.createElement('div');
+                                        userInfo.classList.add('user-info');
+
+                                        const userName = document.createElement('span');
+                                        userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
+                                        userInfo.appendChild(userName);
+
+                                        const rating = document.createElement('span');
+                                        rating.textContent = "rating: " + data[i].rating;
+                                        userInfo.appendChild(rating); 6
+                                        offerBlock.appendChild(userInfo);
+
+                                        const message = document.createElement('div');
+                                        message.classList.add('message');
+                                        message.textContent = data[i].message;
+                                        offerBlock.appendChild(message);
+
+                                        const quotation = document.createElement('div');
+                                        quotation.classList.add('quotation');
+                                        quotation.innerHTML = "quotation<br><h3>" + data[i].quotation + "<h3><br>";
+
+                                        const button = document.createElement('button');
+                                        button.textContent = 'Select';
+                                        // Add event listener to the button
+                                        // Use a closure to capture the value of i for each button
+                                        (function (index) {
+                                            button.addEventListener('click', function () {
+                                                // Store the corresponding offerOrder value in localStorage
+                                                localStorage.setItem("selectedOfferID", data[index].offerOrder);
+                                                console.log("Selected offer ID: " + data[index].offerOrder);
+                                                localStorage.setItem("selectedQuotation", data[index].quotation);
+                                                console.log("Selected Quotation: " + data[index].quotation);
+                                                // Redirect to taskPayment.html
+                                                setTimeout(function () {
+                                                    window.top.location.href = "taskPayment.html";
+                                                }, 0);
+                                            });
+                                        })(i);
+                                        quotation.appendChild(button);
+
+                                        offerBlock.appendChild(quotation);
+
+                                        offerContainer.appendChild(offerBlock);
+                                    }
+                                } else {
+                                    // console.log("choose Template A");
+                                    function loadCSS(file) {
+                                        var link = document.createElement("link");
+                                        link.rel = "stylesheet";
+                                        link.href = file;
+                                        document.head.appendChild(link);
+                                    }
+                                    // Load CSS based on your requirements
+                                    loadCSS("style_offerTemplateA.css");
+
+                                    // hand the display of offer in template A - no quotation
+                                    for (let i = 0; i < data.length; i++) {
+                                        const offerBlock = document.createElement('div');
+                                        offerBlock.classList.add('offer');
+
+                                        const userInfo = document.createElement('div');
+                                        userInfo.classList.add('user-info');
+
+                                        const userName = document.createElement('span');
+                                        userName.innerHTML = "<b>" + data[i].userName + "</b><br>";
+                                        userInfo.appendChild(userName);
+
+                                        const rating = document.createElement('span');
+                                        rating.textContent = "rating: " + data[i].rating;
+                                        userInfo.appendChild(rating);
+
+                                        offerBlock.appendChild(userInfo);
+
+                                        const message = document.createElement('div');
+                                        message.classList.add('message');
+                                        message.textContent = data[i].message;
+                                        offerBlock.appendChild(message);
+
+                                        offerContainer.appendChild(offerBlock);
+                                    }
+                                };
+
+                            }
                         }
                     })
                     .catch(error => {
@@ -304,6 +418,10 @@
                     });
             }
         }
+
+
+
+
 
         // use button the change the localStorage targetTaskID
         const changeTargetTaskIDButton = document.getElementById('changeTargetTaskIDButton');
@@ -330,16 +448,47 @@
 
 
     <script>
+        /////////// display local store session
+        // Function to update the displayed session information
         function updateDisplayedSession() {
             const userName = localStorage.getItem('userName');
             const userID = localStorage.getItem('userID');
+            const member = localStorage.getItem('member');
+            const professional = localStorage.getItem('pro');
             const displayElement = document.getElementById('displayStoredSession');
-            displayElement.textContent = `User Name: ${userName} | UserID: ${userID}`;
+            displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
         }
         // Initial display of stored session information
         updateDisplayedSession();
-    // // Wait for the sharedDiv to be inserted into the container
-    // document.addEventListener('DOMContentLoaded', updateDisplayedSession);
+
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
+        signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('member');
+            localStorage.removeItem('pro');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/login.html';
+        });
+
+        // // Wait for the sharedDiv to be inserted into the container
+        // document.addEventListener('DOMContentLoaded', updateDisplayedSession);
+
+        // to test the connectivity to DB
+        const button_testDB = document.getElementById('tryTestDB');
+        button_testDB.addEventListener('click', async () => {
+            // console.log("clicked");
+            const response = await fetch('/account/test-db');
+            const data = await response.json();
+            // console.log(data);
+
+            const jsonStr = JSON.stringify(data);
+            var displayGet = document.getElementById("displayGET");
+            displayGet.innerHTML = "<b>connection: OK</b> || Retrieved Sample Data: email = " + data[0].email;
+        });
     </script>
 </body>
 

@@ -20,7 +20,7 @@ import Professionals2 from "./Professionals2";
 import Professionals3 from "./Professionals3";
 import Account from "./Account";
 import logoHeader from './images/logoHeader.jpg';
-import RegisteredService from "./RegisteredService";
+import RegisteredServices from "./RegisteredServices";
 import MembershipServices from "./MembershipServices";
 import ProfessionalServices from "./ProfessionalServices";
 
@@ -51,11 +51,10 @@ function App() {
         <Route path="/SignUp2" element={<SignUp2 />} />
         <Route path="/ServicePublised" element={<ServicePublised />} />  
         <Route path="/Account" element={<Account />} />
-        <Route path="/RegisteredService" element={<RegisteredService />} />
+        <Route path="/RegisteredServices" element={<RegisteredServices />} />
         <Route path="/MembershipServices" element={<MembershipServices />} />  
         <Route path="/ProfessionalServices" element={<ProfessionalServices />} />
       </Routes>
-     
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './css/RegisteredService.css';
+import './css/RegisteredServices.css';
 
-const RegisteredService = () => {
+const RegisteredServices = () => {
     const [need, setNeed] = useState('');
     const [budget, setBudget] = useState('');
     const [category, setCategory] = useState('');
@@ -86,7 +86,6 @@ const RegisteredService = () => {
                             <div className="order-summary-field" onClick={() => handleSort('startDate')}>
                                 {sortField === 'startDate' && <span className="sort-arrow">{sortOrder === 'asc' ? '▲' : '▼'}</span>}
                             </div>
-                            {/* Add more fields for sorting */}
                         </div>
                         {sortOrders(orders).map((order, index) => (
                             <div
@@ -104,8 +103,7 @@ const RegisteredService = () => {
                         ))}
                     </div>
 
-                    {selectedOrder && (
-                        <div className="selected-order-details">
+                    {selectedOrder && ( 
                             <div className="summary-container">
                                 <h2>Summary</h2>
                                 <p><strong>Order</strong> {"#" + selectedOrder.number}</p>
@@ -116,26 +114,27 @@ const RegisteredService = () => {
                                 <p><strong>Location</strong> {selectedOrder.location}</p>
                                 <p><strong>Requirement</strong> {selectedOrder.requirement}</p>
                                 <p><strong>Description</strong> {selectedOrder.description}</p>
-                            </div>
-                            <hr />
-                            <div className="offer-container">
+                                <hr />
+                                <div className="offer-container">
                                 {getUserRateAndComments(selectedOrder) ? (
                                     <div className="rate-comment-container">
-                                        <p className="rate">
+                                        <div className="rate">
                                             Rate: {Math.round(getUserRateAndComments(selectedOrder).rate)}{' '}
                                             {Array.from({ length: Math.round(getUserRateAndComments(selectedOrder).rate) }).map((_, index) => (
                                                 <span key={index}>⭐</span>
                                             ))}
-                                        </p>
-                                        <ul className="comment">
-                                            <li>{getUserRateAndComments(selectedOrder).comments}</li>
-                                        </ul>
+                                        </div>
+                                        <div className="comment">
+                                            <ul>
+                                                <li>{getUserRateAndComments(selectedOrder).comments}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 ) : (
                                     <p>No rate and comments yet...</p>
                                 )}
-                            </div>
-                        </div>
+                                </div>
+                            </div>      
                     )}
                 </div>
             )}
@@ -144,4 +143,4 @@ const RegisteredService = () => {
     );
 };
 
-export default RegisteredService;
+export default RegisteredServices;

@@ -30,13 +30,16 @@ router.get('/fetch-created-by', async (req, res) => {
     try {
         const taskID = req.query.taskID;
 
-        const sql = 'SELECT createdBy FROM taskList WHERE taskID = ?';
+        const sql = 'SELECT * FROM taskList WHERE taskID = ?';
         const [rows, fields] = await db.query(sql, [taskID]);
 
         console.log(rows[0]);
         if (rows.length > 0) {
             const createdBy = rows[0].createdBy;
-            res.send({ createdBy });
+            const status = rows[0].status;
+            const doneBy = rows[0].doneBy;
+            res.send({ createdBy, status, doneBy });
+            console.log("this task status: " + status);
         } else {
             res.status(404).send('Task not found');
         }

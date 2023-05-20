@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './css/CreateTask.css';
 
+
 const RequestServicePage = () => {
   const [need, setNeed] = useState('');
   const [budget, setBudget] = useState('');
@@ -114,29 +115,34 @@ const RequestServicePage = () => {
               <label className="form-label">What do you need done?</label>
               <input type="text" className="form-input" value={need} onChange={(e) => setNeed(e.target.value)} />
             </div>
-            <div className="form-field">
-              <label className="form-label">Budget:</label>
-              <input type="text" className="form-input" value={budget} onChange={(e) => setBudget(e.target.value)} />
+            <div className="flex-container">
+              <div className="form-field">
+                <label className="form-label">Budget:</label>
+                <input type="text" className="form-input" value={budget} onChange={(e) => setBudget(e.target.value)} />
+              </div>
+              <div className="form-field">
+                <label className="form-label">Category:</label>
+                <select className="form-input" value={category} onChange={(e) => setCategory(e.target.value)}>
+                  <option value="">select</option>
+                  <option value="Electrical">Electrical</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Gardening">Gardening</option>
+                  <option value="Plumber">Plumber</option>
+                  <option value="Design">Design</option>
+                </select>
+              </div>
             </div>
             <div className="form-field">
-              <label className="form-label">Category:</label>
-              <select className="form-input" value={category} onChange={(e) => setCategory(e.target.value)}>
-                <option value="">select</option>
-                <option value="Electrical">Electrical</option>
-                <option value="Construction">Construction</option>
-                <option value="Gardening">Gardening</option>
-                <option value="Plumber">Plumber</option>
-                <option value="Design">Design</option>
-              </select>
-            </div>
-
-            <div className="form-field">
-              <label className="form-label">Start Date:</label>
-              <input type="date" className="form-input" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-            </div>
-            <div className="form-field">
-              <label className="form-label">End Date:</label>
-              <input type="date" className="form-input" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+              <div className="date-fields-container">
+                <div className="date-field">
+                  <label className="form-label">Start Date:</label>
+                  <input type="date" className="form-input" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                </div>
+                <div className="date-field">
+                  <label className="form-label">End Date:</label>
+                  <input type="date" className="form-input" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                </div>
+              </div>
             </div>
             <div className="form-field">
               <label className="form-label">Special Requirement (optional):</label>
@@ -150,12 +156,10 @@ const RequestServicePage = () => {
               <label className="form-label">It is an online task:</label>
               <input type="checkbox" className="form-checkbox" checked={onlineTask} onChange={(e) => setOnlineTask(e.target.checked)} />
             </div>
-            {onlineTask && (
-              <div className="form-field">
-                <label className="form-label">Details (optional):</label>
-                <input type="text" className="form-input" value={details} onChange={(e) => setDetails(e.target.value)} />
-              </div>
-            )}
+            <div className="form-field">
+              <label className="form-label">Details (optional):</label>
+              <input type="text" className="form-input" value={details} onChange={(e) => setDetails(e.target.value)} />
+            </div>
             <div className="form-actions">
               <button type="submit" className="form-submit-btn">
                 Next
@@ -166,7 +170,6 @@ const RequestServicePage = () => {
       )}
       {isNextClicked && !isListView && (
         <div>
-          {/* Render the next component here */}
           <div className="confirm-task-container">
             <h1 className="confirm-task-title">Create a Service Request</h1>
             <p className="confirm-task-subtitle">Please confirm your request details:</p>
@@ -199,12 +202,10 @@ const RequestServicePage = () => {
                 <div className="confirm-task-label">Location:</div>
                 <div className="confirm-task-value">{location}</div>
               </div>
-              {onlineTask && (
-                <div className="confirm-task-detail">
-                  <div className="confirm-task-label">Details:</div>
-                  <div className="confirm-task-value">{details}</div>
-                </div>
-              )}
+              <div className="confirm-task-detail">
+                 <div className="confirm-task-label">Details:</div>
+                <div className="confirm-task-value">{details}</div>
+              </div>
             </div>
             <div className="form-actions" style={{ display: 'flex', justifyContent: 'space-between' }}>
               <button className="form-back-btn" onClick={() => setIsNextClicked(false)}>Back</button>
@@ -216,7 +217,6 @@ const RequestServicePage = () => {
 
       {isListView && (
         <div className="orders-container">
-
           <div className="order-summary-container">
             <div className="order-summary-header">
               <div className="order-summary-field" onClick={() => handleSort('number')}>
@@ -225,7 +225,6 @@ const RequestServicePage = () => {
               <div className="order-summary-field" onClick={() => handleSort('startDate')}>
                 {sortField === 'startDate' && <span className="sort-arrow">{sortOrder === 'asc' ? '▲' : '▼'}</span>}
               </div>
-              {/* Add more fields for sorting */}
             </div>
             {sortOrders(orders).map((order, index) => (
               <div
@@ -244,7 +243,6 @@ const RequestServicePage = () => {
           </div>
 
           {selectedOrder && (
-            <div className="selected-order-details">
               <div className="summary-container">
                 <h2>Summary</h2>
                 <p><strong>Order</strong> {"#" + selectedOrder.number}</p>
@@ -255,12 +253,9 @@ const RequestServicePage = () => {
                 <p><strong>Location</strong> {selectedOrder.location}</p>
                 <p><strong>Requirement</strong> {selectedOrder.requirement}</p>
                 <p><strong>Description</strong> {selectedOrder.description}</p>
-              </div>
-              <hr />
-              <div className="offer-container">
+                <hr />
                 <p>no any offer yet...</p>
               </div>
-            </div>
           )}
         </div>
       )}
