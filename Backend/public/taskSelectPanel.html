@@ -137,7 +137,10 @@
                             // console.log(localStorage.getItem('targetTaskID'));
                             // console.log(task.doneBy); 
                             localStorage.setItem('targetTaskStatus', task.status);
-                            localStorage.setItem('targetTaskDoneBy', task.doneBy)
+                            localStorage.setItem('targetTaskDoneBy', task.doneBy);
+                            retrieveTargetTaskCustomer();
+                            retrieveTargetTaskProfessional();
+                            retrieveTargetTaskQuotation();
                             // Perform any other actions upon table click if needed
                         });
 
@@ -151,6 +154,104 @@
         }
     </script>
 
+    <script> //for implement localStorage data
+        ///
+        ///
+        ///
+        // to retrieve the customer info by targetTaskCreatedBy
+        function retrieveTargetTaskCustomer() {
+            const userID = localStorage.getItem("targetTaskCreatedBy");
+            try {
+                fetch(`/account/get-user?userID=${userID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                    .then(data => {
+                        const name = data[0].sname + " " + data[0].lname;
+                        localStorage.setItem("targetTaskCustomerName", name);
+                        localStorage.setItem("targetTaskCustomerPhone", data[0].phoneNum);
+                        localStorage.setItem("targetTaskCustomerEmail", data[0].email);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        // to retrieve the profession info by targetTaskDoneBy
+        function retrieveTargetTaskProfessional() {
+            const userID = localStorage.getItem("targetTaskDoneBy");
+            if (userID) {
+                try {
+                    fetch(`/account/get-user?userID=${userID}`)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Error:', response.status);
+                            }
+                        })
+                        .then(data => {
+                            if (data && data.length > 0) {
+                                const name = data[0].sname + " " + data[0].lname;
+                                localStorage.setItem("targetTaskProfessionalName", name);
+                                localStorage.setItem("targetTaskProfessionalPhone", data[0].phoneNum);
+                                localStorage.setItem("targetTaskProfessionalEmail", data[0].email);
+                            } else {
+                                localStorage.setItem("targetTaskProfessionalName", null);
+                                localStorage.setItem("targetTaskProfessionalPhone", null);
+                                localStorage.setItem("targetTaskProfessionalEmail", null);
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                console.log("targetTaskDoneBy is null");
+            }
+        }
+        // to retrieve the success quotation by targetTaskID
+        function retrieveTargetTaskQuotation() {
+            const taskID = localStorage.getItem("targetTaskID");
+            try {
+                fetch(`/offer/get-target-offer?taskID=${taskID}`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error:', response.status);
+                        }
+                    })
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const targetTaskPrice = data[0].quotation;
+                            // console.log(data[0].quotation);
+                            localStorage.setItem("targetTaskPrice", targetTaskPrice);
+                            // localStorage.setItem("targetTaskCustomerPhone", data[0].phoneNum);
+                            // localStorage.setItem("targetTaskCustomerEmail", data[0].email);
+                        } else {
+                            localStorage.setItem("targetTaskPrice", null);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    ////
+    ///
+    //
+    </script>
 
 
     <script>
@@ -166,9 +267,9 @@
         }
         // Initial display of stored session information
         updateDisplayedSession();
-        
-         // sign out logic
-         const signOutButton = document.getElementById('signout');
+
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
         signOutButton.addEventListener('click', () => {
             // Clear the stored session data in localStorage
             localStorage.removeItem('userName');
