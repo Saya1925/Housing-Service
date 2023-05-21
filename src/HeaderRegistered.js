@@ -41,7 +41,7 @@ const HeaderRegistered = ({ isLoggedIn, setIsLoggedIn, userName }) => {
     { label: 'My Tasks', path: '' },
     { label: 'My Offers', path: '' },
     { label: 'Subscribe Membership', path: '/MembershipCustomer' },
-    { label: 'Become Professional', path: '/Professional' },
+    { label: 'Become Professional', path: '/Professionals' },
     { label: 'Sign Out', path: '' },
   ]
   

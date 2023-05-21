@@ -1,3 +1,5 @@
+/*closed
+
 //This page is home screen for registered user, membership user and professional user
 
 import React from 'react';
@@ -6,11 +8,27 @@ import heroImage from './images/hero_homePage.jpg';
 import './css/HomePage.css';
 import HeaderMembership from './HeaderMembership';
 
+
 const HomePageMembership = () => {
   const navigate = useNavigate();
 
   const browseServices = () => {
-    navigate('/MembershipServices');
+    let path;
+    switch (userType) {
+      case 'registered':
+        path = '/RegisteredServices';
+        break;
+      case 'membership':
+        path = '/MembershipServices';
+        break;
+      case 'professional':
+        path = '/ProfessionalServices';
+        break;
+      default:
+        path = '/';
+        break;
+    }
+    navigate(path);
   };
 
   return (
@@ -30,3 +48,5 @@ const HomePageMembership = () => {
 };
 
 export default HomePageMembership;
+
+*/

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from './images/hero_homePage.jpg'; 
 import './css/HomePage.css';
 import Header from './Header';
 
 const HomePage = () => {
+  const [isLoggedIn, setLoginStatus] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSignUp = () => {
@@ -13,7 +15,7 @@ const HomePage = () => {
 
   return (
     <div className="page-container">
-    <Header />
+    <Header isLoggedIn={isLoggedIn} setLoginStatus={setLoginStatus} />
       <div className="content">
         <h2>Easy House Services</h2>
         <p>Welcome to our Housing Service Platform!</p>

@@ -5,14 +5,33 @@ import { useNavigate } from 'react-router-dom';
 import heroImage from './images/hero_homePage.jpg'; 
 import './css/HomePage.css';
 import HeaderRegistered from './HeaderRegistered';
+import HeaderMembership from './HeaderMembership';
+import HeaderProfessional from './HeaderProfessional';
 
-const HomePageRegistered = () => {
+
+const HomePageRegistered = ({ userType, isLoggedIn, setIsLoggedIn, userName }) => {
   const navigate = useNavigate();
 
   const browseServices = () => {
     navigate('/RegisteredServices');
   };
 
+  let HeaderComponent;
+  switch (userType) {
+    case 'registered':
+      HeaderComponent = HeaderRegistered;
+      break;
+    case 'membership':
+      HeaderComponent = HeaderMembership;
+      break;
+    case 'professional':
+      HeaderComponent = HeaderProfessional;
+      break;
+    default:
+      HeaderComponent = null;
+      break;
+  }
+  
   return (
     <div className="page-container">
     <HeaderRegistered />

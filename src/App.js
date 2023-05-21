@@ -6,8 +6,6 @@ import HeaderMembership from "./HeaderMembership";
 import HeaderProfessional from "./HeaderProfessional";
 import HomePage from "./HomePage";
 import HomePageRegistered from "./HomePageRegistered";
-import HomePageMembership from "./HomePageMembership";
-import HomePageProfessional from "./HomePageProfessional";
 import CreateTask from "./CreateTask";
 import SignUp from "./SignUp";
 import SignUp2 from "./SignUp2";
@@ -34,8 +32,6 @@ function App() {
       <Routes>
         <Route path="*" element={<HomePage />} />
         <Route path="/HomePageRegistered" element={<HomePageRegistered />} />
-        <Route path="/HomePageMembership" element={<HomePageMembership />} />
-        <Route path="/HomePageProfessional" element={<HomePageProfessional />} />
         <Route path="/Header" element={<Header logoHeader={logoHeader} />} />
         <Route path="/HeaderRegistered" element={<Header logoHeader={logoHeader} />} />
         <Route path="/HeaderMembership" element={<Header logoHeader={logoHeader} />} />
