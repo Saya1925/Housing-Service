@@ -62,10 +62,11 @@
     <script>
 
         // Check the value of localStorage.getItem('pro')
-        const proValue = localStorage.getItem('pro');
+        // var proValue = localStorage.getItem('pro');
+        // var targetTaskCreatedBy = localStorage.getItem('targetTaskCreatedBy');
+        // var currentUserID = localStorage.getItem('userID');
 
-
-        if (proValue === '1') {
+        // if ( proValue === '1' && targetTaskCreatedBy !== currentUserID ) {
             // Create an iframe element
             const offer_iframe = document.createElement('iframe');
             offer_iframe.style.display = 'none'; // Hide the iframe
@@ -87,10 +88,9 @@
                 // offer_iframeContent.getElementById('displayStoredSession').textContent = 'User Name: John Doe | UserID: 12345';
             });
 
-
             // Append the iframe to the document body
             document.body.appendChild(offer_iframe);
-        }
+        // }
     </script>
 
 
@@ -226,6 +226,10 @@
         function retrieveTask() {
             // const taskID = taskIDInput.value;
             const taskID = localStorage.getItem("targetTaskID");
+
+
+            
+
 
             try {
                 fetch(`/getTask/get-target-task?taskID=${taskID}`)

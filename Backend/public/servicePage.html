@@ -7,7 +7,20 @@
     <link rel="stylesheet" href="style_selectPanel.css">
     <link rel="stylesheet" href="style_taskFlow.css">
 </head>
-
+<style>
+    #makeOfferPanel #message {
+      width: 276px;
+      height: 104px;
+      vertical-align: top;
+      padding-top: 0px;
+    }
+  
+    #makeOfferPanel label {
+      display: inline-block;
+      vertical-align: top;
+    }
+  </style>
+  
 <body>
     <!-- header -->
     <span id="example"></span>
@@ -166,9 +179,9 @@
     <script>
 
         // Check the value of localStorage.getItem('pro')
-        const proValue = localStorage.getItem('pro');
+        // const proValue = localStorage.getItem('pro');
 
-        if (proValue === '1') {
+        // if (proValue === '1') {
             // Create an iframe element
             const offer_iframe = document.createElement('iframe');
             offer_iframe.style.display = 'none'; // Hide the iframe
@@ -193,7 +206,7 @@
 
             // Append the iframe to the document body
             document.body.appendChild(offer_iframe);
-        }
+        // }
     </script>
 
 
@@ -230,7 +243,7 @@
             // console.log("user: " + localStorage.getItem("userID"));
             // console.log("createdBY: " + localStorage.getItem("targetTaskCreatedBy"));
             if (localStorage.getItem("userID") === localStorage.getItem("targetTaskCreatedBy")) {
-                console.log("choose CSS B");
+                // console.log("choose CSS B");
 
                 function loadCSS(file) {
                     var link = document.createElement("link");
@@ -244,7 +257,7 @@
                 // // Set the source of the iframe to makeOffer.html
                 // offerList_iframe.src = 'offerListB.html';
             } else {
-                console.log("choose CSS A");
+                // console.log("choose CSS A");
 
                 function loadCSS(file) {
                     456
