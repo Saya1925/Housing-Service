@@ -1,3 +1,5 @@
+/*closed
+
 //This page is home screen for registered user, membership user and professional user
 
 import React from 'react';
@@ -30,3 +32,4 @@ const HomePageProfessional = () => {
 };
 
 export default HomePageProfessional;
+*/

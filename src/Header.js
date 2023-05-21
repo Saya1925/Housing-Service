@@ -1,45 +1,84 @@
-import React, { useState } from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, NavLink, useNavigate } from 'react-router-dom';
 import logoHeader from './images/logoHeader.jpg';
 import { Modal, Box, TextField, Button } from '@mui/material';
 import './css/Header.css';
+import axios from 'axios';
 
-const Header = ({ isLoggedIn, setIsLoggedIn }) => {
-  const [open, setOpen] = useState(false);
+const Header = ({  }) => {
+  const [openLogin, setOpenLogin] = useState(false); // use openLogin instead of open
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState(''); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  //event listener1
-  const handleOpen = () => setOpen(true);
+  const navigate = useNavigate(); 
 
-  //event listener2
-  const handleClose = () => setOpen(false);
+  //handleOpenLogin to open your login modal. 
+  //If true, can be used to control the visibility of your login modal 
+  const handleOpenLogin = () => setOpenLogin(true);
+  const handleCloseLogin = () => setOpenLogin(false);
 
-  //event listener3
   const handleLogin = () => {
-    console.log(email, password);
-    // If the login is successful, update the isLoggedIn state
-    setIsLoggedIn(true);
-    handleClose();  // Close the login modal
+    axios.post('http://localhost:3001/account/login', {
+      email: email,
+      password: password
+    })
+    .then(function (response) {
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+        
+        const { membership, professional } = response.data;
+        let userType = 'registered';
+        if (membership === 1 && professional === 0) {
+          userType = 'membership';
+        } else if (membership === 0 && professional === 1) {
+          userType = 'professional';
+        }
+        setUserType(userType);
+        
+        handleCloseLogin();
+      } else {
+        console.error('Login unsuccessful');
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
+
 
   const buttons = [
     { label: 'HOME', path: '/' },
     { label: 'SERVICE', path: '/ServicePublished' },
     { label: 'ABOUT US', path: '' },
-    { label: 'LOGIN', onClick: handleOpen },
+    { label: 'LOGIN', onClick: handleOpenLogin },
   ];
 
   const location = useLocation();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      switch (userType) {
+        case 'membership':
+          navigate('/HomePageMembership', { replace: true });
+          break;
+        case 'professional':
+          navigate('/HomePageProfessional', { replace: true });
+          break;
+        case 'registered':
+        default:
+          navigate('/HomePageRegistered', { replace: true });
+          break;
+      }
+    }
+  }, [userType, isLoggedIn, navigate]);
   
   return (
-    <header className="header" isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+    <header className="header">
       <nav className="nav">
         <div className="logo-container">
           <img src={logoHeader} alt="logoHeader" />
-          {isLoggedIn && (
-            <button className="hamburger-menu">☰</button>
-          )}
         </div>
         <div className="nav-links">
         {buttons.map((button, index) => {
@@ -60,7 +99,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
       </nav>
 
       {/* Login Modal Code */}
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={openLogin} onClose={handleCloseLogin}>
         <Box className="login-box">
         <TextField
           label="Email"

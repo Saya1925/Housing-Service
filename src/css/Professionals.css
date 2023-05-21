@@ -1,3 +1,5 @@
+/*This CSS corresponds to Professionals/2/3.js*/
+
 body {
   display: flex;
   flex-direction: column;
@@ -109,7 +111,7 @@ h1 {
   color: #555555
 }
 
-.back-button {
+.p-back-button {
   background-color: white;
   margin-top: 40px;
 
@@ -124,7 +126,7 @@ h1 {
   width: 200px;
 }
 
-.proceed-button {
+.p-proceed-button {
   background-color: #68CEDC;
   margin-top: 40px;
   margin-left: 10px;
@@ -148,7 +150,7 @@ h1 {
 
 
 /*MembershipCustomer3*/
-.create-task-button {
+.p-create-task-button {
     background-color: #68CEDC;
     margin-top: 40px;
     margin-left: 10px;
