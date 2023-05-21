@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/Membership.css';
 import HeaderMembership from './HeaderMembership';
+import axios from 'axios';
 
 const MembershipCustomer2 = ({ handleBack, handleProceed }) => {
   const [cardNumber, setCardNumber] = useState('');
