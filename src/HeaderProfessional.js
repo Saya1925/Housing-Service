@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import logoHeader from './images/logoHeader.jpg';
 import './css/Header.css';
@@ -6,6 +6,8 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+
+const SessionContext = React.createContext();
 
 const HeaderUser = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   const [openLogin, setOpenLogin] = useState(false);
@@ -56,8 +58,6 @@ const HeaderUser = ({ isLoggedIn, setIsLoggedIn, userName }) => {
             <NavLink
               key={index}
               to={button.path}
-              exact
-              activeClassName="active"
               className="nav-link"
               onClick={button.onClick}
             >

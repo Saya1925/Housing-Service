@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, NavLink, useNavigate } from 'react-router-dom';
 import logoHeader from './images/logoHeader.jpg';
 import { Modal, Box, TextField, Button } from '@mui/material';
 import './css/Header.css';
 import axios from 'axios';
+
+// Create a context to share the session data
+const SessionContext = React.createContext();
 
 const Header = ({  }) => {
   const [openLogin, setOpenLogin] = useState(false); // use openLogin instead of open
@@ -20,31 +23,34 @@ const Header = ({  }) => {
   const handleCloseLogin = () => setOpenLogin(false);
 
   const handleLogin = () => {
-    axios.post('http://localhost:3001/account/login', {
-      email: email,
-      password: password
-    })
-    .then(function (response) {
-      if (response.status === 200) {
-        setIsLoggedIn(true);
-        
-        const { membership, professional } = response.data;
-        let userType = 'registered';
-        if (membership === 1 && professional === 0) {
-          userType = 'membership';
-        } else if (membership === 0 && professional === 1) {
-          userType = 'professional';
+    axios
+      .post('http://localhost:3001/account/login', {
+        email: email,
+        password: password
+      })
+      .then(function (response) {
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+  
+          const { membership, professional, userID } = response.data;
+          let userType = 'registered';
+          if (membership === 1 && professional === 0) {
+            userType = 'membership';
+          } else if (membership === 0 && professional === 1) {
+            userType = 'professional';
+          }
+          setUserType(userType);
+          sessionStorage.setItem('userType', userType); // Store userType in sessionStorage
+          sessionStorage.setItem('userID', userID); // Store userID in sessionStorage
+  
+          handleCloseLogin();
+        } else {
+          console.error('Login unsuccessful');
         }
-        setUserType(userType);
-        
-        handleCloseLogin();
-      } else {
-        console.error('Login unsuccessful');
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
 

@@ -42,7 +42,7 @@ const Professionals = () => {
 
   const handleNextClick = () => {
     // Navigate to the next page (MembershipCustomer2.js)
-    navigate('/MembershipCustomer2');
+    navigate('/Professionals2');
   };
 
   return (
