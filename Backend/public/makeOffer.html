@@ -75,6 +75,9 @@
     </div>
 
     <script>
+
+
+        // logic to send offer
         var targetTaskCreatedBy;
         var targetTaskID;
         // XMLHttpRequest for submit the offer
@@ -126,6 +129,7 @@
         document.getElementById('fetchCreatedByButton').addEventListener('click', function () {
             targetTaskID = document.getElementById('taskIDInput').value;
             localStorage.setItem('targetTaskID', targetTaskID);
+            offerPanelVisibility();
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/offer/fetch-created-by?taskID=' + targetTaskID);
             xhr.onload = function () {
@@ -149,8 +153,36 @@
                 }
             };
             xhr.send();
+
+            
+
         });
 
+        function offerPanelVisibility(){
+            // logic to make form show or not
+            const makeOfferPanel = document.getElementById('makeOfferPanel');
+            // Check the conditions and show/hide the form accordingly
+            var proValue = localStorage.getItem('pro');
+            var targetTaskCreatedBy = localStorage.getItem('targetTaskCreatedBy');
+            var targetTaskDoneBy = localStorage.getItem('targetTaskDoneBy');
+            var currentUserID = localStorage.getItem('userID');
+            if (proValue === '1' && targetTaskCreatedBy !== currentUserID && targetTaskDoneBy !== currentUserID) {
+                console.log("showwwww")
+                makeOfferPanel.style.display = 'block'; // Show the form container
+            } else {
+                console.log("hidddde")
+                makeOfferPanel.style.display = 'none'; // Hide the form container
+            }
+        }
+
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'targetTaskID') {
+                offerPanelVisibility();
+            }
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            offerPanelVisibility();
+        });
 
         ///
         ///

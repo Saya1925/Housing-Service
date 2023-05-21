@@ -285,12 +285,15 @@
                             cell4_1.classList.add('budget');
                             cell4_2.textContent = "#000" + task.taskID;
                             cell4_2.classList.add('task-id');
+                            
+                            // const status = task.status;
+                            // const doneBy = task.doneBy;
 
                             // Add click event listener to each table
                             table.addEventListener('click', () => {
                                 localStorage.setItem('targetTaskID', task.taskID);
                                 // console.log(localStorage.getItem('targetTaskID'));
-                                // console.log(task.doneBy); 
+                                // console.log(doneBy);
                                 localStorage.setItem('targetTaskStatus', task.status);
                                 localStorage.setItem('targetTaskDoneBy', task.doneBy);
                                 retrieveTargetTaskCustomer();
