@@ -3,6 +3,7 @@
 
 <head>
     <title>submitting an offer</title>
+    <link rel="stylesheet" href="style_selectPanel.css">
 </head>
 
 <body>
@@ -50,19 +51,6 @@
         task</span><br>
     <br>
     <div id="makeOfferPanel">
-        <style>
-            #message {
-                width: 276px;
-                height: 104px;
-                vertical-align: top;
-                padding-top: 0px;
-            }
-
-            label {
-                display: inline-block;
-                vertical-align: top;
-            }
-        </style>
         <form id="offerSubmit" action="/offer/submit-offer" method="POST">
             <label for="message">Message:</label>
             <textarea id="message" name="message"></textarea>
