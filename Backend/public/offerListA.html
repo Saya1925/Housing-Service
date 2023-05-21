@@ -159,7 +159,13 @@
 
                                         const displayParagraph1 = document.createElement('div');
                                         displayParagraph1.classList.add('taskFlow_paragraph');
-                                        displayParagraph1.innerHTML = "Please contact your client for further information and arrangement.";
+                                        displayParagraph1.innerHTML = "Please contact your client for further information and arrangement. Details:<br><br>" +
+                                        "<b>Client: </b>" + localStorage.getItem("targetTaskCustomerName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskCustomerPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskCustomerEmail") + "<br>" +
+                                        "<b>Professional: </b>" + localStorage.getItem("targetTaskProfessionalName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
 
                                         const displayParagraph2 = document.createElement('div');
                                         displayParagraph2.classList.add('taskFlow_paragraphSubtle');
@@ -222,7 +228,13 @@
 
                                         const displayParagraph = document.createElement('div');
                                         displayParagraph.classList.add('taskFlow_paragraph');
-                                        displayParagraph.innerHTML = "Please contact your professional";
+                                        displayParagraph.innerHTML = "Please contact your professional. Detils: <br><br>" +
+                                        "<b>Client: </b>" + localStorage.getItem("targetTaskCustomerName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskCustomerPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskCustomerEmail") + "<br>" +
+                                        "<b>Professional: </b>" + localStorage.getItem("targetTaskProfessionalName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
 
                                         diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
                                         offerContainer.appendChild(diaplayBlock);
@@ -260,7 +272,13 @@
 
                                         const displayParagraph1 = document.createElement('div');
                                         displayParagraph1.classList.add('taskFlow_paragraph');
-                                        displayParagraph1.innerHTML = "Seems the task was finished buy the professional,<br>please leave your review and confirm the settlement.";
+                                        displayParagraph1.innerHTML = "Seems the task was finished buy the professional,<br>please leave your review and confirm the settlement. <br><br>" +
+                                        "<b>Client: </b>" + localStorage.getItem("targetTaskCustomerName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskCustomerPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskCustomerEmail") + "<br>" +
+                                        "<b>Professional: </b>" + localStorage.getItem("targetTaskProfessionalName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
 
                                         // const displayParagraph2 = document.createElement('div');
                                         // displayParagraph2.classList.add('taskFlow_paragraphSubtle');
@@ -341,7 +359,13 @@
 
                                         const displayParagraph = document.createElement('div');
                                         displayParagraph.classList.add('taskFlow_paragraph');
-                                        displayParagraph.innerHTML = "Please contact your client for further information and arrangement.";
+                                        displayParagraph.innerHTML = "Please contact your client for further information and arrangement. <br><br>" +
+                                        "<b>Client: </b>" + localStorage.getItem("targetTaskCustomerName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskCustomerPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskCustomerEmail") + "<br>" +
+                                        "<b>Professional: </b>" + localStorage.getItem("targetTaskProfessionalName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
 
                                         const displayParagraph2 = document.createElement('div');
                                         displayParagraph2.classList.add('taskFlow_paragraph');
@@ -451,15 +475,90 @@
                         } else if (localStorage.getItem("targetTaskStatus") === "taskComplete") {
                             console.log("status: taskComplete");
                             if (localStorage.getItem("targetTaskDoneBy") === localStorage.getItem("userID")) {
-                                const reportProText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                reportProText.innerHTML = "have you report here (for professional)";
-                                offerContainer.appendChild(reportProText);
+                                // const reportProText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // reportProText.innerHTML = "have you report here (for professional)";
+                                // offerContainer.appendChild(reportProText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>Task Completed!! Your Report is ready for you!</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "Report details:<br><br>" + 
+                                        "<b>Client: </b>" + localStorage.getItem("targetTaskCustomerName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskCustomerPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskCustomerEmail") + "<br>" +
+                                        "<b>Professional: </b>" + localStorage.getItem("targetTaskProfessionalName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
+
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButtonCus');
+                                        actionButton.innerText = "Download Report";
+
+                                        // use the button the update the task status from onGoing to taskDone
+                                        actionButton.addEventListener('click', () => {
+                                        });
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(actionButton);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
+
                             } else if (localStorage.getItem("targetTaskCreatedBy") === localStorage.getItem("userID")) {
-                                const reportCusText = document.createElement('span');
-                                // style >>>>>>> noOfferText.classList.add('noOffer');
-                                reportCusText.innerHTML = "have you report here (for customer)";
-                                offerContainer.appendChild(reportCusText);
+                                // const reportCusText = document.createElement('span');
+                                // // style >>>>>>> noOfferText.classList.add('noOffer');
+                                // reportCusText.innerHTML = "have you report here (for customer)";
+                                // offerContainer.appendChild(reportCusText);
+                                function loadCSS(file) {
+                                    var link = document.createElement("link");
+                                    link.rel = "stylesheet";
+                                    link.href = file;
+
+                                    // Use the onload event to ensure the CSS file is fully loaded
+                                    link.onload = function () {
+                                        // CSS file is loaded, create and style the noOfferText element
+                                        const diaplayBlock = document.createElement('div');
+                                        diaplayBlock.classList.add('diaplayBlock');
+
+                                        const displayTitle = document.createElement('div');
+                                        displayTitle.classList.add('taskFlow_title');
+                                        displayTitle.innerHTML = "<b>Task Completed!! Your Report is ready for you!</b>";
+
+                                        const displayParagraph = document.createElement('div');
+                                        displayParagraph.classList.add('taskFlow_paragraph');
+                                        displayParagraph.innerHTML = "Report details:<br><br>" + 
+                                        "<b>Client: </b>" + localStorage.getItem("targetTaskCustomerName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskCustomerPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskCustomerEmail") + "<br>" +
+                                        "<b>Professional: </b>" + localStorage.getItem("targetTaskProfessionalName") + "&nbsp &nbsp" +
+                                        "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
+                                        "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
+                                        offerContainer.appendChild(diaplayBlock);
+                                        // console.log("CSS file loaded:", file);
+                                    };
+                                    document.head.appendChild(link);
+                                }
+                                // Load CSS based on your requirements
+                                loadCSS("style_taskFlow.css");
                             }
 
                             // ::: status = awaiting :::  normal offer list

@@ -249,7 +249,7 @@
                         // Clear previous tables
                         selectPanelContainer.innerHTML = '';
                         selectPanelContainer.classList.add('selectPanel-container');
-                        localStorage.setItem('targetTaskID', tasks[0].taskID);
+                        // localStorage.setItem('targetTaskID', tasks[0].taskID);
                         // console.log(tasks[0].taskID);
 
                         // Create a table for each task
@@ -285,12 +285,20 @@
                             cell4_1.classList.add('budget');
                             cell4_2.textContent = "#000" + task.taskID;
                             cell4_2.classList.add('task-id');
-                            
+
                             // const status = task.status;
                             // const doneBy = task.doneBy;
 
                             // Add click event listener to each table
                             table.addEventListener('click', () => {
+                                // Reset the border of all tables to 1px
+                                const allTables = document.querySelectorAll('.selectPanel-container table');
+                                allTables.forEach((table) => {
+                                    table.style.border = '1px solid #F2F2F2';
+                                });
+
+                                // Set the border of the clicked table to 2px
+                                table.style.border = '2px solid #999999';
                                 localStorage.setItem('targetTaskID', task.taskID);
                                 // console.log(localStorage.getItem('targetTaskID'));
                                 // console.log(doneBy);
