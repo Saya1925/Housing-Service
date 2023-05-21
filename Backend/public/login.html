@@ -146,6 +146,9 @@
                         const resUserName = document.getElementById('dataFromRes');
                         resUserName.textContent = "(message from res, server session) User Name: " + data.userName + " #ID: " + data.userID;
 
+                        //set the default view for service page
+                        localStorage.setItem("tasksSelection", "latest");
+
                         // Make a GET request to retrieve session data
                         const xhr2 = new XMLHttpRequest();
                         xhr2.open('GET', '/account/session');
