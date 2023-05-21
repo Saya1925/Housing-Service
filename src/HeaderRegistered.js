@@ -6,14 +6,12 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import axios from 'axios';
 
-const HeaderRegistered = ({ userName, userType, setUserType }) => {
+const HeaderRegistered = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [openProfile, setOpenProfile] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleOpenLogin = () => setOpenLogin(true);
   const handleCloseLogin = () => setOpenLogin(false);
@@ -21,35 +19,13 @@ const HeaderRegistered = ({ userName, userType, setUserType }) => {
   const handleOpenProfile = () => setOpenProfile(true);
   const handleCloseProfile = () => setOpenProfile(false);
 
-  
-
 
   const handleLogin = () => {
-    axios.post('http://localhost:3001/account/login', {
-      email: email,
-      password: password
-    })
-    .then(function (response) {
-      if (response.status === 200) {
-        setIsLoggedIn(true);
-        
-        const { membership, professional } = response.data;
-        let userType = 'registered';
-        if (membership === 1 && professional === 0) {
-          userType = 'membership';
-        } else if (membership === 0 && professional === 1) {
-          userType = 'professional';
-        }
-        setUserType(userType);
-        
-        handleCloseLogin();
-      } else {
-        console.error('Login unsuccessful');
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    // Perform the login process here
+    console.log(email, password);
+    // If the login is successful, update the isLoggedIn state
+    setIsLoggedIn(true);
+    handleCloseLogin();
   };
 
   const buttons = [
@@ -65,7 +41,7 @@ const HeaderRegistered = ({ userName, userType, setUserType }) => {
     { label: 'My Tasks', path: '' },
     { label: 'My Offers', path: '' },
     { label: 'Subscribe Membership', path: '/MembershipCustomer' },
-    { label: 'Become Professional', path: '/Professional' },
+    { label: 'Become Professional', path: '/Professionals' },
     { label: 'Sign Out', path: '' },
   ]
   
