@@ -79,4 +79,18 @@ router.post('/professionalTransaction', async (req, res) => {
 // });
 
 
+// Route to retrieve the data from customerTran
+router.get('/get-transaction', async (req, res) => {
+    try {
+      const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
+      const [rows, fields] = await db.query(sql);
+      res.send(rows);
+      console.log(rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error connecting to database');
+    }
+  });
+
+
 module.exports = router;
