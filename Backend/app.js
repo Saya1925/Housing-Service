@@ -63,6 +63,29 @@ const transactionRoutes = require('./transaction.js');
 // register the create task routes
 app.use('/transaction', transactionRoutes);
 
+// calling generateReport.js
+const generateReport = require('./generateReport.js');
+// register the create task routes
+app.use('/generateReport', generateReport);
+
+
+// //
+// const generateReport = require('./generateReport');
+
+// // Define a route to handle the button click and trigger PDF generation
+// app.get('//generate-report', async (req, res) => {
+//   try {
+//     // Call the function to generate the PDF report
+//     await generateReport();
+
+//     // Send a response to the client
+//     res.send('PDF report generated successfully');
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Error generating PDF report');
+//   }
+// });
+
 
 /**********
  * set up the running of the backend application..
