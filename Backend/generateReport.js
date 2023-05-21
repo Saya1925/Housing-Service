@@ -14,7 +14,7 @@ const templateContent = fs.readFileSync('./reportTemplate.hbs', 'utf-8');
 
 const template = Handlebars.compile(templateContent);
 
-(async () => {
+async function generateReport() {
     // Function to retrieve the data from customerTran
     async function getTransactionData() {
         const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
@@ -60,4 +60,6 @@ const template = Handlebars.compile(templateContent);
     doc.pipe(fs.createWriteStream('report.pdf'));
     doc.font('Helvetica').fontSize(12).text(renderedTemplate, { align: 'left' });
     doc.end();
-})();
+};
+
+module.exports = generateReport;

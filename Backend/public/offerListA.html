@@ -573,7 +573,37 @@
                                             "<b>Phone: </b>" + localStorage.getItem("targetTaskProfessionalPhone") + "&nbsp &nbsp" +
                                             "<b>Email: </b>" + localStorage.getItem("targetTaskProfessionalEmail") + "<br><br>";
 
-                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph);
+                                        const actionButton = document.createElement('button');
+                                        actionButton.classList.add('actionButtonCus');
+                                        actionButton.innerText = "Download Report";
+
+                                        // use the button the update the task status from onGoing to taskDone
+                                        actionButton.addEventListener('click', () => {
+                                            // Make a request to the server endpoint that triggers PDF generation
+                                            fetch('/generateReport')
+                                                .then((response) => {
+                                                    if (response.ok) {
+                                                        // If the request was successful, initiate the file download
+                                                        response.blob().then((blob) => {
+                                                            const url = URL.createObjectURL(blob);
+                                                            const a = document.createElement('a');
+                                                            a.href = url;
+                                                            a.download = 'report.pdf';
+                                                            a.click();
+                                                            URL.revokeObjectURL(url);
+                                                        });
+                                                    } else {
+                                                        // Handle error response from the server
+                                                        console.error('Error generating PDF report');
+                                                    }
+                                                })
+                                                .catch((error) => {
+                                                    // Handle network or fetch API error
+                                                    console.error('Error generating PDF report', error);
+                                                });
+                                        });
+
+                                        diaplayBlock.appendChild(displayTitle).appendChild(displayParagraph).appendChild(actionButton);
                                         offerContainer.appendChild(diaplayBlock);
                                         // console.log("CSS file loaded:", file);
                                     };

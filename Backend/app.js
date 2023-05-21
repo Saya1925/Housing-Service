@@ -11,6 +11,12 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+// for report
+const fs = require('fs');
+const PDFDocument = require('pdfkit');
+const Handlebars = require('handlebars');
+
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');
 //   });
@@ -63,28 +69,60 @@ const transactionRoutes = require('./transaction.js');
 // register the create task routes
 app.use('/transaction', transactionRoutes);
 
-// calling generateReport.js
-const generateReport = require('./generateReport.js');
-// register the create task routes
-app.use('/generateReport', generateReport);
+// Read the template file
+const templateContent = fs.readFileSync('./reportTemplate.hbs', 'utf-8');
+const template = Handlebars.compile(templateContent);
 
+// Define the route for generating and downloading the PDF report
+app.get('/generateReport', async (req, res) => {
+  try {
+    // Function to retrieve the data from customerTran
+    async function getTransactionData() {
+      const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
+      const [rows, fields] = await db.query(sql);
+      console.log(rows);
+      return rows;
+    }
 
-// //
-// const generateReport = require('./generateReport');
+    // Fetch data from the getTransactionData function
+    const transactions = await getTransactionData();
 
-// // Define a route to handle the button click and trigger PDF generation
-// app.get('//generate-report', async (req, res) => {
-//   try {
-//     // Call the function to generate the PDF report
-//     await generateReport();
+    // Extract the values from the rows object
+    const {
+      userName,
+      transactionNum,
+      userID,
+      cardNum,
+      cardHolder,
+      billAddress,
+      serviceFee,
+      platformCharge,
+      totalFee
+    } = transactions[0]; // Assuming there is only one transaction in the result
 
-//     // Send a response to the client
-//     res.send('PDF report generated successfully');
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Error generating PDF report');
-//   }
-// });
+    // Render the template with the data:
+    const renderedTemplate = template({
+      userName,
+      transactionNum,
+      userID,
+      cardNum,
+      cardHolder,
+      billAddress,
+      serviceFee,
+      platformCharge,
+      totalFee
+    });
+
+    // Create a PDF document using pdfkit and add the rendered template content to it:
+    const doc = new PDFDocument();
+    doc.font('Helvetica').fontSize(12).text(renderedTemplate, { align: 'left' });
+    doc.pipe(res); // Pipe the PDF directly to the response object
+    doc.end();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error generating PDF report');
+  }
+});
 
 
 /**********
