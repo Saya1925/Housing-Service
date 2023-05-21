@@ -1,0 +1,18 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1684653010216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1684653010216,
+            "name": "Commit-0",
+            "content": "{\r\n  \"name\": \"housing\",\r\n  \"version\": \"0.1.0\",\r\n  \"type\": \"commonjs\",\r\n  \"dependencies\": {\r\n    \"@emotion/react\": \"^11.11.0\",\r\n    \"@emotion/styled\": \"^11.11.0\",\r\n    \"@mui/material\": \"^5.12.3\",\r\n    \"@testing-library/react\": \"^12.1.4\",\r\n    \"@testing-library/user-event\": \"^13.5.0\",\r\n    \"axios\": \"^1.4.0\",\r\n    \"express\": \"^4.18.2\",\r\n    \"jest-environment-jsdom\": \"^27.0.6\",\r\n    \"react\": \"^18.2.0\",\r\n    \"react-dom\": \"^18.2.0\",\r\n    \"react-router-dom\": \"^6.11.0\",\r\n    \"react-scripts\": \"^2.1.3\",\r\n    \"save\": \"^2.9.0\",\r\n    \"web-vitals\": \"^2.1.4\"\r\n  },\r\n  \"scripts\": {\r\n    \"start\": \"react-scripts --openssl-legacy-provider start\",\r\n    \"build\": \"react-scripts build\",\r\n    \"test\": \"jest\",\r\n    \"eject\": \"react-scripts eject\",\r\n    \"clean\": \"rm -rf build\"\r\n  },\r\n  \"eslintConfig\": {\r\n    \"extends\": [\r\n      \"react-app\",\r\n      \"react-app/jest\"\r\n    ]\r\n  },\r\n  \"browserslist\": {\r\n    \"production\": [\r\n      \">0.2%\",\r\n      \"not dead\",\r\n      \"not op_mini all\"\r\n    ],\r\n    \"development\": [\r\n      \"last 1 chrome version\",\r\n      \"last 1 firefox version\",\r\n      \"last 1 safari version\"\r\n    ]\r\n  },\r\n  \"devDependencies\": {\r\n    \"@babel/core\": \"^7.21.8\",\r\n    \"@babel/plugin-syntax-jsx\": \"^7.21.4\",\r\n    \"@babel/preset-env\": \"^7.21.5\",\r\n    \"@babel/preset-react\": \"^7.18.6\",\r\n    \"@babel/preset-typescript\": \"^7.21.4\",\r\n    \"@testing-library/jest-dom\": \"^5.16.5\",\r\n    \"@testing-library/react\": \"^14.0.0\",\r\n    \"babel-loader\": \"^9.1.2\",\r\n    \"dotenv\": \"^16.0.3\",\r\n    \"identity-obj-proxy\": \"^3.0.0\",\r\n    \"jest\": \"^27.5.1\",\r\n    \"jest-static-stubs\": \"^0.0.1\",\r\n    \"mocha\": \"^10.2.0\"\r\n  }\r\n}\r\n"
+        }
+    ]
+}
