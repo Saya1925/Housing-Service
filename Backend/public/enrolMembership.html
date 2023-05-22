@@ -151,51 +151,59 @@
 
 
     <div class="content">
-        <div class="headline-text">Easy House Service</div>
-        <div class="home-text">Welcome to our House Service Platform!<br>
-            Find the perfect service provider, request a quote,<br>
-            and experience top-notch service. Join us today and<br>
-            simplify your house servicing tasks!
+        <div>
+            <input type="radio" id="annualCus" name="memSub" value="annual">
+            <label for="annualCus">Annual: $216/annual</label>
         </div>
         <div>
-            <a href="signup.html"><button class="cta-organe">SIGN UP</button></a>
+            <input type="radio" id="monthlyCus" name="memSub" value="monthly">
+            <label for="monthlyCus">Monthly: $25/monthly</label>
         </div>
-        <div class="home-hero">
-            <img src="src/hero.png" alt="Image" class="scaled-image">
-        </div>
+        <button id="getMembership">Customer subscribe membership button</button>
+        <br>
+        <span id="membershipStutas"></span>
     </div>
 
+    <script>
+        // to change the status of Customer membership by sending userID
+        const button_getMembership = document.getElementById('getMembership');
+        button_getMembership.addEventListener('click', async () => {
+            const userID = localStorage.getItem('userID');
+            const subscriptionType = document.querySelector('input[name="memSub"]:checked');
+            if (subscriptionType.value == "monthly") {
+                var membershipFee = "$25/monthly";
+                // console.log(professionFee);
+            }
+            if (subscriptionType.value == "annual") {
+                var membershipFee = "$216/annual";
+                // console.log(professionFee);
+            }
 
+            try {
+                const response = await fetch(`/customerMembership/customerMembershipS?userID=${userID}&membershipFee=${membershipFee}`);
+
+                if (response.ok) {
+                    const message = await response.text();
+                    const membershipStutas = document.getElementById("membershipStutas");
+                    membershipStutas.textContent = message;
+                    console.log(membershipFee);
+                    console.log(message);
+                    localStorage.setItem('member', 1);
+                } else {
+                    console.log('Error:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
 
 
     <!-- some basic functional elements -->
 
     <script>
-        // /////////// display local store session
-        // // Function to update the displayed session information
-        // function updateDisplayedSession() {
-        //     const userName = localStorage.getItem('userName');
-        //     const userID = localStorage.getItem('userID');
-        //     const member = localStorage.getItem('member');
-        //     const professional = localStorage.getItem('pro');
-        //     const displayElement = document.getElementById('displayStoredSession');
-        //     // displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
-        // }
-        // // Initial display of stored session information
-        // updateDisplayedSession();
 
         // sign out logic
-        // const signOutButton = document.getElementById('signout');
-        // signOutButton.addEventListener('click', () => {
-        //     // Clear the stored session data in localStorage
-        //     localStorage.removeItem('userName');
-        //     localStorage.removeItem('userID');
-        //     localStorage.removeItem('member');
-        //     localStorage.removeItem('pro');
-
-        //     // Redirect the user to the login page or any other desired page
-        //     window.location.href = '/home.html';
-        // });
         const signOutButtons = document.querySelectorAll('.signout');
         signOutButtons.forEach((button) => {
             button.addEventListener('click', () => {

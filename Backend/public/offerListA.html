@@ -423,7 +423,7 @@
                                         // use the button go to the transaction request page
                                         actionButton.addEventListener('click', () => {
                                             setTimeout(function () {
-                                                window.top.location.href = "taskPaymentPro.html";
+                                                window.top.location.href = "transactionPro.html";
                                             }, 0);
                                         });
 
@@ -694,9 +694,9 @@
                                                 console.log("Selected offer ID: " + data[index].offerOrder);
                                                 localStorage.setItem("selectedQuotation", data[index].quotation);
                                                 console.log("Selected Quotation: " + data[index].quotation);
-                                                // Redirect to taskPayment.html
+                                                // Redirect to taskPayment.html // transactionCus.html
                                                 setTimeout(function () {
-                                                    window.top.location.href = "taskPayment.html";
+                                                    window.top.location.href = "transactionCus.html";
                                                 }, 0);
                                             });
                                         })(i);

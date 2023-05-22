@@ -151,19 +151,146 @@
 
 
     <div class="content">
-        <div class="headline-text">Easy House Service</div>
-        <div class="home-text">Welcome to our House Service Platform!<br>
-            Find the perfect service provider, request a quote,<br>
-            and experience top-notch service. Join us today and<br>
-            simplify your house servicing tasks!
-        </div>
-        <div>
-            <a href="signup.html"><button class="cta-organe">SIGN UP</button></a>
-        </div>
-        <div class="home-hero">
-            <img src="src/hero.png" alt="Image" class="scaled-image">
-        </div>
+        <table
+            style="border-collapse: collapse; width: 632px; border-width: 1px; border-style: solid; border-color: #f2f2f2; ">
+            <tr>
+                <td vertical-align: top;>
+                    <p>please enter your payment details:</p>
+                    <label for="cardNum">Card Number:</label><br>
+                    <input type="text" id="cardNum" name="cardNum" placeholder="Enter your card number" required
+                        size="40px"><br><br>
+                    <label for="cardHolder">Cardholder Name:</label><br>
+                    <input type="text" id="cardHolder" name="cardHolder" placeholder="Enter cardholder name" required
+                        size="40px"><br><br>
+                    <table style="border-collapse: collapse;">
+                        <tr>
+                            <td style="padding-right: 12px;">
+                                <label for="expDate">Expiration Date:</label><br>
+                                <input type="text" id="expDate" name="expDate" placeholder="MM/YY" required
+                                    size="18px"><br><br>
+                            </td>
+                            <td>
+                                <label for="cvcNum">CVC Number:</label><br>
+                                <input type="text" id="cvcNum" name="cvcNum" placeholder="Enter CVC number" required
+                                    size="18px"><br><br>
+                            </td>
+                        </tr>
+                    </table>
+                    <label for="billAddress">Billing Address:</label><br>
+                    <input id="billAddress" name="billAddress" placeholder="Enter billing address" required
+                        size="40px"></input>
+                </td>
+                <td
+                    style="vertical-align: top; text-align: center; width: 200px; height: 192px;border-style: solid; border-width: 1px; border-color: #f2f2f2;">
+                    <p>payment details:</p>
+                    <table style="text-align: center; width: 200px;">
+                        <tr>
+                            <td>service fee</td>
+                        </tr>
+                        <tr>
+                            <td><span id="serviceFee">$270</span></td>
+                        </tr>
+                        <tr>
+                            <td>commission</td>
+                        </tr>
+                        <tr>
+                            <td><span id="platformCommission">$0</span></td>
+                        </tr>
+                        <tr>
+                            <td>Total Payment<span id="totalPayment">$$</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br><br>
+
+        <button onclick="goBack()">Back</button>
+        <button id="proceedButton">Proceed</button><br>
+        <span id="transactionStatus"></span>
     </div>
+
+
+    <script>
+        console.log("selected offer to pay: " + localStorage.getItem("selectedOfferID"));
+        console.log(localStorage);
+
+        // compute service fee details
+        var fee = parseInt(localStorage.getItem("targetTaskPrice"));
+        var serviceFee = document.getElementById("serviceFee");
+        serviceFee.innerHTML = "$" + fee;
+        // compute commission fee
+        var charge = fee * 0.02;
+        var platformCommission = document.getElementById("platformCommission");
+        platformCommission.innerHTML = "$" + charge;
+        // total
+        var totalPayment = document.getElementById("totalPayment");
+        var total = fee - charge;
+        totalPayment.innerHTML = "$" + total;
+
+
+
+        ///// Route to professionalTranscation in transaction.js
+        const proceedButton = document.getElementById('proceedButton');
+        const transactionStatus = document.getElementById('transactionStatus');
+
+        // Add event listener to the button
+        proceedButton.addEventListener('click', function () {
+            // Create XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Set up the request
+            xhr.open('POST', '/transaction/professionalTransaction', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Set up the request payload
+            const payload = {
+                userID: localStorage.getItem("userID"),
+                taskID: localStorage.getItem("targetTaskID"),
+                userName: localStorage.getItem("userName"),
+                cardNum: document.getElementById("cardNum").value,
+                cardHolder: document.getElementById("cardHolder").value,
+                billAddress: document.getElementById("billAddress").value,
+                serviceFee: fee,
+                commission: charge,
+                totalPayment: total,
+            };
+
+            // Convert payload to JSON string
+            const jsonPayload = JSON.stringify(payload);
+
+            // Handle response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = xhr.responseText;
+                        console.log(response);
+                        transactionStatus.textContent = response; // Set the response message in the span element
+                    } else {
+                        console.error(xhr.status);
+                        transactionStatus.textContent = 'Error occurred during the transaction'; // Display error message
+                    }
+                }
+            };
+
+            // Send the request
+            xhr.send(jsonPayload);
+        });
+
+        function proceed() {
+            // Perform any necessary validation or processing of the input fields
+            var cardNum = document.getElementById("cardNum").value;
+            var cardHolder = document.getElementById("cardHolder").value;
+            var expDate = document.getElementById("expDate").value;
+            var cvcNum = document.getElementById("cvcNum").value;
+            var billAddress = document.getElementById("billAddress").value;
+        }
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+
 
 
 
@@ -171,31 +298,8 @@
     <!-- some basic functional elements -->
 
     <script>
-        // /////////// display local store session
-        // // Function to update the displayed session information
-        // function updateDisplayedSession() {
-        //     const userName = localStorage.getItem('userName');
-        //     const userID = localStorage.getItem('userID');
-        //     const member = localStorage.getItem('member');
-        //     const professional = localStorage.getItem('pro');
-        //     const displayElement = document.getElementById('displayStoredSession');
-        //     // displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
-        // }
-        // // Initial display of stored session information
-        // updateDisplayedSession();
 
         // sign out logic
-        // const signOutButton = document.getElementById('signout');
-        // signOutButton.addEventListener('click', () => {
-        //     // Clear the stored session data in localStorage
-        //     localStorage.removeItem('userName');
-        //     localStorage.removeItem('userID');
-        //     localStorage.removeItem('member');
-        //     localStorage.removeItem('pro');
-
-        //     // Redirect the user to the login page or any other desired page
-        //     window.location.href = '/home.html';
-        // });
         const signOutButtons = document.querySelectorAll('.signout');
         signOutButtons.forEach((button) => {
             button.addEventListener('click', () => {

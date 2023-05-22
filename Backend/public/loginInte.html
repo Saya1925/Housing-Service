@@ -56,8 +56,8 @@
                         <a href="#">profile</a>
                         <a href="#">my tasks</a>
                         <a href="#">my offers</a>
-                        <a href="#">subscribe membership</a>
-                        <a href="#">become professional</a>
+                        <a href="enrolMembership.html">subscribe membership</a>
+                        <a href="enrolProfessional.html">become professional</a>
                         <a href="#" class="signout">sign out</a>
                     </div>
                 </div>
@@ -69,8 +69,7 @@
                         <a href="#">profile</a>
                         <a href="#">my tasks</a>
                         <a href="#">my offers</a>
-                        <a href="#">subscribe membership</a>
-                        <a href="#">become professional</a>
+                        <a href="enrolProfessional.html">become professional</a>
                         <a href="#" class="signout">sign out</a>
                     </div>
                 </div>
@@ -82,8 +81,7 @@
                         <a href="#">profile</a>
                         <a href="#">my tasks</a>
                         <a href="#">my offers</a>
-                        <a href="#">subscribe membership</a>
-                        <a href="#">become professional</a>
+                        <a href="enrolMembership.html">subscribe membership</a>
                         <a href="#" class="signout">sign out</a>
                     </div>
                 </div>
@@ -94,61 +92,61 @@
     </div>
     <!-- header -->
 
-<!-- for header A / B -->
-<script>
-    // Check if the user is logged in
-    var isLoggedIn = "logined";
-    // Get references to the navigation sections
-    var visitorNav = document.querySelector('.navigationVisitor');
-    var userNav = document.querySelector('.navigationUser');
+    <!-- for header A / B -->
+    <script>
+        // Check if the user is logged in
+        var isLoggedIn = "logined";
+        // Get references to the navigation sections
+        var visitorNav = document.querySelector('.navigationVisitor');
+        var userNav = document.querySelector('.navigationUser');
 
-    // Show the appropriate navigation section based on the user's login status
-    if (localStorage.getItem("userID") != null) {
-        // console.log("it is a user");
-        visitorNav.style.display = 'none';
-        userNav.style.display = 'flex';
-    } else {
-        visitorNav.style.display = 'flex';
-        userNav.style.display = 'none';
-    }
-</script>
+        // Show the appropriate navigation section based on the user's login status
+        if (localStorage.getItem("userID") != null) {
+            // console.log("it is a user");
+            visitorNav.style.display = 'none';
+            userNav.style.display = 'flex';
+        } else {
+            visitorNav.style.display = 'flex';
+            userNav.style.display = 'none';
+        }
+    </script>
 
-<!-- for header  showing user / memeber / professional -->
-<script>
-    // Check if the user is normal / memeber / pro
-    var profileUser = document.querySelector('.profileUser');
-    var profileMem = document.querySelector('.profileMem');
-    var profilePro = document.querySelector('.profilePro');
+    <!-- for header  showing user / memeber / professional -->
+    <script>
+        // Check if the user is normal / memeber / pro
+        var profileUser = document.querySelector('.profileUser');
+        var profileMem = document.querySelector('.profileMem');
+        var profilePro = document.querySelector('.profilePro');
 
-    // Show the appropriate navigation section based on the user's login status
-    if (localStorage.getItem("member") == 0 && localStorage.getItem("pro") == 0) {
-        // console.log("it is a user");
-        profileUser.style.display = 'flex';
-        profileMem.style.display = 'none';
-        profilePro.style.display = 'none';
-        var userName = document.getElementById("userName");
-        userName.textContent = localStorage.getItem("userName");
-    } else if (localStorage.getItem("member") == 1 && localStorage.getItem("pro") == 0) {
-        profileUser.style.display = 'none';
-        profileMem.style.display = 'flex';
-        profilePro.style.display = 'none';
-        var memName = document.getElementById("memName");
-        memName.textContent = localStorage.getItem("userName");
-    } else if (localStorage.getItem("member") == 0 && localStorage.getItem("pro") == 1) {
-        profileUser.style.display = 'none';
-        profileMem.style.display = 'none';
-        profilePro.style.display = 'flex';
-        var proName = document.getElementById("proName");
-        proName.textContent = localStorage.getItem("userName");
-    } else if (localStorage.getItem("member") == 1 && localStorage.getItem("pro") == 1) {
-        profileUser.style.display = 'none';
-        profileMem.style.display = 'none';
-        profilePro.style.display = 'flex';
-        var proName = document.getElementById("proName");
-        proName.textContent = localStorage.getItem("userName");
-    }
+        // Show the appropriate navigation section based on the user's login status
+        if (localStorage.getItem("member") == 0 && localStorage.getItem("pro") == 0) {
+            // console.log("it is a user");
+            profileUser.style.display = 'flex';
+            profileMem.style.display = 'none';
+            profilePro.style.display = 'none';
+            var userName = document.getElementById("userName");
+            userName.textContent = localStorage.getItem("userName");
+        } else if (localStorage.getItem("member") == 1 && localStorage.getItem("pro") == 0) {
+            profileUser.style.display = 'none';
+            profileMem.style.display = 'flex';
+            profilePro.style.display = 'none';
+            var memName = document.getElementById("memName");
+            memName.textContent = localStorage.getItem("userName");
+        } else if (localStorage.getItem("member") == 0 && localStorage.getItem("pro") == 1) {
+            profileUser.style.display = 'none';
+            profileMem.style.display = 'none';
+            profilePro.style.display = 'flex';
+            var proName = document.getElementById("proName");
+            proName.textContent = localStorage.getItem("userName");
+        } else if (localStorage.getItem("member") == 1 && localStorage.getItem("pro") == 1) {
+            profileUser.style.display = 'none';
+            profileMem.style.display = 'none';
+            profilePro.style.display = 'flex';
+            var proName = document.getElementById("proName");
+            proName.textContent = localStorage.getItem("userName");
+        }
 
-</script>
+    </script>
 
 
 
@@ -223,8 +221,8 @@
                                     console.log("membership: " + storedMember);
                                     console.log("profession: " + storedPro);
 
-                                    // Redirect the user to services page
-                                    window.location.href = '/services.html';
+                                    // // Redirect the user to services page
+                                    // window.location.href = '/services.html';
 
                                 } else {
                                     // Handle errors...
