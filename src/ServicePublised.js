@@ -1,11 +1,17 @@
 //Junhui
 //Similar to Make Offer
-
 import React from 'react';
 
 const ServicePublised = () => {
   return (
-    <div style={{ border: '2px solid yellow', padding: '20px' }}>
+    <div 
+      style={{
+      border: '2px solid yellow',
+      padding: '20px',
+      background: 'url("image URL")', 
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}>
       <h1>Create a service a request</h1>
       <p>Request:{} </p>
       <p>Budget: Category:{}</p>
