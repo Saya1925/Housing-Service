@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>House Services</title>
+    <link rel="stylesheet" href="fontAndIntegration.css">
+    <link rel="stylesheet" href="style_servicePage.css">
+    <link rel="stylesheet" href="style_selectPanel.css">
+    <link rel="stylesheet" href="style_taskFlow.css">
+</head>
+<style>
+    #makeOfferPanel #message {
+        width: 276px;
+        height: 104px;
+        vertical-align: top;
+        padding-top: 0px;
+    }
+
+    #makeOfferPanel label {
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+
+<body>
+    <!-- header -->
+
+    <div class="header">
+        <div class="logo">
+            <img src="src/hs_logo.png" alt="Logo">
+        </div>
+
+        <div class="navigationVisitor">
+            <!-- Navigation for visitors -->
+            <!-- <div class="visitorNav"> -->
+            <a href="home.html" class="nav-button">HOME</a>
+            <a href="services.html" class="nav-button">SERVICES</a>
+            <a href="#" class="nav-button">ABOUT US</a>
+            <div class="auth-buttons">
+                <a href="signup.html"><button class="signup-button">SIGN UP</button></a>
+                <a href="loginInte.html"><button class="login-button">LOGIN</button></a>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- Navigation for logged-in users -->
+        <div class="navigationUser">
+            <a href="home.html" class="nav-button">HOME</a>
+            <a href="services.html" class="nav-button">SERVICES</a>
+            <a href="createTaskInte.html"><button class="create-button">Create Task</button></a>
+            <div>profile info here</div>
+            <button id="signout" class="signout-button">sign out</button><br>
+        </div>
+    </div>
+    <!-- for header A / B -->
+    <script>
+        // Check if the user is logged in
+        var isLoggedIn = "logined";
+        // Get references to the navigation sections
+        var visitorNav = document.querySelector('.navigationVisitor');
+        var userNav = document.querySelector('.navigationUser');
+
+        // Show the appropriate navigation section based on the user's login status
+        if (localStorage.getItem("userID") != null) {
+            // console.log("it is a user");
+            visitorNav.style.display = 'none';
+            userNav.style.display = 'flex';
+        } else {
+            visitorNav.style.display = 'flex';
+            userNav.style.display = 'none';
+        }
+    </script>
+    <!-- header -->
+
+
+    <div class="content">
+        <form id="loginForm" action="/account/login" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="pw">Password:</label>
+            <input type="password" id="pw" name="pw" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+        <span id="loginStatus"></span>
+    </div>
+
+
+    <!-- for login logic -->
+
+    <script>
+        // XMLHttpRequest
+        const loginForm = document.getElementById('loginForm');
+        const loginStatus = document.getElementById('loginStatus');
+        let response;
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = loginForm.email.value;
+            const pw = loginForm.pw.value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/account/login');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        // Update the login status message
+                        loginStatus.textContent = data.message;
+
+                        //set the default view for service page
+                        localStorage.setItem("tasksSelection", "latest");
+
+                        // Make a GET request to retrieve session data
+                        const xhr2 = new XMLHttpRequest();
+                        xhr2.open('GET', '/account/session');
+                        xhr2.onreadystatechange = function () {
+                            if (xhr2.readyState === XMLHttpRequest.DONE) {
+                                if (xhr2.status === 200) {
+                                    const sessionData = JSON.parse(xhr2.responseText);
+                                    // const userName = sessionData.userName;
+                                    // const userID = sessionData.userID;
+                                    console.log(sessionData);
+                                    // Store session data in localStorage
+                                    localStorage.setItem('userName', sessionData.userName);
+                                    localStorage.setItem('userID', sessionData.userID);
+                                    localStorage.setItem('email', sessionData.email);
+                                    localStorage.setItem('member', sessionData.member);
+                                    localStorage.setItem('pro', sessionData.pro);
+                                    // updateDisplayedSession();
+
+                                    // Use the session data as needed
+                                    const storedUserName = localStorage.getItem('userName');
+                                    const storedUserID = localStorage.getItem('userID');
+                                    const storedEmail = localStorage.getItem('email');
+                                    const storedMember = localStorage.getItem('member');
+                                    const storedPro = localStorage.getItem('pro');
+                                    console.log("name: " + storedUserName);
+                                    console.log("userID: " + storedUserID);
+                                    console.log("email: " + storedEmail);
+                                    console.log("membership: " + storedMember);
+                                    console.log("profession: " + storedPro);
+
+                                    // Redirect the user to services page
+                                    window.location.href = '/services.html';
+
+                                } else {
+                                    // Handle errors...
+                                }
+                            }
+                        };
+                        xhr2.send();
+                    } else {
+                        // Handle errors...
+                        loginStatus.textContent = 'Error submitting login form';
+                    }
+                }
+            };
+            const data = JSON.stringify({ email, pw });
+            xhr.send(data);
+        });
+    </script>
+
+
+    <!-- some basic functional elements -->
+
+    <script>
+        /////////// display local store session
+        // Function to update the displayed session information
+        // function updateDisplayedSession() {
+        //     const userName = localStorage.getItem('userName');
+        //     const userID = localStorage.getItem('userID');
+        //     const member = localStorage.getItem('member');
+        //     const professional = localStorage.getItem('pro');
+        //     const displayElement = document.getElementById('displayStoredSession');
+        //     // displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
+        // }
+        // // Initial display of stored session information
+        // updateDisplayedSession();
+
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
+        signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('member');
+            localStorage.removeItem('pro');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/home.html';
+        });
+
+    </script>
+
+</body>
+
+</html>

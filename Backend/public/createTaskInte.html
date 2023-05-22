@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>House Services</title>
+    <link rel="stylesheet" href="fontAndIntegration.css">
+    <link rel="stylesheet" href="style_servicePage.css">
+    <link rel="stylesheet" href="style_selectPanel.css">
+    <link rel="stylesheet" href="style_taskFlow.css">
+</head>
+<style>
+    #makeOfferPanel #message {
+        width: 276px;
+        height: 104px;
+        vertical-align: top;
+        padding-top: 0px;
+    }
+
+    #makeOfferPanel label {
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+
+<body>
+    <!-- header -->
+
+    <div class="header">
+        <div class="logo">
+            <img src="src/hs_logo.png" alt="Logo">
+        </div>
+
+        <div class="navigationVisitor">
+            <!-- Navigation for visitors -->
+            <!-- <div class="visitorNav"> -->
+            <a href="home.html" class="nav-button">HOME</a>
+            <a href="services.html" class="nav-button">SERVICES</a>
+            <a href="#" class="nav-button">ABOUT US</a>
+            <div class="auth-buttons">
+                <a href="signup.html"><button class="signup-button">SIGN UP</button></a>
+                <a href="loginInte.html"><button class="login-button">LOGIN</button></a>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- Navigation for logged-in users -->
+        <div class="navigationUser">
+            <a href="home.html" class="nav-button">HOME</a>
+            <a href="services.html" class="nav-button">SERVICES</a>
+            <a href="createTaskInte.html"><button class="create-button">Create Task</button></a>
+            <div>profile info here</div>
+            <button id="signout" class="signout-button">sign out</button><br>
+        </div>
+    </div>
+    <!-- for header A / B -->
+    <script>
+        // Check if the user is logged in
+        var isLoggedIn = "logined";
+        // Get references to the navigation sections
+        var visitorNav = document.querySelector('.navigationVisitor');
+        var userNav = document.querySelector('.navigationUser');
+
+        // Show the appropriate navigation section based on the user's login status
+        if (localStorage.getItem("userID") != null) {
+            // console.log("it is a user");
+            visitorNav.style.display = 'none';
+            userNav.style.display = 'flex';
+        } else {
+            visitorNav.style.display = 'flex';
+            userNav.style.display = 'none';
+        }
+    </script>
+    <!-- header -->
+
+
+    <div class="content">
+        <form id="addTaskForm" action="/createTask/add-task" method="post">
+            <label for="taskName">Task Name:</label>
+            <input type="text" id="taskName" name="taskName"><br>
+
+            <label for="budget">Budget:</label>
+            <input type="text" id="budget" name="budget"><br>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="Electrical">Electrical</option>
+                <option value="Construction">Construction</option>
+                <option value="Gardening">Gardening</option>
+                <option value="Plumber">Plumber</option>
+                <option value="Design">Design</option>
+                <option value="Others">Others</option>
+            </select><br>
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate"><br>
+
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate"><br>
+
+            <label for="specialReq">Special Requirements:</label>
+            <input type="text" id="specialReq" name="specialReq"><br>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location"><br>
+            <label for="onlineTask">Is it an online task?</label>
+            <input type="checkbox" id="onlineTask" name="onlineTask" onclick="toggleLocationInput()"><br>
+
+            <label for="details">Details:</label>
+            <textarea id="details" name="details"></textarea><br>
+
+            <button type="submit">Add Task</button>
+        </form>
+        <span id="newTaskStatus"></span><br>
+    </div>
+
+
+    <!-- for creating task -->
+
+    <script>
+        // XMLHttpRequest for submit the offer
+        document.getElementById('addTaskForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // define the parameters
+            const createdBy = localStorage.getItem('userID');
+            const taskName = addTaskForm.taskName.value;
+            const budget = addTaskForm.budget.value;
+            const category = addTaskForm.category.value;
+            const startDate = addTaskForm.startDate.value;
+            const endDate = addTaskForm.endDate.value;
+            const specialReq = addTaskForm.specialReq.value;
+            const location = addTaskForm.location.value;
+            // const onlineTask = addTaskForm.onlineTask.value;
+            const details = addTaskForm.details.value;
+    
+            // do the XMLHTTPRequest
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/createTask/add-task');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    newTaskStatus.textContent = "create task successfully";
+                    console.log('create task successfully');
+                    // Perform any additional actions upon successful submission
+                } else {
+                    console.error('Error creating task');
+                    // Handle the error case
+                }
+            };
+
+            var formData = JSON.stringify({ createdBy, taskName, budget, category, startDate, endDate, specialReq, location, details, onlineTask });
+            // const data = JSON.stringify({ email, pw });
+            xhr.send(formData);
+        });
+    </script>
+
+
+
+    <!-- some basic functional elements -->
+
+    <script>
+        /////////// display local store session
+        // // Function to update the displayed session information
+        // function updateDisplayedSession() {
+        //     const userName = localStorage.getItem('userName');
+        //     const userID = localStorage.getItem('userID');
+        //     const member = localStorage.getItem('member');
+        //     const professional = localStorage.getItem('pro');
+        //     const displayElement = document.getElementById('displayStoredSession');
+        //     // displayElement.textContent = `User Name: ${userName} | UserID: ${userID} | member: ${member} | professioanl: ${professional}`;
+        // }
+        // // Initial display of stored session information
+        // updateDisplayedSession();
+
+        // sign out logic
+        const signOutButton = document.getElementById('signout');
+        signOutButton.addEventListener('click', () => {
+            // Clear the stored session data in localStorage
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('member');
+            localStorage.removeItem('pro');
+
+            // Redirect the user to the login page or any other desired page
+            window.location.href = '/home.html';
+        });
+
+    </script>
+
+</body>
+
+</html>
