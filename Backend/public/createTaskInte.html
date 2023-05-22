@@ -30,9 +30,8 @@
             <img src="src/hs_logo.png" alt="Logo">
         </div>
 
+        <!-- Navigation for visitors -->
         <div class="navigationVisitor">
-            <!-- Navigation for visitors -->
-            <!-- <div class="visitorNav"> -->
             <a href="home.html" class="nav-button">HOME</a>
             <a href="services.html" class="nav-button">SERVICES</a>
             <a href="#" class="nav-button">ABOUT US</a>
@@ -41,16 +40,60 @@
                 <a href="loginInte.html"><button class="login-button">LOGIN</button></a>
             </div>
         </div>
-        <!-- </div> -->
+
         <!-- Navigation for logged-in users -->
         <div class="navigationUser">
             <a href="home.html" class="nav-button">HOME</a>
             <a href="services.html" class="nav-button">SERVICES</a>
-            <a href="createTaskInte.html"><button class="create-button">Create Task</button></a>
-            <div>profile info here</div>
-            <button id="signout" class="signout-button">sign out</button><br>
+            <a href="createTaskInte.html"><button class="create-button">Request a Service</button></a>
+
+            <!-- type of logined user -->
+            <div id="profileWrapper" class="profile-wrapper">
+                <div class="profileUser">
+                    <span id="userName">User Name</span>
+                    <div class="dropdown-content">
+                        <!-- Dropdown menu items -->
+                        <a href="#">profile</a>
+                        <a href="#">my tasks</a>
+                        <a href="#">my offers</a>
+                        <a href="#">subscribe membership</a>
+                        <a href="#">become professional</a>
+                        <a href="#" class="signout">sign out</a>
+                    </div>
+                </div>
+
+                <div class="profileMem">
+                    <span id="memName">User Name</span>
+                    <div class="dropdown-content">
+                        <!-- Dropdown menu items -->
+                        <a href="#">profile</a>
+                        <a href="#">my tasks</a>
+                        <a href="#">my offers</a>
+                        <a href="#">subscribe membership</a>
+                        <a href="#">become professional</a>
+                        <a href="#" class="signout">sign out</a>
+                    </div>
+                </div>
+
+                <div class="profilePro">
+                    <span id="proName">User Name</span>
+                    <div class="dropdown-content">
+                        <!-- Dropdown menu items -->
+                        <a href="#">profile</a>
+                        <a href="#">my tasks</a>
+                        <a href="#">my offers</a>
+                        <a href="#">subscribe membership</a>
+                        <a href="#">become professional</a>
+                        <a href="#" class="signout">sign out</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <button id="signout" class="signout-button">sign out</button> -->
         </div>
     </div>
+    <!-- header -->
+
     <!-- for header A / B -->
     <script>
         // Check if the user is logged in
@@ -69,7 +112,44 @@
             userNav.style.display = 'none';
         }
     </script>
-    <!-- header -->
+
+    <!-- for header  showing user / memeber / professional -->
+    <script>
+        // Check if the user is normal / memeber / pro
+        var profileUser = document.querySelector('.profileUser');
+        var profileMem = document.querySelector('.profileMem');
+        var profilePro = document.querySelector('.profilePro');
+
+        // Show the appropriate navigation section based on the user's login status
+        if (localStorage.getItem("member") == 0 && localStorage.getItem("pro") == 0) {
+            // console.log("it is a user");
+            profileUser.style.display = 'flex';
+            profileMem.style.display = 'none';
+            profilePro.style.display = 'none';
+            var userName = document.getElementById("userName");
+            userName.textContent = localStorage.getItem("userName");
+        } else if (localStorage.getItem("member") == 1 && localStorage.getItem("pro") == 0) {
+            profileUser.style.display = 'none';
+            profileMem.style.display = 'flex';
+            profilePro.style.display = 'none';
+            var memName = document.getElementById("memName");
+            memName.textContent = localStorage.getItem("userName");
+        } else if (localStorage.getItem("member") == 0 && localStorage.getItem("pro") == 1) {
+            profileUser.style.display = 'none';
+            profileMem.style.display = 'none';
+            profilePro.style.display = 'flex';
+            var proName = document.getElementById("proName");
+            proName.textContent = localStorage.getItem("userName");
+        } else if (localStorage.getItem("member") == 1 && localStorage.getItem("pro") == 1) {
+            profileUser.style.display = 'none';
+            profileMem.style.display = 'none';
+            profilePro.style.display = 'flex';
+            var proName = document.getElementById("proName");
+            proName.textContent = localStorage.getItem("userName");
+        }
+
+    </script>
+
 
 
     <div class="content">
@@ -131,7 +211,7 @@
             const location = addTaskForm.location.value;
             // const onlineTask = addTaskForm.onlineTask.value;
             const details = addTaskForm.details.value;
-    
+
             // do the XMLHTTPRequest
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/createTask/add-task');
@@ -172,16 +252,29 @@
         // updateDisplayedSession();
 
         // sign out logic
-        const signOutButton = document.getElementById('signout');
-        signOutButton.addEventListener('click', () => {
-            // Clear the stored session data in localStorage
-            localStorage.removeItem('userName');
-            localStorage.removeItem('userID');
-            localStorage.removeItem('member');
-            localStorage.removeItem('pro');
+        // const signOutButton = document.getElementById('signout');
+        // signOutButton.addEventListener('click', () => {
+        //     // Clear the stored session data in localStorage
+        //     localStorage.removeItem('userName');
+        //     localStorage.removeItem('userID');
+        //     localStorage.removeItem('member');
+        //     localStorage.removeItem('pro');
 
-            // Redirect the user to the login page or any other desired page
-            window.location.href = '/home.html';
+        //     // Redirect the user to the login page or any other desired page
+        //     window.location.href = '/home.html';
+        // });
+        const signOutButtons = document.querySelectorAll('.signout');
+        signOutButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                // Clear the stored session data in localStorage
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userID');
+                localStorage.removeItem('member');
+                localStorage.removeItem('pro');
+
+                // Redirect the user to the login page or any other desired page
+                window.location.href = '/home.html';
+            });
         });
 
     </script>
