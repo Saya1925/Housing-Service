@@ -21,14 +21,23 @@ import logoHeader from './images/logoHeader.jpg';
 import RegisteredServices from "./RegisteredServices";
 import MembershipServices from "./MembershipServices";
 import ProfessionalServices from "./ProfessionalServices";
-
+import PaymentPage from './PaymentPage';
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
-
+const App = () => {
+  return (
+    <div className="app">
+      <PaymentPage />
+    </div>
+  );
+};
+  
   return (
     <div>
+      
       <Routes>
         <Route path="*" element={<HomePage />} />
         <Route path="/HomePageRegistered" element={<HomePageRegistered />} />
