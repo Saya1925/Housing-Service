@@ -22,7 +22,7 @@ import RegisteredServices from "./RegisteredServices";
 import MembershipServices from "./MembershipServices";
 import ProfessionalServices from "./ProfessionalServices";
 import PaymentPage from './PaymentPage';
-import './Payment.css';
+import './payment.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
