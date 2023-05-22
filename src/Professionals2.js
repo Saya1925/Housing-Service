@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/Professionals.css';
 import HeaderProfessional from './HeaderProfessional';
+import axios from 'axios';
 
 
 const Professionals2 = ({ handleBack, handleProceed }) => {
@@ -37,7 +38,29 @@ const Professionals2 = ({ handleBack, handleProceed }) => {
     // For example, you can check if the card number and card holder are valid
 
     // Call the handleProceed function to proceed to the next step
-    handleProceed();
+   // Create an object with the form data
+    const formData = {
+      cardNumber,
+      cardHolder,
+      expirationDate,
+      cvc,
+      billAddress,
+    };
+
+    // Send the form data to the backend using Axios
+    axios
+      .post('http://localhost:3001/professionalsMembership/professionalsMembershipS', formData)
+      .then((response) => {
+        console.log(response.data);
+        // Handle the response or perform any additional logic
+
+        // Call the handleProceed function to proceed to the next step
+        handleProceed();
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error or display an error message to the user
+      });
   };
 
   const handleBackClick = () => {
