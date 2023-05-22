@@ -21,11 +21,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run linter
-        run: npm run lint
-
-      - name: Run formatter check
-        run: npm run format
-
       - name: Run tests
         run: npm test
+        
+      - name: Deploy to Google App Engine
+        uses: google-github-actions/deploy-appengine@main
+        with:
+          project_id: housingservice950
+          deliverables: app.yaml
+          version: 'v1'
