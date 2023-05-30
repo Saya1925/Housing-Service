@@ -25,12 +25,6 @@
     "eject": "react-scripts eject",
     "clean": "rm -rf build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -55,7 +49,6 @@
     "dotenv": "^16.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "jest-static-stubs": "^0.0.1",
-    "mocha": "^10.2.0"
+    "jest-static-stubs": "^0.0.1"
   }
 }
