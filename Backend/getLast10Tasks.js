@@ -12,7 +12,7 @@ router.use(bodyParser.json());
 router.get('/getTasks', async(req, res) => {
     try {
         const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 10';
-        const [rows, fields] = await db.query(sql);
+        const [rows] = await db.query(sql);
         res.send(rows);
         console.log(rows);
     } catch (error) {

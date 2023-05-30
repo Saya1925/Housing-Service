@@ -36,7 +36,7 @@ router.post('/add-task', async (req, res) => {
 router.get('/get-latest-task', async (req, res) => {
     try {
         const sql = 'SELECT * FROM taskList ORDER BY taskID DESC LIMIT 1';
-        const [rows, fields] = await db.query(sql);
+        const [rows] = await db.query(sql);
         res.send(rows);
         // console.log(rows);
     } catch (error) {

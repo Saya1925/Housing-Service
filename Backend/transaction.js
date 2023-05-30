@@ -25,7 +25,7 @@ router.post('/customerTransaction', async (req, res) => {
                             )
                             WHERE taskID = '${taskID}'`;
 
-        const [result] = await db.query(sqlInsert)
+        const [result] = await db.query(sqlInsert);
         // await db.query(sqlInsert);
         await db.query(sqlUpdateOffer);
         await db.query(sqlUpdateTask);
@@ -49,7 +49,7 @@ router.post('/professionalTransaction', async (req, res) => {
                             SET status = 'taskComplete', transaction = '${totalPayment}', commission = '${commission}'
                             WHERE taskID = '${taskID}'`;
 
-        const [result] = await db.query(sqlInsert)
+        const [result] = await db.query(sqlInsert);
         await db.query(sqlUpdateTask);
 
         console.log(`New transcation record with ID ${result.insertId} has been added`);
@@ -83,7 +83,7 @@ router.post('/professionalTransaction', async (req, res) => {
 router.get('/get-transaction', async (req, res) => {
     try {
       const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
-      const [rows, fields] = await db.query(sql);
+      const [rows] = await db.query(sql);
       res.send(rows);
       console.log(rows);
     } catch (error) {

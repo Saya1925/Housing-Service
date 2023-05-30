@@ -21,7 +21,7 @@ router.use(
 // Route to test the database connection
 router.get('/test-db', async (req, res) => {
   try {
-    const [rows, fields] = await db.query('SELECT * FROM user');
+    const [rows] = await db.query('SELECT * FROM user');
     res.send(rows);
     console.log(rows);
   } catch (error) {
@@ -34,7 +34,7 @@ router.get('/test-db', async (req, res) => {
 router.get('/get-latest-user', async (req, res) => {
   try {
     const sql = 'SELECT * FROM user ORDER BY userID DESC LIMIT 1';
-    const [rows, fields] = await db.query(sql);
+    const [rows] = await db.query(sql);
     res.send(rows);
     console.log(rows);
   } catch (error) {
@@ -145,7 +145,7 @@ router.get('/get-user', async (req, res) => {
   try {
     const { userID } = req.query;
     const sql = `SELECT * FROM user WHERE userID = ?`;
-    const [rows, fields] = await db.query(sql, [userID]);
+    const [rows] = await db.query(sql, [userID]);
     res.send(rows);
     // console.log("now using: " + userID);
   } catch (error) {

@@ -35,12 +35,12 @@ const accountRoutes = require('./account.js');
 app.use('/account', accountRoutes);
 
 // calling membership.js
-const customerMembershipRoutes = require('./customerMembership.js')
+const customerMembershipRoutes = require('./customerMembership.js');
 // register the membership subscription routes
 app.use('/customerMembership', customerMembershipRoutes);
 
 // calling professional.js
-const professionalsMembershipRoutes = require('./professionalsMembership.js')
+const professionalsMembershipRoutes = require('./professionalsMembership.js');
 // register the professional subscription routes
 app.use('/professionalsMembership', professionalsMembershipRoutes);
 
@@ -75,17 +75,18 @@ const template = Handlebars.compile(templateContent);
 
 // Define the route for generating and downloading the PDF report
 app.get('/generateReport', async (req, res) => {
-  try {
+
     // Function to retrieve the data from customerTran
     async function getTransactionData() {
       const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
-      const [rows, fields] = await db.query(sql);
+      const [rows] = await db.query(sql);
       console.log(rows);
       return rows;
     }
 
-    // Fetch data from the getTransactionData function
-    const transactions = await getTransactionData();
+    try {
+      // Fetch data from the getTransactionData function
+      const transactions = await getTransactionData();
 
     // Extract the values from the rows object
     const {

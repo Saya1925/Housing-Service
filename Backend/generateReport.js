@@ -1,24 +1,25 @@
 const fs = require('fs');
-const path = require('path');
 const PDFDocument = require('pdfkit');
 const Handlebars = require('handlebars');
 const db = require('./db');
+const express = require('express');
+const router = express.Router();
 
-const templateFilePath = path.join(__dirname, 'reportTemplate.hbs');
+// Read the template file
+const templateContent = fs.readFileSync('./reportTemplate.hbs', 'utf-8');
+const template = Handlebars.compile(templateContent);
 
-async function generateReport() {
+// Function to retrieve the data from customerTran
+async function getTransactionData() {
+  const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
+  const [rows] = await db.query(sql);
+  console.log(rows);
+  return rows;
+}
+
+// Define the route for generating and downloading the PDF report
+router.get('/generateReport', async (req, res) => {
   try {
-    const templateContent = fs.readFileSync(templateFilePath, 'utf-8');
-    const template = Handlebars.compile(templateContent);
-
-    // Function to retrieve the data from customerTran
-    async function getTransactionData() {
-      const sql = 'SELECT * FROM customerTran ORDER BY transactionNum DESC LIMIT 1';
-      const [rows, fields] = await db.query(sql);
-      console.log(rows);
-      return rows;
-    }
-
     // Fetch data from the getTransactionData function
     const transactions = await getTransactionData();
 
@@ -50,12 +51,13 @@ async function generateReport() {
 
     // Create a PDF document using pdfkit and add the rendered template content to it:
     const doc = new PDFDocument();
-    doc.pipe(fs.createWriteStream('report.pdf'));
     doc.font('Helvetica').fontSize(12).text(renderedTemplate, { align: 'left' });
+    doc.pipe(res); // Pipe the PDF directly to the response object
     doc.end();
   } catch (error) {
-    console.error('Error generating report:', error);
+    console.error(error);
+    res.status(500).send('Error generating PDF report');
   }
-}
+});
 
-module.exports = generateReport;
+module.exports = router;

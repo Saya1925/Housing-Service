@@ -1,14 +1,19 @@
 {
     "env": {
-      "commonjs": true,
+      "browser": true,
       "es2021": true,
-      "node": true
+      "node": true,
+      "jest": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-      "ecmaVersion": 12
+      "ecmaVersion": 2021,
+      "sourceType": "module"
     },
     "rules": {
+      "linebreak-style": "off",
+      "semi": ["error", "always"],
+      "no-multiple-empty-lines": ["error", { "max": 3 }]
     }
   }
   

@@ -2,7 +2,6 @@
 const db = require('./db');
 const express = require('express');
 const router = express.Router();
-const app = express();
 
 // use body-parser for subscribe
 const bodyParser = require('body-parser');

@@ -31,7 +31,7 @@ router.get('/fetch-created-by', async (req, res) => {
         const taskID = req.query.taskID;
 
         const sql = 'SELECT * FROM taskList WHERE taskID = ?';
-        const [rows, fields] = await db.query(sql, [taskID]);
+        const [rows] = await db.query(sql, [taskID]);
 
         console.log(rows[0]);
         if (rows.length > 0) {
@@ -54,7 +54,7 @@ router.get('/get-user', async (req, res) => {
     try {
       const { userID } = req.query;
       const sql = `SELECT * FROM user WHERE userID = ?`;
-      const [rows, fields] = await db.query(sql, [userID]);
+      const [rows] = await db.query(sql, [userID]);
       res.send(rows);
       // console.log("now using: " + userID);
     } catch (error) {
@@ -68,7 +68,7 @@ router.get('/get-target-offer', async (req, res) => {
     try {
       const { taskID } = req.query;
       const sql = `SELECT * FROM offerList WHERE taskID = ? AND success = 1`;
-      const [rows, fields] = await db.query(sql, [taskID]);
+      const [rows] = await db.query(sql, [taskID]);
       res.send(rows);
       // console.log("now using: " + userID);
     } catch (error) {

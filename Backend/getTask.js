@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('exprefieldss');
 const router = express.Router();
 const db = require('./db');
 
@@ -13,7 +13,7 @@ router.get('/byLatest', async (req, res) => {
   try {
     // const { } = req.query;
     const sql = 'SELECT * FROM taskList WHERE status = "awaiting" ORDER BY taskID DESC LIMIT 10';
-    const [rows, fields] = await db.query(sql);
+    const [rows] = await db.query(sql);
     res.send(rows);
     // console.log(rows);
   } catch (error) {
@@ -28,7 +28,7 @@ router.get('/myRequest', async (req, res) => {
     // console.log("shoooooooow my Request")
     const { userID } = req.query;
     const sql = 'SELECT * FROM taskList WHERE createdBy = ? ORDER BY taskID DESC LIMIT 10';
-    const [rows, fields] = await db.query(sql, [userID]);
+    const [rows] = await db.query(sql, [userID]);
     res.send(rows);
     // console.log(rows);
   } catch (error) {
@@ -42,7 +42,7 @@ router.get('/myMission', async (req, res) => {
   try {
     const { userID } = req.query;
     const sql = 'SELECT * FROM taskList WHERE doneBy = ? ORDER BY taskID DESC LIMIT 10';
-    const [rows, fields] = await db.query(sql, [userID]);
+    const [rows] = await db.query(sql, [userID]);
     res.send(rows);
     // console.log(rows);
   } catch (error) {
@@ -57,7 +57,7 @@ router.get('/get-target-task', async (req, res) => {
   try {
     const { taskID } = req.query;
     const sql = 'SELECT * FROM taskList WHERE taskID = ?';
-    const [rows, fields] = await db.query(sql, [taskID]);
+    const [rows] = await db.query(sql, [taskID]);
     res.send(rows);
     // console.log(rows);
   } catch (error) {
@@ -72,7 +72,7 @@ router.get('/get-target-task', async (req, res) => {
 //   try {
 //       const { taskID } = req.query;
 //       const sql = 'SELECT * FROM offerList WHERE taskID = ? AND success = 1';
-//       const [rows, fields] = await db.query(sql, [taskID]);
+//       const [rows] = await db.query(sql, [taskID]);
 //       res.send(rows);
 //       // console.log(rows);
 //   } catch (error) {
@@ -118,7 +118,7 @@ router.get('/getOfferList', async (req, res) => {
       ORDER BY offerOrder DESC;
       
         `;
-    const [rows, fields] = await db.query(sql, [taskID, taskID, taskID]);
+    const [rows] = await db.query(sql, [taskID, taskID, taskID]);
     res.send(rows);
     console.log(rows);
   } catch (error) {
@@ -166,7 +166,7 @@ router.post('/totaskReviewed', async (req, res) => {
 //         const sql = `
 //             SELECT status from taskList where taskID = ? ;
 //         `;
-//         const [rows, fields] = await db.query(sql, [taskID]);
+//         const [rows] = await db.query(sql, [taskID]);
 //         res.send(rows);
 //         console.log(rows);
 //     } catch (error) {
@@ -181,7 +181,7 @@ router.post('/totaskReviewed', async (req, res) => {
 //     try {
 //         const { taskID } = req.query;
 //         const sql = 'SELECT * FROM offerList WHERE taskID = ?';
-//         const [rows, fields] = await db.query(sql, [taskID]);
+//         const [rows] = await db.query(sql, [taskID]);
 //         res.send(rows);
 //         console.log(rows);
 //     } catch (error) {
