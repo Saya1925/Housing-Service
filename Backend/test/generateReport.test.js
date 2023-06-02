@@ -22,4 +22,10 @@ describe('generateReport', function() {
     const pdfExists = fs.existsSync('report.pdf');
     assert.ok(pdfExists, 'PDF file should exist');
   });
+
+  it('should handle empty data', async function() {
+    // Test code for generating a PDF report with empty data
+    // ...
+  });
+
 });
