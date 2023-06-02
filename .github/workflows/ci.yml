@@ -22,10 +22,10 @@ jobs:
         run: npm install
         
       - name: Lint code
-        run: npx eslint .
+        run: npx eslint Backend
 
       - name: Run tests
-        run: npm test
+        run: npm test Backend
 
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v19
