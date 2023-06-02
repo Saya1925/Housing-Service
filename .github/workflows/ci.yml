@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
         
+      - name: Run tests
+      - run: npm test
+        
       - name: Run ESLint
         run: npx eslint Backend --config Backend/.eslintrc.json
 
