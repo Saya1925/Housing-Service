@@ -20,16 +20,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        
+
       - name: Lint code
-        run: npx eslint.
+        run: npx eslint .
 
       - name: Run tests
-        run: npm test Backend
+        run: npm test --prefix Backend
 
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v19
         with:
           application_name: housingservice950
           environment_name: housingservice950-env
-
