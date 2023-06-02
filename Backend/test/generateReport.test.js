@@ -1,6 +1,6 @@
 const fs = require('fs');
 const assert = require('assert');
-const mockFs = require('mock-fs');
+const mockFs = require('../node_modules/mock-fs');
 const generateReport = require('../generateReport');
 
 jest.mock('fs', () => ({
